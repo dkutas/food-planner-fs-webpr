@@ -51,4 +51,4 @@
 - Frontend: Angular
 - DB: PostgreSQL
 - CI/CD: Github actions
-+ OpenAPI Specification
+- OpenAPI Specification
