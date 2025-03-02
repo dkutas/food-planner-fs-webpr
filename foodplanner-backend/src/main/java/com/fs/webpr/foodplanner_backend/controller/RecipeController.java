@@ -6,10 +6,11 @@ import com.fs.webpr.foodplanner_backend.service.RecipeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/recipe")
@@ -19,6 +20,15 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
+    @GetMapping
+    public List<Recipe> getAll() {
+        try {
+            return recipeService.getAll();
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+        }
+    }
+
     @PostMapping
     public Recipe add(RecipeDTO recipeDTO) {
         try {
@@ -27,4 +37,23 @@ public class RecipeController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
         }
     }
+
+    @PatchMapping("/{id}")
+    public Recipe update(@PathVariable UUID id, RecipeDTO recipeDTO) {
+        try {
+            return recipeService.update(id, recipeDTO);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable UUID id) {
+        try {
+            recipeService.delete(id);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+        }
+    }
+
 }
