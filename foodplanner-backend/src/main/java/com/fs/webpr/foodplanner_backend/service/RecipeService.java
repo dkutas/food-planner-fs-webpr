@@ -5,6 +5,7 @@ import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
 import com.fs.webpr.foodplanner_backend.entity.model.Kitchen;
 import com.fs.webpr.foodplanner_backend.entity.model.Recipe;
 import com.fs.webpr.foodplanner_backend.entity.model.RecipeDTO;
+import com.fs.webpr.foodplanner_backend.exception.ResourceNotFoundException;
 import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
 import com.fs.webpr.foodplanner_backend.repository.KitchenRepository;
 import com.fs.webpr.foodplanner_backend.repository.RecipeRepository;
@@ -32,7 +33,7 @@ public class RecipeService {
         Recipe recipe = recipeMapper.toRecipe(recipeDTO);
 
         Kitchen kitchen = kitchenRepository.findById(kitchenId).orElseThrow(
-                () -> new RuntimeException("Kitchen not found")
+                () -> new ResourceNotFoundException("Kitchen not found with id " + kitchenId)
         );
 
         recipe.setKitchen(kitchen);
@@ -41,7 +42,7 @@ public class RecipeService {
 
         ingredientIds.forEach(ingredientId -> {
             Ingredient ingredient = ingredientRepository.findById(ingredientId).orElseThrow(
-                    () -> new RuntimeException("Ingredient not found")
+                    () -> new ResourceNotFoundException("Ingredient not found with id " + ingredientId)
             );
 
             ingredients.add(ingredient);
