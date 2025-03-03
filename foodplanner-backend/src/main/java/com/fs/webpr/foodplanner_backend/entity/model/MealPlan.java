@@ -24,8 +24,8 @@ public class MealPlan {
     private Recipe recipe;
 
     @Column(name = "startDate", nullable = false)
-    OffsetDateTime startDate;
+    private OffsetDateTime startDate;
 
     @Column(name = "endDate", nullable = false)
-    OffsetDateTime endDate;
+    private OffsetDateTime endDate;
 }
