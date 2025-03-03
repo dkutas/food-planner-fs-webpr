@@ -2,7 +2,7 @@ package com.fs.webpr.foodplanner_backend.service;
 
 import com.fs.webpr.foodplanner_backend.entity.mapper.MealPlanMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.MealPlan;
-import com.fs.webpr.foodplanner_backend.entity.model.MealPlanDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.MealPlanDTO;
 import com.fs.webpr.foodplanner_backend.entity.model.Recipe;
 import com.fs.webpr.foodplanner_backend.exception.ResourceNotFoundException;
 import com.fs.webpr.foodplanner_backend.repository.MealPlanRepository;

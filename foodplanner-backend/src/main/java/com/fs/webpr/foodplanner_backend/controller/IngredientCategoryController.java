@@ -1,6 +1,6 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.model.IngredientCategoryDAO;
+import com.fs.webpr.foodplanner_backend.entity.dao.IngredientCategoryDAO;
 import com.fs.webpr.foodplanner_backend.service.IngredientCategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

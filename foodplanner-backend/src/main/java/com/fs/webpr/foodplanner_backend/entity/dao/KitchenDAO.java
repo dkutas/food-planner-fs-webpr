@@ -1,11 +1,11 @@
-package com.fs.webpr.foodplanner_backend.entity.model;
+package com.fs.webpr.foodplanner_backend.entity.dao;
 
 import lombok.Data;
 
 import java.util.UUID;
 
 @Data
-public class IngredientCategoryDAO {
+public class KitchenDAO {
     private UUID id;
     private String name;
 }

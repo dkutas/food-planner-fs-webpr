@@ -1,7 +1,7 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
 import com.fs.webpr.foodplanner_backend.entity.model.Pantry;
-import com.fs.webpr.foodplanner_backend.entity.model.PantryDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.PantryDTO;
 import com.fs.webpr.foodplanner_backend.service.PantryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

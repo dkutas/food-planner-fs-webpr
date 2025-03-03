@@ -1,5 +1,6 @@
-package com.fs.webpr.foodplanner_backend.entity.model;
+package com.fs.webpr.foodplanner_backend.entity.dao;
 
+import com.fs.webpr.foodplanner_backend.entity.model.IngredientCategory;
 import lombok.Data;
 
 import java.util.UUID;

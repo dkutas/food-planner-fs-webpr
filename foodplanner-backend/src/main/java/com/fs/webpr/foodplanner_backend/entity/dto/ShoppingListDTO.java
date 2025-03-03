@@ -1,4 +1,4 @@
-package com.fs.webpr.foodplanner_backend.entity.model;
+package com.fs.webpr.foodplanner_backend.entity.dto;
 
 import lombok.Data;
 

@@ -2,7 +2,7 @@ package com.fs.webpr.foodplanner_backend.service;
 
 import com.fs.webpr.foodplanner_backend.entity.mapper.IngredientMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
-import com.fs.webpr.foodplanner_backend.entity.model.IngredientDAO;
+import com.fs.webpr.foodplanner_backend.entity.dao.IngredientDAO;
 import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

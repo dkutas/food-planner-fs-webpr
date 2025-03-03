@@ -1,7 +1,7 @@
 package com.fs.webpr.foodplanner_backend.entity.mapper;
 
 import com.fs.webpr.foodplanner_backend.entity.model.Pantry;
-import com.fs.webpr.foodplanner_backend.entity.model.PantryDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.PantryDTO;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

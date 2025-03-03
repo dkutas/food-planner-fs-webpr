@@ -3,7 +3,7 @@ package com.fs.webpr.foodplanner_backend.service;
 import com.fs.webpr.foodplanner_backend.entity.mapper.PantryMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
 import com.fs.webpr.foodplanner_backend.entity.model.Pantry;
-import com.fs.webpr.foodplanner_backend.entity.model.PantryDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.PantryDTO;
 import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
 import com.fs.webpr.foodplanner_backend.repository.PantryRepository;
 import jakarta.transaction.Transactional;

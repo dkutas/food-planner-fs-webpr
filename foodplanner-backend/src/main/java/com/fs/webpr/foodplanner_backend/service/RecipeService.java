@@ -4,7 +4,7 @@ import com.fs.webpr.foodplanner_backend.entity.mapper.RecipeMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
 import com.fs.webpr.foodplanner_backend.entity.model.Kitchen;
 import com.fs.webpr.foodplanner_backend.entity.model.Recipe;
-import com.fs.webpr.foodplanner_backend.entity.model.RecipeDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.RecipeDTO;
 import com.fs.webpr.foodplanner_backend.exception.ResourceNotFoundException;
 import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
 import com.fs.webpr.foodplanner_backend.repository.KitchenRepository;
