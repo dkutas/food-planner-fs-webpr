@@ -61,6 +61,12 @@ public class RecipeService {
         return recipeRepository.save(recipe);
     }
 
+    public Recipe get(UUID id) {
+        return recipeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Recipe not found with id " + id)
+        );
+    }
+
     public Recipe update(UUID id, RecipeDTO recipeDTO) {
         Recipe recipe = recipeRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Recipe not found with id " + id)

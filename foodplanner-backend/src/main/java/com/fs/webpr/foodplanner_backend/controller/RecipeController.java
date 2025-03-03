@@ -20,7 +20,7 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
-    @GetMapping
+    @GetMapping()
     public List<Recipe> getAll() {
         try {
             return recipeService.getAll();
@@ -33,6 +33,15 @@ public class RecipeController {
     public Recipe add(RecipeDTO recipeDTO) {
         try {
             return recipeService.add(recipeDTO);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public Recipe get(@PathVariable UUID id) {
+        try {
+            return recipeService.get(id);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
         }
