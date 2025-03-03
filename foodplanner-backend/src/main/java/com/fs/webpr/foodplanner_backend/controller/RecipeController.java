@@ -1,6 +1,6 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.model.Recipe;
+import com.fs.webpr.foodplanner_backend.entity.dao.RecipeDAO;
 import com.fs.webpr.foodplanner_backend.entity.dto.RecipeDTO;
 import com.fs.webpr.foodplanner_backend.service.RecipeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,7 +21,7 @@ public class RecipeController {
     private final RecipeService recipeService;
 
     @GetMapping
-    public List<Recipe> getAll() {
+    public List<RecipeDAO> getAll() {
         try {
             return recipeService.getAll();
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class RecipeController {
     }
 
     @PostMapping
-    public Recipe add(RecipeDTO recipeDTO) {
+    public RecipeDAO add(RecipeDTO recipeDTO) {
         try {
             return recipeService.add(recipeDTO);
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
-    public Recipe get(@PathVariable UUID id) {
+    public RecipeDAO get(@PathVariable UUID id) {
         try {
             return recipeService.get(id);
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class RecipeController {
     }
 
     @PatchMapping("/{id}")
-    public Recipe update(@PathVariable UUID id, RecipeDTO recipeDTO) {
+    public RecipeDAO update(@PathVariable UUID id, RecipeDTO recipeDTO) {
         try {
             return recipeService.update(id, recipeDTO);
         } catch (Exception e) {

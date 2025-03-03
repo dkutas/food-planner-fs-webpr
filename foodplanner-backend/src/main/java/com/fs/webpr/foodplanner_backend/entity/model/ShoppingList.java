@@ -20,5 +20,5 @@ public class ShoppingList {
 
     @OneToOne
     @JoinColumn(name = "ingredient_id", nullable = false)
-    Ingredient ingredient;
+    private Ingredient ingredient;
 }

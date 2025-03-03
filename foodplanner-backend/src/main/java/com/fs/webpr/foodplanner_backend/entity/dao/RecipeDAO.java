@@ -5,8 +5,10 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class IngredientDAO {
+public class RecipeDAO {
     private UUID id;
     private String name;
-    private IngredientCategoryDAO category;
+    private String description;
+    private KitchenDAO kitchen;
+    private IngredientDAO ingredient;
 }

@@ -1,5 +1,6 @@
 package com.fs.webpr.foodplanner_backend.service;
 
+import com.fs.webpr.foodplanner_backend.entity.dao.PantryDAO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.PantryMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
 import com.fs.webpr.foodplanner_backend.entity.model.Pantry;
@@ -22,11 +23,13 @@ public class PantryService {
     private final IngredientRepository ingredientRepository;
     private final PantryMapper pantryMapper;
 
-    public List<Pantry> getAll() {
-        return pantryRepository.findAll();
+    public List<PantryDAO> getAll() {
+        List<Pantry> pantries = pantryRepository.findAll();
+
+        return pantries.stream().map(pantryMapper::toDAO).toList();
     }
 
-    public Pantry add(PantryDTO pantryDTO) {
+    public PantryDAO add(PantryDTO pantryDTO) {
         Pantry pantry = pantryMapper.toPantry(pantryDTO);
 
         UUID ingredientId = pantryDTO.getIngredientId();
@@ -37,16 +40,20 @@ public class PantryService {
 
         pantry.setIngredient(ingredient);
 
-        return pantryRepository.save(pantry);
+        pantry = pantryRepository.save(pantry);
+
+        return pantryMapper.toDAO(pantry);
     }
 
-    public Pantry get(UUID id) {
-        return pantryRepository.findById(id).orElseThrow(
+    public PantryDAO get(UUID id) {
+        Pantry pantry = pantryRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Pantry not found with id " + id)
         );
+
+        return pantryMapper.toDAO(pantry);
     }
 
-    public Pantry update(UUID id, PantryDTO pantryDTO) {
+    public PantryDAO update(UUID id, PantryDTO pantryDTO) {
         Pantry pantry = pantryRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Pantry not found with id " + id)
         );
@@ -59,7 +66,9 @@ public class PantryService {
 
         pantry.setIngredient(ingredient);
 
-        return pantryRepository.save(pantry);
+        pantry = pantryRepository.save(pantry);
+
+        return pantryMapper.toDAO(pantry);
     }
 
     public void delete(UUID id) {

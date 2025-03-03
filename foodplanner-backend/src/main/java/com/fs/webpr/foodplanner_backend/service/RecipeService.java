@@ -1,5 +1,6 @@
 package com.fs.webpr.foodplanner_backend.service;
 
+import com.fs.webpr.foodplanner_backend.entity.dao.RecipeDAO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.RecipeMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
 import com.fs.webpr.foodplanner_backend.entity.model.Kitchen;
@@ -30,11 +31,12 @@ public class RecipeService {
     private final IngredientRepository ingredientRepository;
     private final RecipeMapper recipeMapper;
 
-    public List<Recipe> getAll() {
-        return recipeRepository.findAll();
+    public List<RecipeDAO> getAll() {
+        List<Recipe> recipes = recipeRepository.findAll();
+        return recipes.stream().map(recipeMapper::toDAO).toList();
     }
 
-    public Recipe add(RecipeDTO recipeDTO) {
+    public RecipeDAO add(RecipeDTO recipeDTO) {
         UUID kitchenId = recipeDTO.getKitchenId();
         Set<UUID> ingredientIds = recipeDTO.getIngredientIds();
 
@@ -58,16 +60,20 @@ public class RecipeService {
 
         recipe.setIngredients(ingredients);
 
-        return recipeRepository.save(recipe);
+        recipe = recipeRepository.save(recipe);
+
+        return recipeMapper.toDAO(recipe);
     }
 
-    public Recipe get(UUID id) {
-        return recipeRepository.findById(id).orElseThrow(
+    public RecipeDAO get(UUID id) {
+        Recipe recipe = recipeRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Recipe not found with id " + id)
         );
+
+        return recipeMapper.toDAO(recipe);
     }
 
-    public Recipe update(UUID id, RecipeDTO recipeDTO) {
+    public RecipeDAO update(UUID id, RecipeDTO recipeDTO) {
         Recipe recipe = recipeRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Recipe not found with id " + id)
         );
@@ -97,7 +103,9 @@ public class RecipeService {
 
         recipe.setIngredients(ingredients);
 
-        return recipeRepository.save(recipe);
+        recipe = recipeRepository.save(recipe);
+
+        return recipeMapper.toDAO(recipe);
     }
 
     public void delete(UUID id) {
