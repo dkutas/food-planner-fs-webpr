@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface KitchenMapper {
 
-    KitchenDAO mapToDAO(Kitchen kitchen);
+    KitchenDAO toDAO(Kitchen kitchen);
 }

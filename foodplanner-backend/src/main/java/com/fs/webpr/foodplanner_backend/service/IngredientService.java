@@ -21,6 +21,6 @@ public class IngredientService {
     public List<IngredientDAO> getAll() {
         List<Ingredient> ingredients = ingredientRepository.findAll();
 
-        return ingredients.stream().map(ingredientMapper::mapToDAO).toList();
+        return ingredients.stream().map(ingredientMapper::toDAO).toList();
     }
 }

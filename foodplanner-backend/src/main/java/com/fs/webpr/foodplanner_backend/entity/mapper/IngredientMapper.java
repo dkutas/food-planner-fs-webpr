@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface IngredientMapper {
 
-    IngredientDAO mapToDAO(Ingredient ingredient);
+    IngredientDAO toDAO(Ingredient ingredient);
 }

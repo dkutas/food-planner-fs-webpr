@@ -21,6 +21,6 @@ public class KitchenService {
     public List<KitchenDAO> getAll() {
         List<Kitchen> kitchens = kitchenRepository.findAll();
 
-        return kitchens.stream().map(kitchenMapper::mapToDAO).toList();
+        return kitchens.stream().map(kitchenMapper::toDAO).toList();
     }
 }
