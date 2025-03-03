@@ -20,7 +20,7 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
-    @GetMapping()
+    @GetMapping
     public List<Recipe> getAll() {
         try {
             return recipeService.getAll();
@@ -64,5 +64,4 @@ public class RecipeController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
         }
     }
-
 }

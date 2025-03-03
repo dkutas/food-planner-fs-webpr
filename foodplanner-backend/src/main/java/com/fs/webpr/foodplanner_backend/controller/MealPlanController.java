@@ -20,7 +20,7 @@ public class MealPlanController {
 
     private final MealPlanService mealPlanService;
 
-    @GetMapping()
+    @GetMapping
     public List<MealPlan> getAll() {
         try {
             return mealPlanService.getAll();
