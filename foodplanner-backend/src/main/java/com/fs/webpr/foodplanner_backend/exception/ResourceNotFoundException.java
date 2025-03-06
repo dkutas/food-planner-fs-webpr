@@ -1,5 +1,6 @@
 package com.fs.webpr.foodplanner_backend.exception;
 
+@SuppressWarnings("unused")
 public class ResourceNotFoundException extends RuntimeException {
 
     public ResourceNotFoundException() {
