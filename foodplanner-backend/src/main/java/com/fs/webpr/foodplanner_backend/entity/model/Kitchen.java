@@ -22,7 +22,7 @@ public class Kitchen {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "kitchen")
+    @OneToMany(mappedBy = "kitchen", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<Recipe> recipes;
 }

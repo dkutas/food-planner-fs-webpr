@@ -1,6 +1,6 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.model.IngredientCategoryDAO;
+import com.fs.webpr.foodplanner_backend.entity.model.IngredientCategory;
 import com.fs.webpr.foodplanner_backend.service.IngredientCategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class IngredientCategoryController {
     private final IngredientCategoryService ingredientCategoryService;
 
     @GetMapping
-    public List<IngredientCategoryDAO> getAll() {
+    public List<IngredientCategory> getAll() {
         try {
             return ingredientCategoryService.getAll();
         } catch (Exception e) {

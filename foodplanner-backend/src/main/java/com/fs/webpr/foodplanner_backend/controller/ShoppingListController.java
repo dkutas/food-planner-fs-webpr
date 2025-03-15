@@ -1,7 +1,5 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.model.Recipe;
-import com.fs.webpr.foodplanner_backend.entity.model.RecipeDTO;
 import com.fs.webpr.foodplanner_backend.entity.model.ShoppingList;
 import com.fs.webpr.foodplanner_backend.entity.model.ShoppingListDTO;
 import com.fs.webpr.foodplanner_backend.service.ShoppingListService;
