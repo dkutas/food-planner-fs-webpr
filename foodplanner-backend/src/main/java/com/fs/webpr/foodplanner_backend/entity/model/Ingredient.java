@@ -26,7 +26,7 @@ public class Ingredient {
     @JoinColumn(name = "ingredient_category_id", nullable = false)
     private IngredientCategory category;
 
-    @ManyToMany(mappedBy = "ingredients")
+    @ManyToMany(mappedBy = "ingredients", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<Recipe> recipes;
 }

@@ -37,7 +37,7 @@ public class Recipe {
     @ToString.Exclude
     private Set<Ingredient> ingredients;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.LAZY)
     @ToString.Exclude
     private Set<MealPlan> mealPlans;
 }

@@ -1,7 +1,7 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.dao.ShoppingListDAO;
 import com.fs.webpr.foodplanner_backend.entity.dto.ShoppingListDTO;
+import com.fs.webpr.foodplanner_backend.entity.model.ShoppingList;
 import com.fs.webpr.foodplanner_backend.service.ShoppingListService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class ShoppingListController {
     private final ShoppingListService shoppingListService;
 
     @GetMapping
-    public List<ShoppingListDAO> getAll() {
+    public List<ShoppingList> getAll() {
         try {
             return shoppingListService.getAll();
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class ShoppingListController {
     }
 
     @PostMapping
-    public ShoppingListDAO add(ShoppingListDTO shoppingListDTO) {
+    public ShoppingList add(ShoppingListDTO shoppingListDTO) {
         try {
             return shoppingListService.add(shoppingListDTO);
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class ShoppingListController {
     }
 
     @GetMapping("/{id}")
-    public ShoppingListDAO get(@PathVariable UUID id) {
+    public ShoppingList get(@PathVariable UUID id) {
         try {
             return shoppingListService.get(id);
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class ShoppingListController {
     }
 
     @PatchMapping("/{id}")
-    public ShoppingListDAO update(@PathVariable UUID id, ShoppingListDTO shoppingListDTO) {
+    public ShoppingList update(@PathVariable UUID id, ShoppingListDTO shoppingListDTO) {
         try {
             return shoppingListService.update(id, shoppingListDTO);
         } catch (Exception e) {
