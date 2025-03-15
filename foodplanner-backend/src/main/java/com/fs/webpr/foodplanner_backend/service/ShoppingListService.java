@@ -1,9 +1,10 @@
 package com.fs.webpr.foodplanner_backend.service;
 
+import com.fs.webpr.foodplanner_backend.entity.dao.ShoppingListDAO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.ShoppingListMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
 import com.fs.webpr.foodplanner_backend.entity.model.ShoppingList;
-import com.fs.webpr.foodplanner_backend.entity.model.ShoppingListDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.ShoppingListDTO;
 import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
 import com.fs.webpr.foodplanner_backend.repository.ShoppingListRepository;
 import jakarta.transaction.Transactional;
@@ -22,11 +23,13 @@ public class ShoppingListService {
     private final IngredientRepository ingredientRepository;
     private final ShoppingListMapper shoppingListMapper;
 
-    public List<ShoppingList> getAll() {
-        return shoppingListRepository.findAll();
+    public List<ShoppingListDAO> getAll() {
+        List<ShoppingList> shoppingLists = shoppingListRepository.findAll();
+
+        return shoppingLists.stream().map(shoppingListMapper::toDAO).toList();
     }
 
-    public ShoppingList add(ShoppingListDTO shoppingListDTO) {
+    public ShoppingListDAO add(ShoppingListDTO shoppingListDTO) {
         ShoppingList shoppingList = shoppingListMapper.toShoppingList(shoppingListDTO);
 
         UUID ingredientId = shoppingListDTO.getIngredientId();
@@ -37,14 +40,20 @@ public class ShoppingListService {
 
         shoppingList.setIngredient(ingredient);
 
-        return shoppingListRepository.save(shoppingList);
+        shoppingList = shoppingListRepository.save(shoppingList);
+
+        return shoppingListMapper.toDAO(shoppingList);
     }
 
-    public ShoppingList get(UUID id) {
-        return shoppingListRepository.findById(id).orElseThrow();
+    public ShoppingListDAO get(UUID id) {
+        ShoppingList shoppingList = shoppingListRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Shopping List not found with id " + id)
+        );
+
+        return shoppingListMapper.toDAO(shoppingList);
     }
 
-    public ShoppingList update(UUID id, ShoppingListDTO shoppingListDTO) {
+    public ShoppingListDAO update(UUID id, ShoppingListDTO shoppingListDTO) {
         ShoppingList shoppingList = shoppingListRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Shopping List not found with id " + id)
         );
@@ -57,7 +66,9 @@ public class ShoppingListService {
 
         shoppingList.setIngredient(ingredient);
 
-        return shoppingListRepository.save(shoppingList);
+        shoppingList = shoppingListRepository.save(shoppingList);
+
+        return shoppingListMapper.toDAO(shoppingList);
     }
 
     public void delete(UUID id) {

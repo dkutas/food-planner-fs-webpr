@@ -3,7 +3,6 @@ package com.fs.webpr.foodplanner_backend.entity.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -21,5 +20,5 @@ public class Pantry {
 
     @OneToOne
     @JoinColumn(name = "ingredient_id", nullable = false)
-    Ingredient ingredient;
+    private Ingredient ingredient;
 }

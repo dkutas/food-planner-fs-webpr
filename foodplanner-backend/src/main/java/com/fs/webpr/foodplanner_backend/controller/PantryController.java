@@ -1,7 +1,7 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.model.Pantry;
-import com.fs.webpr.foodplanner_backend.entity.model.PantryDTO;
+import com.fs.webpr.foodplanner_backend.entity.dao.PantryDAO;
+import com.fs.webpr.foodplanner_backend.entity.dto.PantryDTO;
 import com.fs.webpr.foodplanner_backend.service.PantryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class PantryController {
     private final PantryService pantryService;
 
     @GetMapping
-    public List<Pantry> getAll() {
+    public List<PantryDAO> getAll() {
         try {
             return pantryService.getAll();
         } catch (Exception e) {
@@ -30,7 +30,7 @@ public class PantryController {
     }
 
     @PostMapping
-    public Pantry add(PantryDTO pantryDTO) {
+    public PantryDAO add(PantryDTO pantryDTO) {
         try {
             return pantryService.add(pantryDTO);
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class PantryController {
     }
 
     @GetMapping("/{id}")
-    public Pantry get(@PathVariable UUID id) {
+    public PantryDAO get(@PathVariable UUID id) {
         try {
             return pantryService.get(id);
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class PantryController {
     }
 
     @PatchMapping("/{id}")
-    public Pantry update(@PathVariable UUID id, PantryDTO pantryDTO) {
+    public PantryDAO update(@PathVariable UUID id, PantryDTO pantryDTO) {
         try {
             return pantryService.update(id, pantryDTO);
         } catch (Exception e) {
