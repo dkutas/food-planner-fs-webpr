@@ -1,6 +1,5 @@
 package com.fs.webpr.foodplanner_backend.entity.mapper;
 
-import com.fs.webpr.foodplanner_backend.entity.dao.RecipeDAO;
 import com.fs.webpr.foodplanner_backend.entity.model.Recipe;
 import com.fs.webpr.foodplanner_backend.entity.dto.RecipeDTO;
 import org.mapstruct.Mapper;
@@ -10,6 +9,4 @@ import org.mapstruct.ReportingPolicy;
 public interface RecipeMapper {
 
     Recipe toRecipe(RecipeDTO recipeDTO);
-
-    RecipeDAO toDAO(Recipe recipe);
 }

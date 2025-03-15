@@ -1,6 +1,5 @@
 package com.fs.webpr.foodplanner_backend.service;
 
-import com.fs.webpr.foodplanner_backend.entity.dao.MealPlanDAO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.MealPlanMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.MealPlan;
 import com.fs.webpr.foodplanner_backend.entity.dto.MealPlanDTO;
@@ -24,13 +23,11 @@ public class MealPlanService {
     private final RecipeRepository recipeRepository;
     private final MealPlanMapper mealPlanMapper;
 
-    public List<MealPlanDAO> getAll() {
-        List<MealPlan> mealPlans = mealPlanRepository.findAll();
-
-        return mealPlans.stream().map(mealPlanMapper::toDAO).toList();
+    public List<MealPlan> getAll() {
+        return mealPlanRepository.findAll();
     }
 
-    public MealPlanDAO add(MealPlanDTO mealPlanDTO) {
+    public MealPlan add(MealPlanDTO mealPlanDTO) {
         UUID recipeId = mealPlanDTO.getRecipeId();
 
         MealPlan mealPlan = mealPlanMapper.toMealPlan(mealPlanDTO);
@@ -41,20 +38,16 @@ public class MealPlanService {
 
         mealPlan.setRecipe(recipe);
 
-        mealPlan = mealPlanRepository.save(mealPlan);
-
-        return mealPlanMapper.toDAO(mealPlan);
+        return mealPlanRepository.save(mealPlan);
     }
 
-    public MealPlanDAO get(UUID id) {
-        MealPlan mealPlan = mealPlanRepository.findById(id).orElseThrow(
+    public MealPlan get(UUID id) {
+        return mealPlanRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Meal Plan not found with id " + id)
         );
-
-        return mealPlanMapper.toDAO(mealPlan);
     }
 
-    public MealPlanDAO update(UUID id, MealPlanDTO mealPlanDTO) {
+    public MealPlan update(UUID id, MealPlanDTO mealPlanDTO) {
         MealPlan mealPlan = mealPlanRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Meal Plan not found with id " + id)
         );
@@ -69,9 +62,7 @@ public class MealPlanService {
         mealPlan.setStartDate(mealPlanDTO.getStartDate());
         mealPlan.setEndDate(mealPlanDTO.getEndDate());
 
-        mealPlan = mealPlanRepository.save(mealPlan);
-
-        return mealPlanMapper.toDAO(mealPlan);
+        return mealPlanRepository.save(mealPlan);
     }
 
     public void delete(UUID id) {
