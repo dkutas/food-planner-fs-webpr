@@ -22,10 +22,10 @@ CREATE TABLE kitchen
 
 CREATE TABLE meal_plan
 (
-    id         UUID                        NOT NULL,
-    recipe_id  UUID                        NOT NULL,
-    start_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-    end_date   TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    id         UUID                     NOT NULL,
+    recipe_id  UUID                     NOT NULL,
+    start_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    end_date   TIMESTAMP WITH TIME ZONE NOT NULL,
     CONSTRAINT pk_mealplan PRIMARY KEY (id)
 );
 
