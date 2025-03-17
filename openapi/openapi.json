@@ -21,7 +21,8 @@
         "tags": [
           "Shopping List"
         ],
-        "operationId": "getAll",
+        "summary": "Retrieves all shopping list records",
+        "operationId": "getAllShoppingLists",
         "responses": {
           "200": {
             "description": "OK",
@@ -42,7 +43,8 @@
         "tags": [
           "Shopping List"
         ],
-        "operationId": "add",
+        "summary": "Creates a new shopping list record",
+        "operationId": "addShoppingList",
         "parameters": [
           {
             "name": "shoppingListDTO",
@@ -72,7 +74,8 @@
         "tags": [
           "Recipe"
         ],
-        "operationId": "getAll_1",
+        "summary": "Retrieves all recipes",
+        "operationId": "getAllRecipes",
         "responses": {
           "200": {
             "description": "OK",
@@ -93,7 +96,8 @@
         "tags": [
           "Recipe"
         ],
-        "operationId": "add_1",
+        "summary": "Creates a new recipe",
+        "operationId": "addRecipe",
         "parameters": [
           {
             "name": "recipeDTO",
@@ -123,7 +127,8 @@
         "tags": [
           "Pantry"
         ],
-        "operationId": "getAll_2",
+        "summary": "Retrieves all pantry records",
+        "operationId": "getAllPantries",
         "responses": {
           "200": {
             "description": "OK",
@@ -144,7 +149,8 @@
         "tags": [
           "Pantry"
         ],
-        "operationId": "add_2",
+        "summary": "Creates a new pantry record",
+        "operationId": "addPantry",
         "parameters": [
           {
             "name": "pantryDTO",
@@ -174,7 +180,8 @@
         "tags": [
           "Meal Plan"
         ],
-        "operationId": "getAll_3",
+        "summary": "Retrieves a list of all meal plans",
+        "operationId": "getAllMealPlans",
         "responses": {
           "200": {
             "description": "OK",
@@ -195,7 +202,8 @@
         "tags": [
           "Meal Plan"
         ],
-        "operationId": "add_3",
+        "summary": "Creates a new meal plan",
+        "operationId": "addMealPlan",
         "parameters": [
           {
             "name": "mealPlanDTO",
@@ -225,7 +233,8 @@
         "tags": [
           "Shopping List"
         ],
-        "operationId": "get",
+        "summary": "Retrieves a shopping list record by id",
+        "operationId": "getShoppingList",
         "parameters": [
           {
             "name": "id",
@@ -254,7 +263,8 @@
         "tags": [
           "Shopping List"
         ],
-        "operationId": "delete",
+        "summary": "Deletes a shopping list record by id",
+        "operationId": "deleteShoppingList",
         "parameters": [
           {
             "name": "id",
@@ -276,7 +286,8 @@
         "tags": [
           "Shopping List"
         ],
-        "operationId": "update",
+        "summary": "Updates a shopping list record by id",
+        "operationId": "updateShoppingList",
         "parameters": [
           {
             "name": "id",
@@ -315,7 +326,8 @@
         "tags": [
           "Recipe"
         ],
-        "operationId": "get_1",
+        "summary": "Retrieves a recipe by id",
+        "operationId": "getRecipe",
         "parameters": [
           {
             "name": "id",
@@ -344,7 +356,8 @@
         "tags": [
           "Recipe"
         ],
-        "operationId": "delete_1",
+        "summary": "Deletes a recipe by id",
+        "operationId": "deleteRecipe",
         "parameters": [
           {
             "name": "id",
@@ -366,7 +379,8 @@
         "tags": [
           "Recipe"
         ],
-        "operationId": "update_1",
+        "summary": "Updates a recipe by id",
+        "operationId": "updateRecipe",
         "parameters": [
           {
             "name": "id",
@@ -405,7 +419,8 @@
         "tags": [
           "Pantry"
         ],
-        "operationId": "get_2",
+        "summary": "Retrieves a pantry by id",
+        "operationId": "getPantry",
         "parameters": [
           {
             "name": "id",
@@ -434,7 +449,8 @@
         "tags": [
           "Pantry"
         ],
-        "operationId": "delete_2",
+        "summary": "Deletes a pantry by id",
+        "operationId": "deletePantry",
         "parameters": [
           {
             "name": "id",
@@ -456,7 +472,8 @@
         "tags": [
           "Pantry"
         ],
-        "operationId": "update_2",
+        "summary": "Updates a pantry by id",
+        "operationId": "updatePantry",
         "parameters": [
           {
             "name": "id",
@@ -495,7 +512,8 @@
         "tags": [
           "Meal Plan"
         ],
-        "operationId": "get_3",
+        "summary": "Retrieves a meal plan by id",
+        "operationId": "getMealPlan",
         "parameters": [
           {
             "name": "id",
@@ -524,7 +542,8 @@
         "tags": [
           "Meal Plan"
         ],
-        "operationId": "delete_3",
+        "summary": "Deletes a meal plan by id",
+        "operationId": "deleteMealPlan",
         "parameters": [
           {
             "name": "id",
@@ -546,7 +565,8 @@
         "tags": [
           "Meal Plan"
         ],
-        "operationId": "update_3",
+        "summary": "Updates a meal plan by id",
+        "operationId": "updateMealPlan",
         "parameters": [
           {
             "name": "id",
@@ -585,7 +605,8 @@
         "tags": [
           "Kitchen"
         ],
-        "operationId": "getAll_4",
+        "summary": "Retrieves a list of all kitchen",
+        "operationId": "getAllKitchen",
         "responses": {
           "200": {
             "description": "OK",
@@ -608,7 +629,8 @@
         "tags": [
           "Ingredient"
         ],
-        "operationId": "getAll_5",
+        "summary": "Retrieves a list of all ingredient ingredients",
+        "operationId": "getAllIngredients",
         "responses": {
           "200": {
             "description": "OK",
@@ -631,7 +653,8 @@
         "tags": [
           "Ingredient Category"
         ],
-        "operationId": "getAll_6",
+        "summary": "Retrieves a list of all ingredient categories",
+        "operationId": "getAllIngredientCategories",
         "responses": {
           "200": {
             "description": "OK",

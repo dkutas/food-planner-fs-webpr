@@ -3,6 +3,7 @@ package com.fs.webpr.foodplanner_backend.controller;
 import com.fs.webpr.foodplanner_backend.entity.dto.ShoppingListDTO;
 import com.fs.webpr.foodplanner_backend.entity.model.ShoppingList;
 import com.fs.webpr.foodplanner_backend.service.ShoppingListService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,10 @@ public class ShoppingListController {
     private final ShoppingListService shoppingListService;
 
     @GetMapping
+    @Operation(
+            operationId = "getAllShoppingLists",
+            summary = "Retrieves all shopping list records"
+    )
     public List<ShoppingList> getAll() {
         try {
             return shoppingListService.getAll();
@@ -30,6 +35,10 @@ public class ShoppingListController {
     }
 
     @PostMapping
+    @Operation(
+            operationId = "addShoppingList",
+            summary = "Creates a new shopping list record"
+    )
     public ShoppingList add(ShoppingListDTO shoppingListDTO) {
         try {
             return shoppingListService.add(shoppingListDTO);
@@ -39,6 +48,10 @@ public class ShoppingListController {
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            operationId = "getShoppingList",
+            summary = "Retrieves a shopping list record by id"
+    )
     public ShoppingList get(@PathVariable UUID id) {
         try {
             return shoppingListService.get(id);
@@ -48,6 +61,10 @@ public class ShoppingListController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(
+            operationId = "updateShoppingList",
+            summary = "Updates a shopping list record by id"
+    )
     public ShoppingList update(@PathVariable UUID id, ShoppingListDTO shoppingListDTO) {
         try {
             return shoppingListService.update(id, shoppingListDTO);
@@ -57,6 +74,10 @@ public class ShoppingListController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            operationId = "deleteShoppingList",
+            summary = "Deletes a shopping list record by id"
+    )
     public void delete(@PathVariable UUID id) {
         try {
             shoppingListService.delete(id);
