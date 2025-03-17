@@ -8,6 +8,7 @@ class FoodplannerBackendApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }
