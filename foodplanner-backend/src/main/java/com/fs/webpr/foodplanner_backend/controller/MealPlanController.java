@@ -3,6 +3,7 @@ package com.fs.webpr.foodplanner_backend.controller;
 import com.fs.webpr.foodplanner_backend.entity.dto.MealPlanDTO;
 import com.fs.webpr.foodplanner_backend.entity.model.MealPlan;
 import com.fs.webpr.foodplanner_backend.service.MealPlanService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,10 @@ public class MealPlanController {
     private final MealPlanService mealPlanService;
 
     @GetMapping
+    @Operation(
+            operationId = "getAllMealPlans",
+            summary = "Retrieves a list of all meal plans"
+    )
     public List<MealPlan> getAll() {
         try {
             return mealPlanService.getAll();
@@ -30,6 +35,10 @@ public class MealPlanController {
     }
 
     @PostMapping
+    @Operation(
+            operationId = "addMealPlan",
+            summary = "Creates a new meal plan"
+    )
     public MealPlan add(MealPlanDTO mealPlanDTO) {
         try {
             return mealPlanService.add(mealPlanDTO);
@@ -39,6 +48,10 @@ public class MealPlanController {
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            operationId = "getMealPlan",
+            summary = "Retrieves a meal plan by id"
+    )
     public MealPlan get(@PathVariable UUID id) {
         try {
             return mealPlanService.get(id);
@@ -48,6 +61,10 @@ public class MealPlanController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(
+            operationId = "updateMealPlan",
+            summary = "Updates a meal plan by id"
+    )
     public MealPlan update(@PathVariable UUID id, MealPlanDTO mealPlanDTO) {
         try {
             return mealPlanService.update(id, mealPlanDTO);
@@ -57,6 +74,10 @@ public class MealPlanController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            operationId = "deleteMealPlan",
+            summary = "Deletes a meal plan by id"
+    )
     public void delete(@PathVariable UUID id) {
         try {
             mealPlanService.delete(id);
