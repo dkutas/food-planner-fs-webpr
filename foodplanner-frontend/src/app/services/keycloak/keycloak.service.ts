@@ -40,12 +40,12 @@ export class KeycloakService {
     }
   }
 
-  login() {
-    this.keycloak?.login();
+  async login() {
+    await this.keycloak?.login();
   }
 
-  logout() {
-    this.keycloak?.logout();
+  async logout() {
+    await this.keycloak?.logout();
   }
 
 }
