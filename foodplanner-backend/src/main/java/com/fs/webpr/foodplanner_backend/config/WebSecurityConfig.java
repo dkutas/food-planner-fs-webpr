@@ -12,9 +12,9 @@ public class WebSecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .authorizeHttpRequests(requests -> requests
-                        .anyRequest().permitAll()
-                )
+                .oauth2ResourceServer(auth -> auth.jwt(token -> token.jwtAuthenticationConverter(
+                        new KeycloakJwtAuthenticationConverter()
+                )))
                 .build();
     }
 }
