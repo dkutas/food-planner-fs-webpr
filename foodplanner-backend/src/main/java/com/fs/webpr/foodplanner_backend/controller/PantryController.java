@@ -3,6 +3,7 @@ package com.fs.webpr.foodplanner_backend.controller;
 import com.fs.webpr.foodplanner_backend.entity.dto.PantryDTO;
 import com.fs.webpr.foodplanner_backend.entity.model.Pantry;
 import com.fs.webpr.foodplanner_backend.service.PantryService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,10 @@ public class PantryController {
     private final PantryService pantryService;
 
     @GetMapping
+    @Operation(
+            operationId = "getAllPantries",
+            summary = "Retrieves all pantry records"
+    )
     public List<Pantry> getAll() {
         try {
             return pantryService.getAll();
@@ -30,6 +35,10 @@ public class PantryController {
     }
 
     @PostMapping
+    @Operation(
+            operationId = "addPantry",
+            summary = "Creates a new pantry record"
+    )
     public Pantry add(PantryDTO pantryDTO) {
         try {
             return pantryService.add(pantryDTO);
@@ -39,6 +48,10 @@ public class PantryController {
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            operationId = "getPantry",
+            summary = "Retrieves a pantry by id"
+    )
     public Pantry get(@PathVariable UUID id) {
         try {
             return pantryService.get(id);
@@ -48,6 +61,10 @@ public class PantryController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(
+            operationId = "updatePantry",
+            summary = "Updates a pantry by id"
+    )
     public Pantry update(@PathVariable UUID id, PantryDTO pantryDTO) {
         try {
             return pantryService.update(id, pantryDTO);
@@ -57,6 +74,10 @@ public class PantryController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            operationId = "deletePantry",
+            summary = "Deletes a pantry by id"
+    )
     public void delete(@PathVariable UUID id) {
         try {
             pantryService.delete(id);

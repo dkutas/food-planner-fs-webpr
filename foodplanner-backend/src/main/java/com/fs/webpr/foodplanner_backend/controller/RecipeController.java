@@ -3,6 +3,7 @@ package com.fs.webpr.foodplanner_backend.controller;
 import com.fs.webpr.foodplanner_backend.entity.dto.RecipeDTO;
 import com.fs.webpr.foodplanner_backend.entity.model.Recipe;
 import com.fs.webpr.foodplanner_backend.service.RecipeService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,10 @@ public class RecipeController {
     private final RecipeService recipeService;
 
     @GetMapping
+    @Operation(
+            operationId = "getAllRecipes",
+            summary = "Retrieves all recipes"
+    )
     public List<Recipe> getAll() {
         try {
             return recipeService.getAll();
@@ -30,6 +35,10 @@ public class RecipeController {
     }
 
     @PostMapping
+    @Operation(
+            operationId = "addRecipe",
+            summary = "Creates a new recipe"
+    )
     public Recipe add(RecipeDTO recipeDTO) {
         try {
             return recipeService.add(recipeDTO);
@@ -39,6 +48,10 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
+    @Operation(
+            operationId = "getRecipe",
+            summary = "Retrieves a recipe by id"
+    )
     public Recipe get(@PathVariable UUID id) {
         try {
             return recipeService.get(id);
@@ -48,6 +61,10 @@ public class RecipeController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(
+            operationId = "updateRecipe",
+            summary = "Updates a recipe by id"
+    )
     public Recipe update(@PathVariable UUID id, RecipeDTO recipeDTO) {
         try {
             return recipeService.update(id, recipeDTO);
@@ -57,6 +74,10 @@ public class RecipeController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(
+            operationId = "deleteRecipe",
+            summary = "Deletes a recipe by id"
+    )
     public void delete(@PathVariable UUID id) {
         try {
             recipeService.delete(id);

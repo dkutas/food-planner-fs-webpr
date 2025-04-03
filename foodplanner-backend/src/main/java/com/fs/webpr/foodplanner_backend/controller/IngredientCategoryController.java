@@ -2,6 +2,7 @@ package com.fs.webpr.foodplanner_backend.controller;
 
 import com.fs.webpr.foodplanner_backend.entity.model.IngredientCategory;
 import com.fs.webpr.foodplanner_backend.service.IngredientCategoryService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,10 @@ public class IngredientCategoryController {
     private final IngredientCategoryService ingredientCategoryService;
 
     @GetMapping
+    @Operation(
+            operationId = "getAllIngredientCategories",
+            summary = "Retrieves a list of all ingredient categories"
+    )
     public List<IngredientCategory> getAll() {
         try {
             return ingredientCategoryService.getAll();
