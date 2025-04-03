@@ -1,0 +1,9 @@
+<div class="gutter-example">
+  <div nz-row [nzGutter]="[hGutter, vGutter]">
+    @for (i of array; track $index) {
+      <div nz-col class="gutter-row" [nzSpan]="24 / count">
+        <div class="grid-config">Column_{{ $index }}</div>
+      </div>
+    }
+  </div>
+</div>
