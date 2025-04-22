@@ -31,7 +31,6 @@
         KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
         KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       volumes:
-        - # Mount the custom user provider JAR file
         - ./keycloak/providers:/opt/keycloak/providers
         - ./keycloak/import:/opt/keycloak/data/import
       command: [ "start-dev", "--import-realm", "-Dkeycloak.import=/opt/keycloak/data/import/" ]
