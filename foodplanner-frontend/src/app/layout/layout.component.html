@@ -1,0 +1,50 @@
+<nz-layout>
+  <nz-header>
+    <div>
+      <img class="logo" ngSrc="./logo1.png" priority width="120" height="31" alt="Logo"/>
+    </div>
+    <ul nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
+      <li nz-menu-item routerLink="register" routerLinkActive="active-link"
+          (click)="routerService.routeToRegister()">
+        Register
+      </li>
+      <li nz-menu-item routerLink="login" routerLinkActive="active-link"
+          (click)="routerService.routeToLogin()">Login
+      </li>
+    </ul>
+  </nz-header>
+  <nz-content class="outer-content">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>App</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <nz-layout class="inner-layout">
+      <nz-sider nzTheme="dark">
+        <ul nz-menu [nzSelectable]="false" nzMode="inline" class="sider-menu" nzTheme="dark">
+          <li nz-menu-item routerLink="meal-plan" routerLinkActive="active-link"
+              (click)="routerService.routeToMealPlan()">
+            MealPlan
+          </li>
+          <li nz-menu-item routerLink="pantry" routerLinkActive="active-link"
+              (click)="routerService.routeToPantry()">
+            Pantry
+          </li>
+          <li nz-menu-item routerLink="recipes" routerLinkActive="active-link"
+              (click)="routerService.routeToRecipe()">
+            Recipes
+          </li>
+          <li nz-menu-item routerLink="nutritions" routerLinkActive="active-link"
+              (click)="routerService.routeToNutrition()">
+            Nutrition
+          </li>
+          <li nz-menu-item routerLink="shopping-list" routerLinkActive="active-link"
+              (click)="routerService.routeToShoppingList()">
+            Shopping List
+          </li>
+        </ul>
+      </nz-sider>
+      <nz-content class="inner-content">
+        <router-outlet/>
+      </nz-content>
+    </nz-layout>
+  </nz-content>
+</nz-layout>

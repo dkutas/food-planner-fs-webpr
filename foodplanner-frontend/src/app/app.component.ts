@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component} from '@angular/core';
+import {RouterOutlet} from '@angular/router';
+import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
+import {NzIconModule} from 'ng-zorro-antd/icon';
+import {NzMenuModule} from 'ng-zorro-antd/menu';
+import {NzLayoutModule} from 'ng-zorro-antd/layout';
+import {LayoutComponent} from './layout/layout.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [
+    LayoutComponent
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  standalone: true
+  styleUrls: ['./app.component.less'],
 })
-export class  AppComponent {
+export class AppComponent {
   title = 'foodplanner-frontend';
 }
