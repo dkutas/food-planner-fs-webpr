@@ -1,47 +1,49 @@
-services:
-  db:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "${POSTGRES_PORT}:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - app-network
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}" ]
-      interval: 10s
-      retries: 5
+  services:
+    db:
+      image: postgres
+      restart: always
+      environment:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      ports:
+        - "${POSTGRES_PORT}:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      networks:
+        - app-network
+      healthcheck:
+        test: [ "CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}" ]
+        interval: 10s
+        retries: 5
 
-  keycloak:
-    container_name: keycloak-fp
-    image: quay.io/keycloak/keycloak:24.0.2
-    ports:
-      - "9090:8080"
-    environment:
-      KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
-      KC_DB_USERNAME: ${POSTGRES_USER}
-      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
-      KC_HOSTNAME: localhost
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-    volumes:
-      - ./keycloak/import:/opt/keycloak/data/import
-    command: [ "start-dev", "--import-realm", "-Dkeycloak.import=/opt/keycloak/data/import/" ]
-    depends_on:
-      - db
-    networks:
-      - app-network
+    keycloak:
+      container_name: keycloak-fp
+      image: quay.io/keycloak/keycloak:24.0.2
+      ports:
+        - "9090:8080"
+      environment:
+        KC_DB: postgres
+        KC_DB_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+        KC_DB_USERNAME: ${POSTGRES_USER}
+        KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+        KC_HOSTNAME: localhost
+        KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+        KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      volumes:
+        - # Mount the custom user provider JAR file
+        - ./keycloak/providers:/opt/keycloak/providers
+        - ./keycloak/import:/opt/keycloak/data/import
+      command: [ "start-dev", "--import-realm", "-Dkeycloak.import=/opt/keycloak/data/import/" ]
+      depends_on:
+        - db
+      networks:
+        - app-network
 
-volumes:
-  postgres_data:
-    driver: local
+  volumes:
+    postgres_data:
+      driver: local
 
-networks:
-  app-network:
-    driver: bridge
+  networks:
+    app-network:
+      driver: bridge
