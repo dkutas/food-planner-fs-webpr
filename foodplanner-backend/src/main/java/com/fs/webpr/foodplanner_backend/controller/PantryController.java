@@ -30,7 +30,7 @@ public class PantryController {
         try {
             return pantryService.getAll();
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -39,11 +39,11 @@ public class PantryController {
             operationId = "addPantry",
             summary = "Creates a new pantry record"
     )
-    public Pantry add(PantryDTO pantryDTO) {
+    public Pantry add(@RequestBody PantryDTO pantryDTO) {
         try {
             return pantryService.add(pantryDTO);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -56,7 +56,7 @@ public class PantryController {
         try {
             return pantryService.get(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -65,11 +65,11 @@ public class PantryController {
             operationId = "updatePantry",
             summary = "Updates a pantry by id"
     )
-    public Pantry update(@PathVariable UUID id, PantryDTO pantryDTO) {
+    public Pantry update(@PathVariable UUID id, @RequestBody PantryDTO pantryDTO) {
         try {
             return pantryService.update(id, pantryDTO);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -82,7 +82,7 @@ public class PantryController {
         try {
             pantryService.delete(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 }

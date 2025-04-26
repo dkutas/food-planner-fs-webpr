@@ -30,7 +30,7 @@ public class ShoppingListController {
         try {
             return shoppingListService.getAll();
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -39,11 +39,11 @@ public class ShoppingListController {
             operationId = "addShoppingList",
             summary = "Creates a new shopping list record"
     )
-    public ShoppingList add(ShoppingListDTO shoppingListDTO) {
+    public ShoppingList add(@RequestBody ShoppingListDTO shoppingListDTO) {
         try {
             return shoppingListService.add(shoppingListDTO);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -56,7 +56,7 @@ public class ShoppingListController {
         try {
             return shoppingListService.get(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -65,11 +65,11 @@ public class ShoppingListController {
             operationId = "updateShoppingList",
             summary = "Updates a shopping list record by id"
     )
-    public ShoppingList update(@PathVariable UUID id, ShoppingListDTO shoppingListDTO) {
+    public ShoppingList update(@PathVariable UUID id, @RequestBody ShoppingListDTO shoppingListDTO) {
         try {
             return shoppingListService.update(id, shoppingListDTO);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -82,7 +82,7 @@ public class ShoppingListController {
         try {
             shoppingListService.delete(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 }

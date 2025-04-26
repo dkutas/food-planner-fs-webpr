@@ -30,7 +30,7 @@ public class RecipeController {
         try {
             return recipeService.getAll();
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -39,11 +39,11 @@ public class RecipeController {
             operationId = "addRecipe",
             summary = "Creates a new recipe"
     )
-    public Recipe add(RecipeDTO recipeDTO) {
+    public Recipe add(@RequestBody RecipeDTO recipeDTO) {
         try {
             return recipeService.add(recipeDTO);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -56,7 +56,7 @@ public class RecipeController {
         try {
             return recipeService.get(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -65,11 +65,11 @@ public class RecipeController {
             operationId = "updateRecipe",
             summary = "Updates a recipe by id"
     )
-    public Recipe update(@PathVariable UUID id, RecipeDTO recipeDTO) {
+    public Recipe update(@PathVariable UUID id, @RequestBody RecipeDTO recipeDTO) {
         try {
             return recipeService.update(id, recipeDTO);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -82,7 +82,7 @@ public class RecipeController {
         try {
             recipeService.delete(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 }

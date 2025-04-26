@@ -30,7 +30,7 @@ public class MealPlanController {
         try {
             return mealPlanService.getAll();
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -39,11 +39,11 @@ public class MealPlanController {
             operationId = "addMealPlan",
             summary = "Creates a new meal plan"
     )
-    public MealPlan add(MealPlanDTO mealPlanDTO) {
+    public MealPlan add(@RequestBody MealPlanDTO mealPlanDTO) {
         try {
             return mealPlanService.add(mealPlanDTO);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -56,7 +56,7 @@ public class MealPlanController {
         try {
             return mealPlanService.get(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -65,11 +65,11 @@ public class MealPlanController {
             operationId = "updateMealPlan",
             summary = "Updates a meal plan by id"
     )
-    public MealPlan update(@PathVariable UUID id, MealPlanDTO mealPlanDTO) {
+    public MealPlan update(@PathVariable UUID id, @RequestBody MealPlanDTO mealPlanDTO) {
         try {
             return mealPlanService.update(id, mealPlanDTO);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 
@@ -82,7 +82,7 @@ public class MealPlanController {
         try {
             mealPlanService.delete(id);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
         }
     }
 }
