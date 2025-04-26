@@ -31,7 +31,6 @@
         KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
         KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       volumes:
-        - ./keycloak/providers:/opt/keycloak/providers
         - ./keycloak/import:/opt/keycloak/data/import
       command: [ "start-dev", "--import-realm", "-Dkeycloak.import=/opt/keycloak/data/import/" ]
       depends_on:
