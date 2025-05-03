@@ -1,14 +1,12 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.dto.RecipeDTO;
-import com.fs.webpr.foodplanner_backend.entity.model.Recipe;
+import com.fs.webpr.foodplanner_backend.entity.dto.request.RecipeRequestDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.response.RecipeResponseDTO;
 import com.fs.webpr.foodplanner_backend.service.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,12 +24,8 @@ public class RecipeController {
             operationId = "getAllRecipes",
             summary = "Retrieves all recipes"
     )
-    public List<Recipe> getAll() {
-        try {
-            return recipeService.getAll();
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public List<RecipeResponseDTO> getAll() {
+        return recipeService.getAll();
     }
 
     @PostMapping
@@ -39,12 +33,8 @@ public class RecipeController {
             operationId = "addRecipe",
             summary = "Creates a new recipe"
     )
-    public Recipe add(@RequestBody RecipeDTO recipeDTO) {
-        try {
-            return recipeService.add(recipeDTO);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public RecipeResponseDTO add(@RequestBody RecipeRequestDTO recipeRequestDTO) {
+        return recipeService.add(recipeRequestDTO);
     }
 
     @GetMapping("/{id}")
@@ -52,12 +42,8 @@ public class RecipeController {
             operationId = "getRecipe",
             summary = "Retrieves a recipe by id"
     )
-    public Recipe get(@PathVariable UUID id) {
-        try {
-            return recipeService.get(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public RecipeResponseDTO get(@PathVariable UUID id) {
+        return recipeService.get(id);
     }
 
     @PatchMapping("/{id}")
@@ -65,12 +51,8 @@ public class RecipeController {
             operationId = "updateRecipe",
             summary = "Updates a recipe by id"
     )
-    public Recipe update(@PathVariable UUID id, @RequestBody RecipeDTO recipeDTO) {
-        try {
-            return recipeService.update(id, recipeDTO);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public RecipeResponseDTO update(@PathVariable UUID id, @RequestBody RecipeRequestDTO recipeRequestDTO) {
+        return recipeService.update(id, recipeRequestDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -79,10 +61,6 @@ public class RecipeController {
             summary = "Deletes a recipe by id"
     )
     public void delete(@PathVariable UUID id) {
-        try {
-            recipeService.delete(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+        recipeService.delete(id);
     }
 }

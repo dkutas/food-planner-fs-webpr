@@ -1,14 +1,12 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.dto.ShoppingListDTO;
-import com.fs.webpr.foodplanner_backend.entity.model.ShoppingList;
+import com.fs.webpr.foodplanner_backend.entity.dto.request.ShoppingListRequestDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.response.ShoppingListResponseDTO;
 import com.fs.webpr.foodplanner_backend.service.ShoppingListService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,12 +24,8 @@ public class ShoppingListController {
             operationId = "getAllShoppingLists",
             summary = "Retrieves all shopping list records"
     )
-    public List<ShoppingList> getAll() {
-        try {
-            return shoppingListService.getAll();
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public List<ShoppingListResponseDTO> getAll() {
+        return shoppingListService.getAll();
     }
 
     @PostMapping
@@ -39,12 +33,8 @@ public class ShoppingListController {
             operationId = "addShoppingList",
             summary = "Creates a new shopping list record"
     )
-    public ShoppingList add(@RequestBody ShoppingListDTO shoppingListDTO) {
-        try {
-            return shoppingListService.add(shoppingListDTO);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public ShoppingListResponseDTO add(@RequestBody ShoppingListRequestDTO shoppingListRequestDTO) {
+        return shoppingListService.add(shoppingListRequestDTO);
     }
 
     @GetMapping("/{id}")
@@ -52,12 +42,17 @@ public class ShoppingListController {
             operationId = "getShoppingList",
             summary = "Retrieves a shopping list record by id"
     )
-    public ShoppingList get(@PathVariable UUID id) {
-        try {
-            return shoppingListService.get(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public ShoppingListResponseDTO get(@PathVariable UUID id) {
+        return shoppingListService.get(id);
+    }
+
+    @GetMapping("/ingredient/{ingredientId}")
+    @Operation(
+            operationId = "getShoppingListByIngredientId",
+            summary = "Retrieves a shopping list record by ingredient id"
+    )
+    public ShoppingListResponseDTO getByIngredientId(@PathVariable UUID ingredientId) {
+        return shoppingListService.getByIngredientId(ingredientId);
     }
 
     @PatchMapping("/{id}")
@@ -65,12 +60,8 @@ public class ShoppingListController {
             operationId = "updateShoppingList",
             summary = "Updates a shopping list record by id"
     )
-    public ShoppingList update(@PathVariable UUID id, @RequestBody ShoppingListDTO shoppingListDTO) {
-        try {
-            return shoppingListService.update(id, shoppingListDTO);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public ShoppingListResponseDTO update(@PathVariable UUID id, @RequestBody ShoppingListRequestDTO shoppingListRequestDTO) {
+        return shoppingListService.update(id, shoppingListRequestDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -79,10 +70,17 @@ public class ShoppingListController {
             summary = "Deletes a shopping list record by id"
     )
     public void delete(@PathVariable UUID id) {
-        try {
-            shoppingListService.delete(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+        shoppingListService.delete(id);
     }
+
+    @DeleteMapping("/ingredient/{ingredientId}")
+    @Operation(
+            operationId = "deleteShoppingListByIngredientId",
+            summary = "Deletes a shopping list record by ingredient id"
+    )
+    public void deleteByIngredientId(@PathVariable UUID ingredientId) {
+        shoppingListService.deleteByIngredientId(ingredientId);
+    }
+
+
 }

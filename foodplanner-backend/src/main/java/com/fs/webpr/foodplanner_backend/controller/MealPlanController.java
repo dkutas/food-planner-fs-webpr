@@ -1,14 +1,12 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.dto.MealPlanDTO;
-import com.fs.webpr.foodplanner_backend.entity.model.MealPlan;
+import com.fs.webpr.foodplanner_backend.entity.dto.request.MealPlanRequestDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.response.MealPlanResponseDTO;
 import com.fs.webpr.foodplanner_backend.service.MealPlanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,12 +24,8 @@ public class MealPlanController {
             operationId = "getAllMealPlans",
             summary = "Retrieves a list of all meal plans"
     )
-    public List<MealPlan> getAll() {
-        try {
-            return mealPlanService.getAll();
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public List<MealPlanResponseDTO> getAll() {
+        return mealPlanService.getAll();
     }
 
     @PostMapping
@@ -39,12 +33,8 @@ public class MealPlanController {
             operationId = "addMealPlan",
             summary = "Creates a new meal plan"
     )
-    public MealPlan add(@RequestBody MealPlanDTO mealPlanDTO) {
-        try {
-            return mealPlanService.add(mealPlanDTO);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public MealPlanResponseDTO add(@RequestBody MealPlanRequestDTO mealPlanRequestDTO) {
+        return mealPlanService.add(mealPlanRequestDTO);
     }
 
     @GetMapping("/{id}")
@@ -52,12 +42,8 @@ public class MealPlanController {
             operationId = "getMealPlan",
             summary = "Retrieves a meal plan by id"
     )
-    public MealPlan get(@PathVariable UUID id) {
-        try {
-            return mealPlanService.get(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public MealPlanResponseDTO get(@PathVariable UUID id) {
+        return mealPlanService.get(id);
     }
 
     @PatchMapping("/{id}")
@@ -65,12 +51,8 @@ public class MealPlanController {
             operationId = "updateMealPlan",
             summary = "Updates a meal plan by id"
     )
-    public MealPlan update(@PathVariable UUID id, @RequestBody MealPlanDTO mealPlanDTO) {
-        try {
-            return mealPlanService.update(id, mealPlanDTO);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public MealPlanResponseDTO update(@PathVariable UUID id, @RequestBody MealPlanRequestDTO mealPlanRequestDTO) {
+        return mealPlanService.update(id, mealPlanRequestDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -79,10 +61,6 @@ public class MealPlanController {
             summary = "Deletes a meal plan by id"
     )
     public void delete(@PathVariable UUID id) {
-        try {
-            mealPlanService.delete(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+        mealPlanService.delete(id);
     }
 }

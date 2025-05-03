@@ -1,6 +1,7 @@
 package com.fs.webpr.foodplanner_backend.service;
 
-import com.fs.webpr.foodplanner_backend.entity.model.Kitchen;
+import com.fs.webpr.foodplanner_backend.entity.dto.response.KitchenResponseDTO;
+import com.fs.webpr.foodplanner_backend.entity.mapper.KitchenMapper;
 import com.fs.webpr.foodplanner_backend.repository.KitchenRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +15,9 @@ import java.util.List;
 public class KitchenService {
 
     private final KitchenRepository kitchenRepository;
+    private final KitchenMapper kitchenMapper;
 
-    public List<Kitchen> getAll() {
-        return kitchenRepository.findAll();
+    public List<KitchenResponseDTO> getAll() {
+        return kitchenMapper.toKitchenResponseDTO(kitchenRepository.findAll());
     }
 }

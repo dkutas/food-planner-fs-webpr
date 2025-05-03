@@ -1,8 +1,9 @@
 package com.fs.webpr.foodplanner_backend.service;
 
+import com.fs.webpr.foodplanner_backend.entity.dto.request.MealPlanRequestDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.response.MealPlanResponseDTO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.MealPlanMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.MealPlan;
-import com.fs.webpr.foodplanner_backend.entity.dto.MealPlanDTO;
 import com.fs.webpr.foodplanner_backend.entity.model.Recipe;
 import com.fs.webpr.foodplanner_backend.exception.ResourceNotFoundException;
 import com.fs.webpr.foodplanner_backend.repository.MealPlanRepository;
@@ -23,49 +24,63 @@ public class MealPlanService {
     private final RecipeRepository recipeRepository;
     private final MealPlanMapper mealPlanMapper;
 
-    public List<MealPlan> getAll() {
-        return mealPlanRepository.findAll();
+    public List<MealPlanResponseDTO> getAll() {
+        return mealPlanMapper.toMealPlanResponseDTO(mealPlanRepository.findAll());
     }
 
-    public MealPlan add(MealPlanDTO mealPlanDTO) {
-        UUID recipeId = mealPlanDTO.getRecipeId();
-
-        MealPlan mealPlan = mealPlanMapper.toMealPlan(mealPlanDTO);
+    public MealPlanResponseDTO add(MealPlanRequestDTO mealPlanRequestDTO) {
+        UUID recipeId = mealPlanRequestDTO.getRecipeId();
 
         Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(
                 () -> new ResourceNotFoundException("Recipe not found with id " + recipeId)
         );
 
+        MealPlan mealPlan = new MealPlan();
+
         mealPlan.setRecipe(recipe);
 
-        return mealPlanRepository.save(mealPlan);
+        return mealPlanMapper.toMealPlanResponseDTO(mealPlanRepository.save(mealPlan));
     }
 
-    public MealPlan get(UUID id) {
-        return mealPlanRepository.findById(id).orElseThrow(
+    public MealPlanResponseDTO get(UUID id) {
+        return mealPlanMapper.toMealPlanResponseDTO(mealPlanRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Meal Plan not found with id " + id)
-        );
+        ));
     }
 
-    public MealPlan update(UUID id, MealPlanDTO mealPlanDTO) {
+    public MealPlanResponseDTO update(UUID id, MealPlanRequestDTO mealPlanRequestDTO) {
         MealPlan mealPlan = mealPlanRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Meal Plan not found with id " + id)
         );
 
-        UUID recipeId = mealPlanDTO.getRecipeId();
+        if (mealPlanRequestDTO.getRecipeId() != null) {
+            UUID recipeId = mealPlanRequestDTO.getRecipeId();
 
-        Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(
-                () -> new ResourceNotFoundException("Recipe not found with id " + recipeId)
-        );
+            Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(
+                    () -> new ResourceNotFoundException("Recipe not found with id " + recipeId)
+            );
 
-        mealPlan.setRecipe(recipe);
-        mealPlan.setStartDate(mealPlanDTO.getStartDate());
-        mealPlan.setEndDate(mealPlanDTO.getEndDate());
+            mealPlan.setRecipe(recipe);
+        }
 
-        return mealPlanRepository.save(mealPlan);
+        if (mealPlanRequestDTO.getStartDate() != null) {
+            mealPlan.setStartDate(mealPlanRequestDTO.getStartDate());
+        }
+
+        if (mealPlanRequestDTO.getEndDate() != null) {
+            mealPlan.setEndDate(mealPlanRequestDTO.getEndDate());
+        }
+
+        return mealPlanMapper.toMealPlanResponseDTO(mealPlanRepository.save(mealPlan));
     }
 
     public void delete(UUID id) {
+        boolean isMealPlanExists = mealPlanRepository.existsById(id);
+
+        if (!isMealPlanExists) {
+            throw new ResourceNotFoundException("Meal Plan not found with id " + id);
+        }
+
         mealPlanRepository.deleteById(id);
     }
 }

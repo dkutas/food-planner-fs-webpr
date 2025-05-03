@@ -1,14 +1,12 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
-import com.fs.webpr.foodplanner_backend.entity.dto.PantryDTO;
-import com.fs.webpr.foodplanner_backend.entity.model.Pantry;
+import com.fs.webpr.foodplanner_backend.entity.dto.request.PantryRequestDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.response.PantryResponseDTO;
 import com.fs.webpr.foodplanner_backend.service.PantryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,12 +24,8 @@ public class PantryController {
             operationId = "getAllPantries",
             summary = "Retrieves all pantry records"
     )
-    public List<Pantry> getAll() {
-        try {
-            return pantryService.getAll();
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public List<PantryResponseDTO> getAll() {
+        return pantryService.getAll();
     }
 
     @PostMapping
@@ -39,12 +33,8 @@ public class PantryController {
             operationId = "addPantry",
             summary = "Creates a new pantry record"
     )
-    public Pantry add(@RequestBody PantryDTO pantryDTO) {
-        try {
-            return pantryService.add(pantryDTO);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public PantryResponseDTO add(@RequestBody PantryRequestDTO pantryRequestDTO) {
+        return pantryService.add(pantryRequestDTO);
     }
 
     @GetMapping("/{id}")
@@ -52,12 +42,17 @@ public class PantryController {
             operationId = "getPantry",
             summary = "Retrieves a pantry by id"
     )
-    public Pantry get(@PathVariable UUID id) {
-        try {
-            return pantryService.get(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public PantryResponseDTO get(@PathVariable UUID id) {
+        return pantryService.get(id);
+    }
+
+    @GetMapping("/ingredient/{ingredientId}")
+    @Operation(
+            operationId = "getPantryByIngredientId",
+            summary = "Retrieves a pantry by ingredient id"
+    )
+    public PantryResponseDTO getByIngredientId(@PathVariable UUID ingredientId) {
+        return pantryService.getByIngredientId(ingredientId);
     }
 
     @PatchMapping("/{id}")
@@ -65,12 +60,8 @@ public class PantryController {
             operationId = "updatePantry",
             summary = "Updates a pantry by id"
     )
-    public Pantry update(@PathVariable UUID id, @RequestBody PantryDTO pantryDTO) {
-        try {
-            return pantryService.update(id, pantryDTO);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+    public PantryResponseDTO update(@PathVariable UUID id, @RequestBody PantryRequestDTO pantryRequestDTO) {
+        return pantryService.update(id, pantryRequestDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -79,10 +70,15 @@ public class PantryController {
             summary = "Deletes a pantry by id"
     )
     public void delete(@PathVariable UUID id) {
-        try {
-            pantryService.delete(id);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error occurred");
-        }
+        pantryService.delete(id);
+    }
+
+    @DeleteMapping("/ingredient/{ingredientId}")
+    @Operation(
+            operationId = "deletePantryByIngredientId",
+            summary = "Deletes a pantry record by ingredient id"
+    )
+    public void deleteByIngredientId(@PathVariable UUID ingredientId) {
+        pantryService.deleteByIngredientId(ingredientId);
     }
 }

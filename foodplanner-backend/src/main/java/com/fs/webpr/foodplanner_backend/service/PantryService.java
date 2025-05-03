@@ -1,9 +1,11 @@
 package com.fs.webpr.foodplanner_backend.service;
 
+import com.fs.webpr.foodplanner_backend.entity.dto.request.PantryRequestDTO;
+import com.fs.webpr.foodplanner_backend.entity.dto.response.PantryResponseDTO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.PantryMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
 import com.fs.webpr.foodplanner_backend.entity.model.Pantry;
-import com.fs.webpr.foodplanner_backend.entity.dto.PantryDTO;
+import com.fs.webpr.foodplanner_backend.exception.AlreadyExistsException;
 import com.fs.webpr.foodplanner_backend.exception.ResourceNotFoundException;
 import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
 import com.fs.webpr.foodplanner_backend.repository.PantryRepository;
@@ -17,53 +19,89 @@ import java.util.UUID;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@SuppressWarnings("Duplicates")
 public class PantryService {
 
     private final PantryRepository pantryRepository;
     private final IngredientRepository ingredientRepository;
     private final PantryMapper pantryMapper;
 
-    public List<Pantry> getAll() {
-        return pantryRepository.findAll();
+    public List<PantryResponseDTO> getAll() {
+        return pantryMapper.toPantryResponseDTO(pantryRepository.findAll());
     }
 
-    public Pantry add(PantryDTO pantryDTO) {
-        Pantry pantry = pantryMapper.toPantry(pantryDTO);
-
-        UUID ingredientId = pantryDTO.getIngredientId();
+    public PantryResponseDTO add(PantryRequestDTO pantryRequestDTO) {
+        UUID ingredientId = pantryRequestDTO.getIngredientId();
 
         Ingredient ingredient = ingredientRepository.findById(ingredientId).orElseThrow(
                 () -> new ResourceNotFoundException("Ingredient not found with id " + ingredientId)
         );
 
+        boolean isPantryIngredientAlreadyExists = pantryRepository.existsByIngredient_Id(ingredientId);
+
+        if (isPantryIngredientAlreadyExists) {
+            throw new AlreadyExistsException("Ingredient with id " + ingredientId + "is already in pantry");
+        }
+
+        Pantry pantry = new Pantry();
+
         pantry.setIngredient(ingredient);
 
-        return pantryRepository.save(pantry);
+        return pantryMapper.toPantryResponseDTO(pantryRepository.save(pantry));
     }
 
-    public Pantry get(UUID id) {
-        return pantryRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("Pantry not found with id " + id)
-        );
+    public PantryResponseDTO get(UUID id) {
+        return pantryMapper.toPantryResponseDTO(pantryRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Pantry not found with id " + id)
+        ));
     }
 
-    public Pantry update(UUID id, PantryDTO pantryDTO) {
+    public PantryResponseDTO getByIngredientId(UUID ingredientId) {
+        return pantryMapper.toPantryResponseDTO(pantryRepository.findByIngredient_Id(ingredientId).orElseThrow(
+                () -> new ResourceNotFoundException("Pantry not found with ingredient id " + ingredientId)
+        ));
+    }
+
+    public PantryResponseDTO update(UUID id, PantryRequestDTO pantryRequestDTO) {
         Pantry pantry = pantryRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Pantry not found with id " + id)
         );
 
-        UUID ingredientId = pantryDTO.getIngredientId();
+        UUID ingredientId = pantryRequestDTO.getIngredientId();
 
         Ingredient ingredient = ingredientRepository.findById(ingredientId).orElseThrow(
                 () -> new ResourceNotFoundException("Ingredient not found with id " + ingredientId)
         );
 
+        boolean isPantryIngredientAlreadyExists = pantryRepository.existsByIngredient_Id(ingredientId);
+
+        if (isPantryIngredientAlreadyExists) {
+            throw new AlreadyExistsException("Ingredient with id " + ingredientId + "is already in pantry");
+        }
+
         pantry.setIngredient(ingredient);
 
-        return pantryRepository.save(pantry);
+        return pantryMapper.toPantryResponseDTO(pantryRepository.save(pantry));
     }
 
     public void delete(UUID id) {
+        boolean isShoppingListItemExists = pantryRepository.existsById(id);
+
+        if (!isShoppingListItemExists) {
+            throw new ResourceNotFoundException("Pantry Item not found with id " + id);
+        }
+
         pantryRepository.deleteById(id);
+    }
+
+    public void deleteByIngredientId(UUID ingredientId) {
+
+        boolean isShoppingListIngredientExists = pantryRepository.existsByIngredient_Id(ingredientId);
+
+        if (!isShoppingListIngredientExists) {
+            throw new ResourceNotFoundException("Pantry Ingredient not found with id " + ingredientId);
+        }
+
+        pantryRepository.deleteByIngredient_Id(ingredientId);
     }
 }
