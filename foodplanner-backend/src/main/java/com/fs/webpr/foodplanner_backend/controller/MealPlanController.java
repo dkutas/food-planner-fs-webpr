@@ -1,11 +1,14 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
+import com.fs.webpr.foodplanner_backend.common.annotation.CurrentUser;
+import com.fs.webpr.foodplanner_backend.entity.dto.authentication.AuthenticatedUser;
 import com.fs.webpr.foodplanner_backend.entity.dto.request.MealPlanRequestDTO;
 import com.fs.webpr.foodplanner_backend.entity.dto.response.MealPlanResponseDTO;
 import com.fs.webpr.foodplanner_backend.service.MealPlanService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +27,11 @@ public class MealPlanController {
             operationId = "getAllMealPlans",
             summary = "Retrieves a list of all meal plans"
     )
-    public List<MealPlanResponseDTO> getAll() {
-        return mealPlanService.getAll();
+    @PreAuthorize("isAuthenticated()")
+    public List<MealPlanResponseDTO> getAll(
+            @CurrentUser AuthenticatedUser user
+    ) {
+        return mealPlanService.getAll(user);
     }
 
     @PostMapping
@@ -33,8 +39,12 @@ public class MealPlanController {
             operationId = "addMealPlan",
             summary = "Creates a new meal plan"
     )
-    public MealPlanResponseDTO add(@RequestBody MealPlanRequestDTO mealPlanRequestDTO) {
-        return mealPlanService.add(mealPlanRequestDTO);
+    @PreAuthorize("isAuthenticated()")
+    public MealPlanResponseDTO add(
+            @CurrentUser AuthenticatedUser user,
+            @RequestBody MealPlanRequestDTO mealPlanRequestDTO
+    ) {
+        return mealPlanService.add(user, mealPlanRequestDTO);
     }
 
     @GetMapping("/{id}")
@@ -42,8 +52,12 @@ public class MealPlanController {
             operationId = "getMealPlan",
             summary = "Retrieves a meal plan by id"
     )
-    public MealPlanResponseDTO get(@PathVariable UUID id) {
-        return mealPlanService.get(id);
+    @PreAuthorize("isAuthenticated()")
+    public MealPlanResponseDTO get(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id
+    ) {
+        return mealPlanService.get(user, id);
     }
 
     @PatchMapping("/{id}")
@@ -51,8 +65,13 @@ public class MealPlanController {
             operationId = "updateMealPlan",
             summary = "Updates a meal plan by id"
     )
-    public MealPlanResponseDTO update(@PathVariable UUID id, @RequestBody MealPlanRequestDTO mealPlanRequestDTO) {
-        return mealPlanService.update(id, mealPlanRequestDTO);
+    @PreAuthorize("isAuthenticated()")
+    public MealPlanResponseDTO update(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id,
+            @RequestBody MealPlanRequestDTO mealPlanRequestDTO
+    ) {
+        return mealPlanService.update(user, id, mealPlanRequestDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -60,7 +79,11 @@ public class MealPlanController {
             operationId = "deleteMealPlan",
             summary = "Deletes a meal plan by id"
     )
-    public void delete(@PathVariable UUID id) {
-        mealPlanService.delete(id);
+    @PreAuthorize("isAuthenticated()")
+    public void delete(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id
+    ) {
+        mealPlanService.delete(user, id);
     }
 }
