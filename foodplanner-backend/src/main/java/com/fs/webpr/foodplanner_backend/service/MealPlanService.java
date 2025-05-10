@@ -95,7 +95,7 @@ public class MealPlanService {
         );
 
         if (mealPlan.getUserId() != user.userId()) {
-            throw new AccessDeniedException("You do not have permission to get meal plan with id " + id);
+            throw new AccessDeniedException("You do not have permission to delete meal plan with id " + id);
         }
 
         mealPlanRepository.deleteById(id);
