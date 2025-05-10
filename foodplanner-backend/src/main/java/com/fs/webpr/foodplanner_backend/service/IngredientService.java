@@ -1,5 +1,6 @@
 package com.fs.webpr.foodplanner_backend.service;
 
+import com.fs.webpr.foodplanner_backend.entity.dto.authentication.AuthenticatedUser;
 import com.fs.webpr.foodplanner_backend.entity.dto.response.IngredientResponseDTO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.IngredientMapper;
 import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
@@ -19,5 +20,13 @@ public class IngredientService {
 
     public List<IngredientResponseDTO> getAll() {
         return ingredientMapper.toIngredientResponseDTO(ingredientRepository.findAll());
+    }
+
+    public List<IngredientResponseDTO> getIngredientsNotInPantry(AuthenticatedUser user) {
+        return ingredientMapper.toIngredientResponseDTO(ingredientRepository.getIngredientsNotInPantry(user.userId()));
+    }
+
+    public List<IngredientResponseDTO> getIngredientsNotOnShoppingList(AuthenticatedUser user) {
+        return ingredientMapper.toIngredientResponseDTO(ingredientRepository.getIngredientsNotOnShoppingList(user.userId()));
     }
 }

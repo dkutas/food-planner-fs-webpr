@@ -1,10 +1,13 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
+import com.fs.webpr.foodplanner_backend.common.annotation.CurrentUser;
+import com.fs.webpr.foodplanner_backend.entity.dto.authentication.AuthenticatedUser;
 import com.fs.webpr.foodplanner_backend.entity.dto.response.IngredientResponseDTO;
 import com.fs.webpr.foodplanner_backend.service.IngredientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +31,28 @@ public class IngredientController {
         return ingredientService.getAll();
     }
 
+    @GetMapping("/missing/pantry")
+    @Operation(
+            operationId = "getIngredientsNotInPantry",
+            summary = "Retrieves all the ingredients that are not already in pantry for the current user"
+    )
+    @PreAuthorize("isAuthenticated()")
+    public List<IngredientResponseDTO> getIngredientsNotInPantry(
+            @CurrentUser AuthenticatedUser user
+            ) {
+        return ingredientService.getIngredientsNotInPantry(user);
+    }
+
+    @GetMapping("missing/shoppinglist")
+    @Operation(
+            operationId = "getIngredientsNotOnShoppingList",
+            summary = "Retrieves all the ingredients that are not already on the shopping list of the current user"
+    )
+    @PreAuthorize("isAuthenticated()")
+    public List<IngredientResponseDTO> getIngredientsNotOnShoppingList(
+            @CurrentUser AuthenticatedUser user
+    ) {
+        return ingredientService.getIngredientsNotOnShoppingList(user);
+    }
 
 }
