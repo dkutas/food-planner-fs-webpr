@@ -18,6 +18,9 @@ public class Pantry {
     @Column(name = "id", nullable = false)
     private UUID id;
 
+    @Column(name = "userId", nullable = false)
+    private UUID userId;
+
     @OneToOne
     @JoinColumn(name = "ingredient_id", nullable = false)
     private Ingredient ingredient;

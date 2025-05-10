@@ -19,6 +19,9 @@ public class MealPlan {
     @Column(name = "id", nullable = false)
     private UUID id;
 
+    @Column(name = "userId", nullable = false)
+    private UUID userId;
+
     @ManyToOne
     @JoinColumn(name = "recipe_id", nullable = false)
     private Recipe recipe;
