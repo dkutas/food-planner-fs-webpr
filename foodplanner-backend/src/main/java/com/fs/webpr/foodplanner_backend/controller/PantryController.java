@@ -1,11 +1,14 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
+import com.fs.webpr.foodplanner_backend.common.annotation.CurrentUser;
+import com.fs.webpr.foodplanner_backend.entity.dto.authentication.AuthenticatedUser;
 import com.fs.webpr.foodplanner_backend.entity.dto.request.PantryRequestDTO;
 import com.fs.webpr.foodplanner_backend.entity.dto.response.PantryResponseDTO;
 import com.fs.webpr.foodplanner_backend.service.PantryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +27,11 @@ public class PantryController {
             operationId = "getAllPantries",
             summary = "Retrieves all pantry records"
     )
-    public List<PantryResponseDTO> getAll() {
-        return pantryService.getAll();
+    @PreAuthorize("isAuthenticated()")
+    public List<PantryResponseDTO> getAll(
+            @CurrentUser AuthenticatedUser user
+    ) {
+        return pantryService.getAll(user);
     }
 
     @PostMapping
@@ -33,8 +39,12 @@ public class PantryController {
             operationId = "addPantry",
             summary = "Creates a new pantry record"
     )
-    public PantryResponseDTO add(@RequestBody PantryRequestDTO pantryRequestDTO) {
-        return pantryService.add(pantryRequestDTO);
+    @PreAuthorize("isAuthenticated()")
+    public PantryResponseDTO add(
+            @CurrentUser AuthenticatedUser user,
+            @RequestBody PantryRequestDTO pantryRequestDTO
+    ) {
+        return pantryService.add(user, pantryRequestDTO);
     }
 
     @GetMapping("/{id}")
@@ -42,8 +52,12 @@ public class PantryController {
             operationId = "getPantry",
             summary = "Retrieves a pantry by id"
     )
-    public PantryResponseDTO get(@PathVariable UUID id) {
-        return pantryService.get(id);
+    @PreAuthorize("isAuthenticated()")
+    public PantryResponseDTO get(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id
+    ) {
+        return pantryService.get(user, id);
     }
 
     @GetMapping("/ingredient/{ingredientId}")
@@ -51,8 +65,12 @@ public class PantryController {
             operationId = "getPantryByIngredientId",
             summary = "Retrieves a pantry by ingredient id"
     )
-    public PantryResponseDTO getByIngredientId(@PathVariable UUID ingredientId) {
-        return pantryService.getByIngredientId(ingredientId);
+    @PreAuthorize("isAuthenticated()")
+    public PantryResponseDTO getByIngredientId(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID ingredientId
+    ) {
+        return pantryService.getByIngredientId(user, ingredientId);
     }
 
     @PatchMapping("/{id}")
@@ -60,8 +78,13 @@ public class PantryController {
             operationId = "updatePantry",
             summary = "Updates a pantry by id"
     )
-    public PantryResponseDTO update(@PathVariable UUID id, @RequestBody PantryRequestDTO pantryRequestDTO) {
-        return pantryService.update(id, pantryRequestDTO);
+    @PreAuthorize("isAuthenticated()")
+    public PantryResponseDTO update(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id,
+            @RequestBody PantryRequestDTO pantryRequestDTO
+    ) {
+        return pantryService.update(user, id, pantryRequestDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -69,8 +92,12 @@ public class PantryController {
             operationId = "deletePantry",
             summary = "Deletes a pantry by id"
     )
-    public void delete(@PathVariable UUID id) {
-        pantryService.delete(id);
+    @PreAuthorize("isAuthenticated()")
+    public void delete(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id
+    ) {
+        pantryService.delete(user, id);
     }
 
     @DeleteMapping("/ingredient/{ingredientId}")
@@ -78,7 +105,11 @@ public class PantryController {
             operationId = "deletePantryByIngredientId",
             summary = "Deletes a pantry record by ingredient id"
     )
-    public void deleteByIngredientId(@PathVariable UUID ingredientId) {
-        pantryService.deleteByIngredientId(ingredientId);
+    @PreAuthorize("isAuthenticated()")
+    public void deleteByIngredientId(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID ingredientId
+    ) {
+        pantryService.deleteByIngredientId(user, ingredientId);
     }
 }

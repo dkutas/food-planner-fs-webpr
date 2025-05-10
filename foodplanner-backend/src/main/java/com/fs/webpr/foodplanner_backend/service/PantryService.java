@@ -1,5 +1,6 @@
 package com.fs.webpr.foodplanner_backend.service;
 
+import com.fs.webpr.foodplanner_backend.entity.dto.authentication.AuthenticatedUser;
 import com.fs.webpr.foodplanner_backend.entity.dto.request.PantryRequestDTO;
 import com.fs.webpr.foodplanner_backend.entity.dto.response.PantryResponseDTO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.PantryMapper;
@@ -11,6 +12,7 @@ import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
 import com.fs.webpr.foodplanner_backend.repository.PantryRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,11 +28,12 @@ public class PantryService {
     private final IngredientRepository ingredientRepository;
     private final PantryMapper pantryMapper;
 
-    public List<PantryResponseDTO> getAll() {
-        return pantryMapper.toPantryResponseDTO(pantryRepository.findAll());
+    public List<PantryResponseDTO> getAll(AuthenticatedUser user) {
+        return pantryMapper.toPantryResponseDTO(pantryRepository.findAllByUserId(user.userId()));
     }
 
-    public PantryResponseDTO add(PantryRequestDTO pantryRequestDTO) {
+    // TODO: Should be able to add multiple ingredients to the table, but only one per user
+    public PantryResponseDTO add(AuthenticatedUser user, PantryRequestDTO pantryRequestDTO) {
         UUID ingredientId = pantryRequestDTO.getIngredientId();
 
         Ingredient ingredient = ingredientRepository.findById(ingredientId).orElseThrow(
@@ -45,27 +48,45 @@ public class PantryService {
 
         Pantry pantry = new Pantry();
 
+        pantry.setUserId(user.userId());
         pantry.setIngredient(ingredient);
 
         return pantryMapper.toPantryResponseDTO(pantryRepository.save(pantry));
     }
 
-    public PantryResponseDTO get(UUID id) {
-        return pantryMapper.toPantryResponseDTO(pantryRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Pantry not found with id " + id)
-        ));
-    }
-
-    public PantryResponseDTO getByIngredientId(UUID ingredientId) {
-        return pantryMapper.toPantryResponseDTO(pantryRepository.findByIngredient_Id(ingredientId).orElseThrow(
-                () -> new ResourceNotFoundException("Pantry not found with ingredient id " + ingredientId)
-        ));
-    }
-
-    public PantryResponseDTO update(UUID id, PantryRequestDTO pantryRequestDTO) {
+    public PantryResponseDTO get(AuthenticatedUser user, UUID id) {
         Pantry pantry = pantryRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Pantry not found with id " + id)
         );
+
+        if (pantry.getUserId() != user.userId()) {
+            throw new AccessDeniedException("You do not have permission to get pantry item with id " + id);
+        }
+
+        return pantryMapper.toPantryResponseDTO(pantry);
+    }
+
+    public PantryResponseDTO getByIngredientId(AuthenticatedUser user, UUID ingredientId) {
+        Pantry pantry = pantryRepository.findByIngredient_Id(ingredientId).orElseThrow(
+                () -> new ResourceNotFoundException("Pantry not found with ingredient id " + ingredientId)
+        );
+
+        if (pantry.getUserId() != user.userId()) {
+            throw new AccessDeniedException("You do not have permission to get pantry item with ingredient id " + ingredientId);
+        }
+
+        return pantryMapper.toPantryResponseDTO(pantry);
+    }
+
+    // TODO: Should be able to add multiple ingredients to the table, but only one per user
+    public PantryResponseDTO update(AuthenticatedUser user, UUID id, PantryRequestDTO pantryRequestDTO) {
+        Pantry pantry = pantryRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Pantry not found with id " + id)
+        );
+
+        if (pantry.getUserId() != user.userId()) {
+            throw new AccessDeniedException("You do not have permission to update pantry item with id " + id);
+        }
 
         UUID ingredientId = pantryRequestDTO.getIngredientId();
 
@@ -84,22 +105,25 @@ public class PantryService {
         return pantryMapper.toPantryResponseDTO(pantryRepository.save(pantry));
     }
 
-    public void delete(UUID id) {
-        boolean isShoppingListItemExists = pantryRepository.existsById(id);
+    public void delete(AuthenticatedUser user, UUID id) {
+        Pantry pantry = pantryRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Pantry Item not found with id " + id)
+        );
 
-        if (!isShoppingListItemExists) {
-            throw new ResourceNotFoundException("Pantry Item not found with id " + id);
+        if (pantry.getUserId() != user.userId()) {
+            throw new AccessDeniedException("You do not have permission to delete pantry item with id " + id);
         }
 
         pantryRepository.deleteById(id);
     }
 
-    public void deleteByIngredientId(UUID ingredientId) {
+    public void deleteByIngredientId(AuthenticatedUser user, UUID ingredientId) {
+        Pantry pantry = pantryRepository.findByIngredient_Id(ingredientId).orElseThrow(
+                () -> new ResourceNotFoundException("Pantry Item not found with id " + ingredientId)
+        );
 
-        boolean isShoppingListIngredientExists = pantryRepository.existsByIngredient_Id(ingredientId);
-
-        if (!isShoppingListIngredientExists) {
-            throw new ResourceNotFoundException("Pantry Ingredient not found with id " + ingredientId);
+        if (pantry.getUserId() != user.userId()) {
+            throw new AccessDeniedException("You do not have permission to delete pantry item with ingredient id " + ingredientId);
         }
 
         pantryRepository.deleteByIngredient_Id(ingredientId);
