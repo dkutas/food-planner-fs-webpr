@@ -21,7 +21,7 @@ public class IngredientCategoryController {
 
     @GetMapping
     @Operation(
-            operationId = "getAllIngredientCategories",
+            operationId = "getAllIngredientCategory",
             summary = "Retrieves a list of all ingredient categories"
     )
     public List<IngredientCategoryResponseDTO> getAll() {

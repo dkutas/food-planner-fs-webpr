@@ -24,7 +24,7 @@ public class MealPlanController {
 
     @GetMapping
     @Operation(
-            operationId = "getAllMealPlans",
+            operationId = "getAllMealPlan",
             summary = "Retrieves a list of all meal plans"
     )
     @PreAuthorize("isAuthenticated()")

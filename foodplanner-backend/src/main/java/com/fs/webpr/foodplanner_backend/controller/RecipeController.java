@@ -24,7 +24,7 @@ public class RecipeController {
 
     @GetMapping
     @Operation(
-            operationId = "getAllRecipes",
+            operationId = "getAllRecipe",
             summary = "Retrieves all recipes"
     )
     @PreAuthorize("isAuthenticated()")

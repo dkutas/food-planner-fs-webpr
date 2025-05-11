@@ -24,7 +24,7 @@ public class IngredientController {
 
     @GetMapping
     @Operation(
-            operationId = "getAllIngredients",
+            operationId = "getAllIngredient",
             summary = "Retrieves a list of all ingredients"
     )
     public List<IngredientResponseDTO> getAll() {
@@ -33,26 +33,26 @@ public class IngredientController {
 
     @GetMapping("/missing/pantry")
     @Operation(
-            operationId = "getIngredientsNotInPantry",
+            operationId = "getAllIngredientNotInPantry",
             summary = "Retrieves all the ingredients that are not already in pantry for the current user"
     )
     @PreAuthorize("isAuthenticated()")
     public List<IngredientResponseDTO> getIngredientsNotInPantry(
             @CurrentUser AuthenticatedUser user
             ) {
-        return ingredientService.getIngredientsNotInPantry(user);
+        return ingredientService.getAllIngredientNotInPantry(user);
     }
 
     @GetMapping("missing/shoppinglist")
     @Operation(
-            operationId = "getIngredientsNotOnShoppingList",
+            operationId = "getAllIngredientNotOnShoppingList",
             summary = "Retrieves all the ingredients that are not already on the shopping list of the current user"
     )
     @PreAuthorize("isAuthenticated()")
     public List<IngredientResponseDTO> getIngredientsNotOnShoppingList(
             @CurrentUser AuthenticatedUser user
     ) {
-        return ingredientService.getIngredientsNotOnShoppingList(user);
+        return ingredientService.getAllIngredientNotOnShoppingList(user);
     }
 
 }

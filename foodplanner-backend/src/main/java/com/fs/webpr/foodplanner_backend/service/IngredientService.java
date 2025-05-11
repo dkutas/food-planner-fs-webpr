@@ -22,11 +22,11 @@ public class IngredientService {
         return ingredientMapper.toIngredientResponseDTO(ingredientRepository.findAll());
     }
 
-    public List<IngredientResponseDTO> getIngredientsNotInPantry(AuthenticatedUser user) {
+    public List<IngredientResponseDTO> getAllIngredientNotInPantry(AuthenticatedUser user) {
         return ingredientMapper.toIngredientResponseDTO(ingredientRepository.getIngredientsNotInPantry(user.userId()));
     }
 
-    public List<IngredientResponseDTO> getIngredientsNotOnShoppingList(AuthenticatedUser user) {
+    public List<IngredientResponseDTO> getAllIngredientNotOnShoppingList(AuthenticatedUser user) {
         return ingredientMapper.toIngredientResponseDTO(ingredientRepository.getIngredientsNotOnShoppingList(user.userId()));
     }
 }
