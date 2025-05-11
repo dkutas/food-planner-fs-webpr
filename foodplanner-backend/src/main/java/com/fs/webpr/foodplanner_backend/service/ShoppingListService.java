@@ -5,7 +5,6 @@ import com.fs.webpr.foodplanner_backend.entity.dto.response.ShoppingListResponse
 import com.fs.webpr.foodplanner_backend.entity.mapper.ShoppingListMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
 import com.fs.webpr.foodplanner_backend.entity.model.ShoppingList;
-import com.fs.webpr.foodplanner_backend.exception.AlreadyExistsException;
 import com.fs.webpr.foodplanner_backend.exception.ResourceNotFoundException;
 import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
 import com.fs.webpr.foodplanner_backend.repository.ShoppingListRepository;
@@ -54,10 +53,8 @@ public class ShoppingListService {
         ));
     }
 
-    public ShoppingListResponseDTO getByIngredientId(UUID ingredientId) {
-        return shoppingListMapper.toShoppingListResponseDTO(shoppingListRepository.findByIngredient_Id(ingredientId).orElseThrow(
-                () -> new ResourceNotFoundException("Shopping List Item not found with ingredient id " + ingredientId)
-        ));
+    public List<ShoppingListResponseDTO> getAllByIngredientId(UUID ingredientId) {
+        return shoppingListMapper.toShoppingListResponseDTO(shoppingListRepository.findAllByIngredient_Id(ingredientId));
     }
 
     public ShoppingListResponseDTO update(UUID id, ShoppingListRequestDTO shoppingListRequestDTO) {

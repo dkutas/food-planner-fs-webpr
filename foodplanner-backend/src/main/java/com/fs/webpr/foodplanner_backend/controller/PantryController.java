@@ -24,7 +24,7 @@ public class PantryController {
 
     @GetMapping
     @Operation(
-            operationId = "getAllPantries",
+            operationId = "getAllPantryItem",
             summary = "Retrieves all pantry records"
     )
     @PreAuthorize("isAuthenticated()")
@@ -36,7 +36,7 @@ public class PantryController {
 
     @PostMapping
     @Operation(
-            operationId = "addPantry",
+            operationId = "addPantryItem",
             summary = "Creates a new pantry record"
     )
     @PreAuthorize("isAuthenticated()")
@@ -49,7 +49,7 @@ public class PantryController {
 
     @GetMapping("/{id}")
     @Operation(
-            operationId = "getPantry",
+            operationId = "getPantryItem",
             summary = "Retrieves a pantry by id"
     )
     @PreAuthorize("isAuthenticated()")
@@ -62,20 +62,20 @@ public class PantryController {
 
     @GetMapping("/ingredient/{ingredientId}")
     @Operation(
-            operationId = "getPantryByIngredientId",
+            operationId = "getAllPantryItemByIngredientId",
             summary = "Retrieves a pantry by ingredient id"
     )
     @PreAuthorize("isAuthenticated()")
-    public PantryResponseDTO getByIngredientId(
+    public List<PantryResponseDTO> getAllByIngredientId(
             @CurrentUser AuthenticatedUser user,
             @PathVariable UUID ingredientId
     ) {
-        return pantryService.getByIngredientId(user, ingredientId);
+        return pantryService.getAllByIngredientId(user, ingredientId);
     }
 
     @PatchMapping("/{id}")
     @Operation(
-            operationId = "updatePantry",
+            operationId = "updatePantryItem",
             summary = "Updates a pantry by id"
     )
     @PreAuthorize("isAuthenticated()")
@@ -89,7 +89,7 @@ public class PantryController {
 
     @DeleteMapping("/{id}")
     @Operation(
-            operationId = "deletePantry",
+            operationId = "deletePantryItem",
             summary = "Deletes a pantry by id"
     )
     @PreAuthorize("isAuthenticated()")

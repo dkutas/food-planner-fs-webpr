@@ -6,7 +6,6 @@ import com.fs.webpr.foodplanner_backend.entity.dto.response.PantryResponseDTO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.PantryMapper;
 import com.fs.webpr.foodplanner_backend.entity.model.Ingredient;
 import com.fs.webpr.foodplanner_backend.entity.model.Pantry;
-import com.fs.webpr.foodplanner_backend.exception.AlreadyExistsException;
 import com.fs.webpr.foodplanner_backend.exception.ResourceNotFoundException;
 import com.fs.webpr.foodplanner_backend.repository.IngredientRepository;
 import com.fs.webpr.foodplanner_backend.repository.PantryRepository;
@@ -59,16 +58,10 @@ public class PantryService {
         return pantryMapper.toPantryResponseDTO(pantry);
     }
 
-    public PantryResponseDTO getByIngredientId(AuthenticatedUser user, UUID ingredientId) {
-        Pantry pantry = pantryRepository.findByIngredient_Id(ingredientId).orElseThrow(
-                () -> new ResourceNotFoundException("Pantry not found with ingredient id " + ingredientId)
-        );
+    public List<PantryResponseDTO> getAllByIngredientId(AuthenticatedUser user, UUID ingredientId) {
+        List<Pantry> pantryItems = pantryRepository.findAllByUserIdAndIngredient_Id(user.userId(), ingredientId);
 
-        if (pantry.getUserId() != user.userId()) {
-            throw new AccessDeniedException("You do not have permission to get pantry item with ingredient id " + ingredientId);
-        }
-
-        return pantryMapper.toPantryResponseDTO(pantry);
+        return pantryMapper.toPantryResponseDTO(pantryItems);
     }
 
     public PantryResponseDTO update(AuthenticatedUser user, UUID id, PantryRequestDTO pantryRequestDTO) {

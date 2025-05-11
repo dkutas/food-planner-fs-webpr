@@ -21,7 +21,7 @@ public class ShoppingListController {
 
     @GetMapping
     @Operation(
-            operationId = "getAllShoppingLists",
+            operationId = "getAllShoppingListItem",
             summary = "Retrieves all shopping list records"
     )
     public List<ShoppingListResponseDTO> getAll() {
@@ -30,7 +30,7 @@ public class ShoppingListController {
 
     @PostMapping
     @Operation(
-            operationId = "addShoppingList",
+            operationId = "addShoppingListItem",
             summary = "Creates a new shopping list record"
     )
     public ShoppingListResponseDTO add(@RequestBody ShoppingListRequestDTO shoppingListRequestDTO) {
@@ -39,7 +39,7 @@ public class ShoppingListController {
 
     @GetMapping("/{id}")
     @Operation(
-            operationId = "getShoppingList",
+            operationId = "getShoppingListItem",
             summary = "Retrieves a shopping list record by id"
     )
     public ShoppingListResponseDTO get(@PathVariable UUID id) {
@@ -48,16 +48,16 @@ public class ShoppingListController {
 
     @GetMapping("/ingredient/{ingredientId}")
     @Operation(
-            operationId = "getShoppingListByIngredientId",
+            operationId = "getAllShoppingListItemByIngredientId",
             summary = "Retrieves a shopping list record by ingredient id"
     )
-    public ShoppingListResponseDTO getByIngredientId(@PathVariable UUID ingredientId) {
-        return shoppingListService.getByIngredientId(ingredientId);
+    public List<ShoppingListResponseDTO> getAllByIngredientId(@PathVariable UUID ingredientId) {
+        return shoppingListService.getAllByIngredientId(ingredientId);
     }
 
     @PatchMapping("/{id}")
     @Operation(
-            operationId = "updateShoppingList",
+            operationId = "updateShoppingListItem",
             summary = "Updates a shopping list record by id"
     )
     public ShoppingListResponseDTO update(@PathVariable UUID id, @RequestBody ShoppingListRequestDTO shoppingListRequestDTO) {
@@ -66,7 +66,7 @@ public class ShoppingListController {
 
     @DeleteMapping("/{id}")
     @Operation(
-            operationId = "deleteShoppingList",
+            operationId = "deleteShoppingListItem",
             summary = "Deletes a shopping list record by id"
     )
     public void delete(@PathVariable UUID id) {
