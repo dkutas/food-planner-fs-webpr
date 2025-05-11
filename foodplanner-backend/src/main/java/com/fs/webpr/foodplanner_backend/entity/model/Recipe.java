@@ -28,6 +28,9 @@ public class Recipe {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "is_public", nullable = false)
+    private Boolean isPublic;
+
     @ManyToOne
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;

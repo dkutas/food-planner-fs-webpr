@@ -36,6 +36,10 @@ public class RecipeService {
     private final IngredientRepository ingredientRepository;
     private final RecipeMapper recipeMapper;
 
+    public List<RecipeResponseDTO> getAllPublic() {
+        return recipeMapper.toRecipeResponseDTO(recipeRepository.findAllPublic());
+    }
+
     public List<RecipeResponseDTO> getAll(AuthenticatedUser user) {
         return recipeMapper.toRecipeResponseDTO(recipeRepository.findAllByUserId(user.userId()));
     }
@@ -106,6 +110,10 @@ public class RecipeService {
 
         if (recipeRequestDTO.getDescription() != null) {
             recipe.setDescription(recipeRequestDTO.getDescription());
+        }
+
+        if (recipeRequestDTO.getIsPublic() != null) {
+            recipe.setIsPublic(recipeRequestDTO.getIsPublic());
         }
 
         UUID kitchenId = recipeRequestDTO.getKitchenId();

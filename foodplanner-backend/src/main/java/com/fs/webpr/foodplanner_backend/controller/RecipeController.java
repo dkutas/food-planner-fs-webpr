@@ -22,6 +22,15 @@ public class RecipeController {
 
     private final RecipeService recipeService;
 
+    @GetMapping("/public")
+    @Operation(
+            operationId = "getAllPublicRecipe",
+            summary = "Retrieves all public recipes"
+    )
+    public List<RecipeResponseDTO> getAllPublic() {
+        return recipeService.getAllPublic();
+    }
+
     @GetMapping
     @Operation(
             operationId = "getAllRecipe",

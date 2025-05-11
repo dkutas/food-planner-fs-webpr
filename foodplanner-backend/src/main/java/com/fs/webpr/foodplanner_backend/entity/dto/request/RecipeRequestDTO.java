@@ -9,6 +9,7 @@ import java.util.UUID;
 public class RecipeRequestDTO {
     private String name;
     private String description;
+    private Boolean isPublic;
     private UUID kitchenId;
     private Set<UUID> ingredientIds;
 }
