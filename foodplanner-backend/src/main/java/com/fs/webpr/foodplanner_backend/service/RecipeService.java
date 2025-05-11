@@ -68,7 +68,7 @@ public class RecipeService {
             throw new ResourceNotFoundException("Ingredient not found with id " + ingredientIds);
         }
 
-        Recipe recipe = new Recipe();
+        Recipe recipe = recipeMapper.toRecipe(recipeRequestDTO);
 
         recipe.setUserId(user.userId());
 
