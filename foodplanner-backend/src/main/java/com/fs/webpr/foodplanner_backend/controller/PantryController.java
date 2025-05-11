@@ -100,16 +100,4 @@ public class PantryController {
         pantryService.delete(user, id);
     }
 
-    @DeleteMapping("/ingredient/{ingredientId}")
-    @Operation(
-            operationId = "deletePantryByIngredientId",
-            summary = "Deletes a pantry record by ingredient id"
-    )
-    @PreAuthorize("isAuthenticated()")
-    public void deleteByIngredientId(
-            @CurrentUser AuthenticatedUser user,
-            @PathVariable UUID ingredientId
-    ) {
-        pantryService.deleteByIngredientId(user, ingredientId);
-    }
 }

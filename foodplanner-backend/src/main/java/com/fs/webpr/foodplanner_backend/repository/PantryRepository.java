@@ -11,10 +11,6 @@ import java.util.UUID;
 @Repository
 public interface PantryRepository extends JpaRepository<Pantry, UUID> {
 
-    boolean existsByIngredient_Id(UUID ingredientId);
-
-    void deleteByIngredient_Id(UUID ingredientId);
-
     Optional<Pantry> findByIngredient_Id(UUID ingredientId);
 
     List<Pantry> findAllByUserId(UUID userId);

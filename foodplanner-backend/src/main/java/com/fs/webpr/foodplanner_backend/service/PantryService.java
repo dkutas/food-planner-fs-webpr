@@ -32,19 +32,12 @@ public class PantryService {
         return pantryMapper.toPantryResponseDTO(pantryRepository.findAllByUserId(user.userId()));
     }
 
-    // TODO: Should be able to add multiple ingredients to the table, but only one per user
     public PantryResponseDTO add(AuthenticatedUser user, PantryRequestDTO pantryRequestDTO) {
         UUID ingredientId = pantryRequestDTO.getIngredientId();
 
         Ingredient ingredient = ingredientRepository.findById(ingredientId).orElseThrow(
                 () -> new ResourceNotFoundException("Ingredient not found with id " + ingredientId)
         );
-
-        boolean isPantryIngredientAlreadyExists = pantryRepository.existsByIngredient_Id(ingredientId);
-
-        if (isPantryIngredientAlreadyExists) {
-            throw new AlreadyExistsException("Ingredient with id " + ingredientId + "is already in pantry");
-        }
 
         Pantry pantry = new Pantry();
 
@@ -78,7 +71,6 @@ public class PantryService {
         return pantryMapper.toPantryResponseDTO(pantry);
     }
 
-    // TODO: Should be able to add multiple ingredients to the table, but only one per user
     public PantryResponseDTO update(AuthenticatedUser user, UUID id, PantryRequestDTO pantryRequestDTO) {
         Pantry pantry = pantryRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Pantry not found with id " + id)
@@ -93,12 +85,6 @@ public class PantryService {
         Ingredient ingredient = ingredientRepository.findById(ingredientId).orElseThrow(
                 () -> new ResourceNotFoundException("Ingredient not found with id " + ingredientId)
         );
-
-        boolean isPantryIngredientAlreadyExists = pantryRepository.existsByIngredient_Id(ingredientId);
-
-        if (isPantryIngredientAlreadyExists) {
-            throw new AlreadyExistsException("Ingredient with id " + ingredientId + "is already in pantry");
-        }
 
         pantry.setIngredient(ingredient);
 
@@ -117,15 +103,4 @@ public class PantryService {
         pantryRepository.deleteById(id);
     }
 
-    public void deleteByIngredientId(AuthenticatedUser user, UUID ingredientId) {
-        Pantry pantry = pantryRepository.findByIngredient_Id(ingredientId).orElseThrow(
-                () -> new ResourceNotFoundException("Pantry Item not found with id " + ingredientId)
-        );
-
-        if (pantry.getUserId() != user.userId()) {
-            throw new AccessDeniedException("You do not have permission to delete pantry item with ingredient id " + ingredientId);
-        }
-
-        pantryRepository.deleteByIngredient_Id(ingredientId);
-    }
 }

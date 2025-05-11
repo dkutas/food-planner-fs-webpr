@@ -41,12 +41,6 @@ public class ShoppingListService {
 
         log.debug("Found Ingredient: {}", ingredient);
 
-        boolean isShoppingListIngredientAlreadyExists = shoppingListRepository.existsByIngredient_Id(ingredientId);
-
-        if (isShoppingListIngredientAlreadyExists) {
-            throw new AlreadyExistsException("Ingredient with id " + ingredientId + " is already in pantry");
-        }
-
         ShoppingList shoppingList = new ShoppingList();
 
         shoppingList.setIngredient(ingredient);
@@ -77,12 +71,6 @@ public class ShoppingListService {
                 () -> new ResourceNotFoundException("Ingredient not found with id " + ingredientId)
         );
 
-        boolean isShoppingListIngredientAlreadyExists = shoppingListRepository.existsByIngredient_Id(ingredientId);
-
-        if (isShoppingListIngredientAlreadyExists) {
-            throw new AlreadyExistsException("Ingredient with id " + ingredientId + " is already in pantry");
-        }
-
         shoppingList.setIngredient(ingredient);
 
         return shoppingListMapper.toShoppingListResponseDTO(shoppingListRepository.save(shoppingList));
@@ -98,14 +86,4 @@ public class ShoppingListService {
         shoppingListRepository.deleteById(id);
     }
 
-    public void deleteByIngredientId(UUID ingredientId) {
-
-        boolean isShoppingListIngredientExists = shoppingListRepository.existsByIngredient_Id(ingredientId);
-
-        if (!isShoppingListIngredientExists) {
-            throw new ResourceNotFoundException("Shopping List Ingredient not found with id " + ingredientId);
-        }
-
-        shoppingListRepository.deleteByIngredient_Id(ingredientId);
-    }
 }

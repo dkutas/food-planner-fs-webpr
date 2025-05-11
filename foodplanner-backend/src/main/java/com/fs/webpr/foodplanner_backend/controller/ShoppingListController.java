@@ -73,14 +73,4 @@ public class ShoppingListController {
         shoppingListService.delete(id);
     }
 
-    @DeleteMapping("/ingredient/{ingredientId}")
-    @Operation(
-            operationId = "deleteShoppingListByIngredientId",
-            summary = "Deletes a shopping list record by ingredient id"
-    )
-    public void deleteByIngredientId(@PathVariable UUID ingredientId) {
-        shoppingListService.deleteByIngredientId(ingredientId);
-    }
-
-
 }
