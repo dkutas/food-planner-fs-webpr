@@ -1,6 +1,5 @@
 package com.fs.webpr.foodplanner_backend.service;
 
-import com.fs.webpr.foodplanner_backend.common.annotation.CurrentUser;
 import com.fs.webpr.foodplanner_backend.entity.dto.authentication.AuthenticatedUser;
 import com.fs.webpr.foodplanner_backend.entity.dto.request.RecipeRequestDTO;
 import com.fs.webpr.foodplanner_backend.entity.dto.response.RecipeResponseDTO;
@@ -114,6 +113,10 @@ public class RecipeService {
 
         if (recipeRequestDTO.getIsPublic() != null) {
             recipe.setIsPublic(recipeRequestDTO.getIsPublic());
+        }
+
+        if (recipeRequestDTO.getPreparationTime() != null) {
+            recipe.setPreparationTime(recipeRequestDTO.getPreparationTime());
         }
 
         UUID kitchenId = recipeRequestDTO.getKitchenId();

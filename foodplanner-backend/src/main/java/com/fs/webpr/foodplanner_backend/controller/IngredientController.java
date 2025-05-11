@@ -43,7 +43,7 @@ public class IngredientController {
         return ingredientService.getAllIngredientNotInPantry(user);
     }
 
-    @GetMapping("missing/shoppinglist")
+    @GetMapping("/missing/shoppinglist")
     @Operation(
             operationId = "getAllIngredientNotOnShoppingList",
             summary = "Retrieves all the ingredients that are not already on the shopping list of the current user"

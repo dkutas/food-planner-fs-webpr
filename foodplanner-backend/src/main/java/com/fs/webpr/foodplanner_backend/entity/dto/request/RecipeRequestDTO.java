@@ -10,6 +10,7 @@ public class RecipeRequestDTO {
     private String name;
     private String description;
     private Boolean isPublic;
+    private Long preparationTime;
     private UUID kitchenId;
     private Set<UUID> ingredientIds;
 }

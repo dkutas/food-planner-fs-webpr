@@ -31,6 +31,10 @@ public class Recipe {
     @Column(name = "is_public", nullable = false)
     private Boolean isPublic;
 
+    // Preparation time in seconds
+    @Column(name = "preparation_time", nullable = false)
+    private Long preparationTime;
+
     @ManyToOne
     @JoinColumn(name = "kitchen_id", nullable = false)
     private Kitchen kitchen;
