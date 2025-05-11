@@ -1,11 +1,14 @@
 package com.fs.webpr.foodplanner_backend.controller;
 
+import com.fs.webpr.foodplanner_backend.common.annotation.CurrentUser;
+import com.fs.webpr.foodplanner_backend.entity.dto.authentication.AuthenticatedUser;
 import com.fs.webpr.foodplanner_backend.entity.dto.request.ShoppingListRequestDTO;
 import com.fs.webpr.foodplanner_backend.entity.dto.response.ShoppingListResponseDTO;
 import com.fs.webpr.foodplanner_backend.service.ShoppingListService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +27,11 @@ public class ShoppingListController {
             operationId = "getAllShoppingListItem",
             summary = "Retrieves all shopping list records"
     )
-    public List<ShoppingListResponseDTO> getAll() {
-        return shoppingListService.getAll();
+    @PreAuthorize("isAuthenticated()")
+    public List<ShoppingListResponseDTO> getAll(
+            @CurrentUser AuthenticatedUser user
+    ) {
+        return shoppingListService.getAll(user);
     }
 
     @PostMapping
@@ -33,8 +39,12 @@ public class ShoppingListController {
             operationId = "addShoppingListItem",
             summary = "Creates a new shopping list record"
     )
-    public ShoppingListResponseDTO add(@RequestBody ShoppingListRequestDTO shoppingListRequestDTO) {
-        return shoppingListService.add(shoppingListRequestDTO);
+    @PreAuthorize("isAuthenticated()")
+    public ShoppingListResponseDTO add(
+            @CurrentUser AuthenticatedUser user,
+            @RequestBody ShoppingListRequestDTO shoppingListRequestDTO
+    ) {
+        return shoppingListService.add(user, shoppingListRequestDTO);
     }
 
     @GetMapping("/{id}")
@@ -42,8 +52,12 @@ public class ShoppingListController {
             operationId = "getShoppingListItem",
             summary = "Retrieves a shopping list record by id"
     )
-    public ShoppingListResponseDTO get(@PathVariable UUID id) {
-        return shoppingListService.get(id);
+    @PreAuthorize("isAuthenticated()")
+    public ShoppingListResponseDTO get(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id
+    ) {
+        return shoppingListService.get(user, id);
     }
 
     @GetMapping("/ingredient/{ingredientId}")
@@ -51,8 +65,12 @@ public class ShoppingListController {
             operationId = "getAllShoppingListItemByIngredientId",
             summary = "Retrieves a shopping list record by ingredient id"
     )
-    public List<ShoppingListResponseDTO> getAllByIngredientId(@PathVariable UUID ingredientId) {
-        return shoppingListService.getAllByIngredientId(ingredientId);
+    @PreAuthorize("isAuthenticated()")
+    public List<ShoppingListResponseDTO> getAllByIngredientId(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID ingredientId
+    ) {
+        return shoppingListService.getAllByIngredientId(user, ingredientId);
     }
 
     @PatchMapping("/{id}")
@@ -60,8 +78,13 @@ public class ShoppingListController {
             operationId = "updateShoppingListItem",
             summary = "Updates a shopping list record by id"
     )
-    public ShoppingListResponseDTO update(@PathVariable UUID id, @RequestBody ShoppingListRequestDTO shoppingListRequestDTO) {
-        return shoppingListService.update(id, shoppingListRequestDTO);
+    @PreAuthorize("isAuthenticated()")
+    public ShoppingListResponseDTO update(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id,
+            @RequestBody ShoppingListRequestDTO shoppingListRequestDTO
+    ) {
+        return shoppingListService.update(user, id, shoppingListRequestDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -69,8 +92,12 @@ public class ShoppingListController {
             operationId = "deleteShoppingListItem",
             summary = "Deletes a shopping list record by id"
     )
-    public void delete(@PathVariable UUID id) {
-        shoppingListService.delete(id);
+    @PreAuthorize("isAuthenticated()")
+    public void delete(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id
+    ) {
+        shoppingListService.delete(user, id);
     }
 
 }

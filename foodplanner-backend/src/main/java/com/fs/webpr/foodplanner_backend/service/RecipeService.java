@@ -1,5 +1,7 @@
 package com.fs.webpr.foodplanner_backend.service;
 
+import com.fs.webpr.foodplanner_backend.common.annotation.CurrentUser;
+import com.fs.webpr.foodplanner_backend.entity.dto.authentication.AuthenticatedUser;
 import com.fs.webpr.foodplanner_backend.entity.dto.request.RecipeRequestDTO;
 import com.fs.webpr.foodplanner_backend.entity.dto.response.RecipeResponseDTO;
 import com.fs.webpr.foodplanner_backend.entity.mapper.RecipeMapper;
@@ -13,6 +15,7 @@ import com.fs.webpr.foodplanner_backend.repository.RecipeRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -33,11 +36,11 @@ public class RecipeService {
     private final IngredientRepository ingredientRepository;
     private final RecipeMapper recipeMapper;
 
-    public List<RecipeResponseDTO> getAll() {
-        return recipeMapper.toRecipeResponseDTO(recipeRepository.findAll());
+    public List<RecipeResponseDTO> getAll(AuthenticatedUser user) {
+        return recipeMapper.toRecipeResponseDTO(recipeRepository.findAllByUserId(user.userId()));
     }
 
-    public RecipeResponseDTO add(RecipeRequestDTO recipeRequestDTO) {
+    public RecipeResponseDTO add(AuthenticatedUser user, RecipeRequestDTO recipeRequestDTO) {
         UUID kitchenId = recipeRequestDTO.getKitchenId();
         Set<UUID> ingredientIds = recipeRequestDTO.getIngredientIds();
 
@@ -63,6 +66,8 @@ public class RecipeService {
 
         Recipe recipe = new Recipe();
 
+        recipe.setUserId(user.userId());
+
         recipe.setKitchen(kitchen);
 
         recipe.setIngredients(ingredients);
@@ -72,18 +77,28 @@ public class RecipeService {
         return recipeMapper.toRecipeResponseDTO(recipeRepository.save(recipe));
     }
 
-    public RecipeResponseDTO get(UUID id) {
-        return recipeMapper.toRecipeResponseDTO(recipeRepository.findById(id).orElseThrow(
+    public RecipeResponseDTO get(AuthenticatedUser user, UUID id) {
+        Recipe recipe = recipeRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Recipe not found with id " + id)
-        ));
+        );
+
+        if (recipe.getUserId() != user.userId()) {
+            throw new AccessDeniedException("You do not have permission to get recipe with id " + id);
+        }
+
+        return recipeMapper.toRecipeResponseDTO(recipe);
     }
 
-    public RecipeResponseDTO update(UUID id, RecipeRequestDTO recipeRequestDTO) {
+    public RecipeResponseDTO update(AuthenticatedUser user, UUID id, RecipeRequestDTO recipeRequestDTO) {
         Recipe recipe = recipeRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Recipe not found with id " + id)
         );
 
         log.debug("Recipe Found: {}", recipe);
+
+        if (recipe.getUserId() != user.userId()) {
+            throw new AccessDeniedException("You do not have permission to update recipe with id " + id);
+        }
 
         if (recipeRequestDTO.getName() != null) {
             recipe.setName(recipeRequestDTO.getName());
@@ -129,11 +144,13 @@ public class RecipeService {
         return recipeMapper.toRecipeResponseDTO(recipeRepository.save(recipe));
     }
 
-    public void delete(UUID id) {
-        boolean isRecipeExists = recipeRepository.existsById(id);
+    public void delete(AuthenticatedUser user, UUID id) {
+        Recipe recipe = recipeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Recipe not found with id " + id)
+        );
 
-        if (!isRecipeExists) {
-            throw new ResourceNotFoundException("Meal Plan not found with id " + id);
+        if (recipe.getUserId() != user.userId()) {
+            throw new AccessDeniedException("You do not have permission to delete recipe with id " + id);
         }
 
         recipeRepository.deleteById(id);

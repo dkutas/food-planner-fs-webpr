@@ -10,6 +10,8 @@ import java.util.UUID;
 @Repository
 public interface ShoppingListRepository extends JpaRepository<ShoppingList, UUID> {
 
-    List<ShoppingList> findAllByIngredient_Id(UUID ingredientId);
+    List<ShoppingList> findAllByUserId(UUID userId);
+
+    List<ShoppingList> findAllByUserIdAndIngredient_Id(UUID userId, UUID ingredientId);
 
 }
