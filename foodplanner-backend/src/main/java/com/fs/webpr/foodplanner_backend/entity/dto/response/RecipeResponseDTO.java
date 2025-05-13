@@ -7,6 +7,7 @@ public record RecipeResponseDTO(
         UUID id,
         String name,
         String description,
+        Long preparationTime,
         KitchenResponseDTO kitchen,
         Set<IngredientResponseDTO> ingredients
 ) {}
