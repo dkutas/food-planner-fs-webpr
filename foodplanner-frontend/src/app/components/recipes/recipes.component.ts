@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GridComponent} from './grid/grid.component';
+import {RecipeService} from '../../services/recipe.service';
+import {Recipe} from '../../models/recipe.model';
 
 @Component({
   selector: 'app-recipes',
@@ -9,12 +11,23 @@ import {GridComponent} from './grid/grid.component';
   ],
   styleUrls: ['./recipes.component.less']
 })
-export class RecipesComponent implements OnInit {
+export class RecipeComponent implements OnInit {
 
-  constructor() {
+  recipes: Recipe[] = [];
+
+  constructor(
+    private recipeService: RecipeService,
+  ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadRecipe();
   }
+
+  loadRecipe() {
+    this.recipeService
+      .getAll().subscribe((res: Recipe[]) => this.recipes = res);
+  }
+
 
 }

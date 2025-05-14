@@ -2,9 +2,8 @@ import {Routes} from '@angular/router';
 import {MealplanComponent} from './components/mealplan/mealplan.component';
 import {NutritionsComponent} from './components/nutritions/nutritions.component';
 import {PantryComponent} from './components/pantry/pantry.component';
-import {RecipesComponent} from './components/recipes/recipes.component';
+import {RecipeComponent} from './components/recipes/recipes.component';
 import {ShoppingListComponent} from './components/shopping-list/shopping-list.component';
-import {AppComponent} from './app.component';
 import {RegisterComponent} from './components/auth/register/register.component';
 import {LoginComponent} from './components/auth/login/login.component';
 import {privateGuard} from './guards/private.guard';
@@ -36,7 +35,7 @@ export const routes: Routes = [
   {
     title: 'Recipes',
     path: 'recipes',
-    component: RecipesComponent
+    component: RecipeComponent
   },
   {
     title: 'Shopping List',

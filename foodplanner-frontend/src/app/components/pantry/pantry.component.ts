@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GridComponent} from './grid/grid.component';
+import {PantryService} from '../../services/pantry.service';
+import {Pantry} from '../../models/pantry-model';
 
 @Component({
   selector: 'app-pantry',
@@ -11,10 +13,19 @@ import {GridComponent} from './grid/grid.component';
 })
 export class PantryComponent implements OnInit {
 
-  constructor() {
+  pantries: Pantry[] = [];
+
+  constructor(
+    private pantryService: PantryService
+  ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadPantries();
+  }
+
+  loadPantries() {
+    this.pantryService.getAll().subscribe(res => this.pantries = res);
   }
 
 }

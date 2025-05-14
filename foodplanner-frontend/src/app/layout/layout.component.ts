@@ -7,6 +7,7 @@ import {NzMenuModule} from 'ng-zorro-antd/menu';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {NgOptimizedImage} from '@angular/common';
 import {RouterService} from '../services/router.service';
+import {KeycloakService} from '../services/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-layout',
@@ -15,7 +16,7 @@ import {RouterService} from '../services/router.service';
   styleUrls: ['./layout.component.less']
 })
 export class LayoutComponent {
-  constructor(public routerService: RouterService) {
+  constructor(public routerService: RouterService, public keycloakService: KeycloakService) {
 
   }
 

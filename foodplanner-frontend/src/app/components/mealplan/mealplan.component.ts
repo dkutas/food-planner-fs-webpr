@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PlannerComponent} from './planner/planner.component';
+import {MealPlan} from '../../models/meal-plan.model';
+import {MealPlanService} from '../../services/meal-plan.service';
 
 @Component({
   selector: 'app-mealplan',
@@ -11,10 +13,21 @@ import {PlannerComponent} from './planner/planner.component';
 })
 export class MealplanComponent implements OnInit {
 
-  constructor() {
+  mealPlans: MealPlan[] = [];
+
+  constructor(
+    private mealPlanService: MealPlanService,
+  ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadMealplans();
   }
+
+  loadMealplans() {
+    this.mealPlanService
+      .getAll().subscribe((res: MealPlan[]) => this.mealPlans = res);
+  }
+
 
 }
