@@ -1,14 +1,16 @@
 import {ApplicationConfig, inject, provideAppInitializer, provideZoneChangeDetection} from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {provideRouter} from '@angular/router';
 
 import {KeycloakService} from './services/keycloak/keycloak.service';
 
 export function initializeKeycloak(keycloakService: KeycloakService) {
   return keycloakService.initializeKeycloak();
 }
+
 import {routes} from './app.routes';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
+import {httpTokenInterceptor} from './interceptors/http-token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAppInitializer(() => initializeKeycloak(inject(KeycloakService))),
     provideAnimationsAsync(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([httpTokenInterceptor])),
   ],
 
 };

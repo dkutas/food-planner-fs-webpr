@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GridComponent} from './grid/grid.component';
+import {ShoppingList} from '../../models/shopping-list.model';
+import {ShoppingListService} from '../../services/shopping-list.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -9,10 +11,21 @@ import {GridComponent} from './grid/grid.component';
 })
 export class ShoppingListComponent implements OnInit {
 
-  constructor() {
+  shoppingLists: ShoppingList[] = [];
+
+  constructor(
+    private shoppingListService: ShoppingListService,
+  ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadShoppingLists();
   }
+
+  loadShoppingLists() {
+    this.shoppingListService
+      .getAll().subscribe((res: ShoppingList[]) => this.shoppingLists = res);
+  }
+
 
 }

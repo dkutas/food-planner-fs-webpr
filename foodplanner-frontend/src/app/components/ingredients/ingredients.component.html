@@ -1,0 +1,23 @@
+<nz-table [nzData]="ingredients" [nzBordered]="true" [nzSize]="'middle'" [nzScroll]="{ x: '1000px' }">
+  <thead>
+  <tr>
+    <th>Név</th>
+    <th>Leírás</th>
+    <th>Hozzávalók</th>
+    <th>Műveletek</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let recipe of ingredients">
+    <td>{{ recipe.name }}</td>
+    <td>{{ recipe.description }}</td>
+    <!--    <td>{{ recipe.recipes.join(', ') }}</td>-->
+    <td>
+      <a [routerLink]="['/recipes/edit', recipe.id]">Szerkesztés</a> |
+      <a (click)="deleteRecipe(+recipe.id!)">Törlés</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+
+<button nz-button nzType="primary" [routerLink]="['/recipes/new']">Új recept</button>

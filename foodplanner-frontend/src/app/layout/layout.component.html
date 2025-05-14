@@ -4,12 +4,8 @@
       <img class="logo" ngSrc="./logo1.png" priority width="120" height="31" alt="Logo"/>
     </div>
     <ul nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
-      <li nz-menu-item routerLink="register" routerLinkActive="active-link"
-          (click)="routerService.routeToRegister()">
-        Register
-      </li>
       <li nz-menu-item routerLink="login" routerLinkActive="active-link"
-          (click)="routerService.routeToLogin()">Login
+          (click)="keycloakService.logout()">Logout
       </li>
     </ul>
   </nz-header>
