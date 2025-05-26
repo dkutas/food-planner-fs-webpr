@@ -1,28 +1,46 @@
 import {Component, OnInit} from '@angular/core';
-import {NzModalModule, NzModalService} from 'ng-zorro-antd/modal';
-import {NzTableComponent} from 'ng-zorro-antd/table';
-import {RouterLink} from '@angular/router';
-import {NgForOf} from '@angular/common';
 import {Ingredient} from '../../models/ingredient.model';
 import {IngredientService} from '../../services/ingredient.service';
+import {MatDialog} from '@angular/material/dialog';
+import {IngredientFormComponent} from './ingredient-form/ingredient-form.component';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef, MatHeaderRow,
+  MatHeaderRowDef, MatRow, MatRowDef,
+  MatTable
+} from '@angular/material/table';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-ingredient-list',
-  templateUrl: './ingredients.component.html',
   imports: [
-    NzTableComponent,
-    RouterLink,
-    NzModalModule,
-    NgForOf
+    MatButton,
+    MatTable,
+    MatHeaderCell,
+    MatCell,
+    MatColumnDef,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatIconButton,
+    MatIcon,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatRow,
+    MatHeaderRow
   ],
-  styleUrls: ['./ingredients.component.less']
+  templateUrl: './ingredients.component.html'
 })
-export class IngredientsComponent implements OnInit {
+export class IngredientListComponent implements OnInit {
   ingredients: Ingredient[] = [];
+  displayedColumns: string[] = ['name', 'category', 'actions'];
 
   constructor(
     private ingredientService: IngredientService,
-    private modal: NzModalService
+    private dialog: MatDialog
   ) {
   }
 
@@ -30,16 +48,28 @@ export class IngredientsComponent implements OnInit {
     this.loadIngredients();
   }
 
-  loadIngredients() {
-    this.ingredientService.getAll().subscribe((res: Ingredient[]) => this.ingredients = res);
+  loadIngredients(): void {
+    this.ingredientService.getAll().subscribe(
+      data => this.ingredients = data
+    );
   }
 
-  deleteRecipe(id: number) {
-    this.modal.confirm({
-      nzTitle: 'Biztosan törlöd?',
-      nzOnOk: () => {
-        this.ingredientService.delete(id).subscribe(() => this.loadIngredients());
-      }
+  openForm(ingredient?: Ingredient): void {
+    const dialogRef = this.dialog.open(IngredientFormComponent, {
+      width: '600px',
+      data: ingredient || {}
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.loadIngredients();
+    });
+  }
+
+  delete(id: string): void {
+    if (confirm('Are you sure?')) {
+      this.ingredientService.delete(id).subscribe(() => {
+        this.loadIngredients();
+      });
+    }
   }
 }

@@ -1,0 +1,41 @@
+<div class="calendar-container">
+  <div class="calendar-header">
+    <button mat-icon-button (click)="previousWeek()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+    <span class="week-range">
+      {{ weekDays[0] | date }} - {{ weekDays[6] | date }}
+    </span>
+    <button mat-icon-button (click)="nextWeek()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
+
+  <div class="calendar-grid">
+    <div class="day-column" *ngFor="let day of weekDays">
+      <div class="day-header">
+        <span class="day-name">{{ day | date:'EEEE' }}</span>
+        <span class="day-date">{{ day | date:'MMM d' }}</span>
+        <button mat-icon-button (click)="addMealPlan(day)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <div class="meal-plans">
+        <mat-card *ngFor="let plan of getMealPlansForDay(day)" class="meal-plan-card">
+          <mat-card-header>
+            <mat-card-title>{{ plan.recipe.name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-actions>
+            <button mat-icon-button [routerLink]="['/recipes', plan.recipe.id]">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteMealPlan(plan.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

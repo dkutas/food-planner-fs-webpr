@@ -1,47 +1,62 @@
 import {Routes} from '@angular/router';
-import {MealplanComponent} from './components/mealplan/mealplan.component';
 import {NutritionsComponent} from './components/nutritions/nutritions.component';
-import {PantryComponent} from './components/pantry/pantry.component';
-import {RecipeComponent} from './components/recipes/recipes.component';
-import {ShoppingListComponent} from './components/shopping-list/shopping-list.component';
 import {RegisterComponent} from './components/auth/register/register.component';
 import {LoginComponent} from './components/auth/login/login.component';
-import {privateGuard} from './guards/private.guard';
+import {
+  MealPlannerCalendarComponent
+} from './components/mealplan/meal-planner-calendar/meal-planner-calendar.component';
+import {PantryListComponent} from './components/pantry/pantry.component';
+import {MealPlanListComponent} from './components/mealplan/mealplan.component';
+import {RecipeListComponent} from './components/recipes/recipes.component';
+import {ShoppingListListComponent} from './components/shopping-list/shopping-list.component';
+import {authGuard} from './guards/auth.guard';
+import {KitchenListComponent} from './components/kitchen/kitchen.component';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'login'
+    redirectTo: 'login',
   },
   {
-    title: 'Mealplan',
+    path: 'meal-planner',
+    component: MealPlannerCalendarComponent,
+    canActivate: [authGuard],
+    title: 'Meal Planner'
+  },
+  {
+    title: 'Mealplans',
     path: 'meal-plan',
-    component: MealplanComponent,
-    canActivate: [privateGuard]
+    component: MealPlanListComponent,
+    canActivate: [authGuard]
+  }, {
+    title: 'Kitchens',
+    path: 'kitchens',
+    component: KitchenListComponent,
+    canActivate: [authGuard]
   },
   {
     title: 'Nutritions',
     path: 'nutritions',
     component: NutritionsComponent,
-    canActivate: [privateGuard]
+    canActivate: [authGuard]
   },
   {
     title: 'Pantry',
     path: 'pantry',
-    component: PantryComponent,
-    canActivate: [privateGuard]
+    component: PantryListComponent,
+    canActivate: [authGuard]
   },
   {
     title: 'Recipes',
     path: 'recipes',
-    component: RecipeComponent
+    component: RecipeListComponent
   },
   {
     title: 'Shopping List',
     path: 'shopping-list',
-    component: ShoppingListComponent,
-    canActivate: [privateGuard]
+    component: ShoppingListListComponent,
+    canActivate: [authGuard]
   }, {
     title: 'Log in',
     path: 'login',

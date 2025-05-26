@@ -1,4 +1,3 @@
-// shopping-list.service.ts
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -8,7 +7,7 @@ import {ShoppingList} from '../models/shopping-list.model';
   providedIn: 'root'
 })
 export class ShoppingListService {
-  private apiUrl = '/api/shoppinglist';
+  private apiUrl = 'api/shopping-lists';
 
   constructor(private http: HttpClient) {
   }
@@ -17,19 +16,19 @@ export class ShoppingListService {
     return this.http.get<ShoppingList[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<ShoppingList> {
+  getById(id: string): Observable<ShoppingList> {
     return this.http.get<ShoppingList>(`${this.apiUrl}/${id}`);
   }
 
-  create(shoppingList: ShoppingList): Observable<ShoppingList> {
-    return this.http.post<ShoppingList>(this.apiUrl, shoppingList);
+  create(item: ShoppingList): Observable<ShoppingList> {
+    return this.http.post<ShoppingList>(this.apiUrl, item);
   }
 
-  update(id: number, shoppingList: ShoppingList): Observable<ShoppingList> {
-    return this.http.put<ShoppingList>(`${this.apiUrl}/${id}`, shoppingList);
+  update(id: string, item: ShoppingList): Observable<ShoppingList> {
+    return this.http.put<ShoppingList>(`${this.apiUrl}/${id}`, item);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

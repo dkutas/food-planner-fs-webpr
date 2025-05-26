@@ -1,4 +1,3 @@
-// pantry.service.ts
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -8,7 +7,7 @@ import {Recipe} from '../models/recipe.model';
   providedIn: 'root'
 })
 export class RecipeService {
-  private apiUrl = '/api/recipe';
+  private apiUrl = 'api/recipe';
 
   constructor(private http: HttpClient) {
   }
@@ -17,19 +16,19 @@ export class RecipeService {
     return this.http.get<Recipe[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<Recipe> {
+  getById(id: string): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.apiUrl}/${id}`);
   }
 
-  create(pantry: Recipe): Observable<Recipe> {
-    return this.http.post<Recipe>(this.apiUrl, pantry);
+  create(recipe: Recipe): Observable<Recipe> {
+    return this.http.post<Recipe>(this.apiUrl, recipe);
   }
 
-  update(id: number, pantry: Recipe): Observable<Recipe> {
-    return this.http.put<Recipe>(`${this.apiUrl}/${id}`, pantry);
+  update(id: string, recipe: Recipe): Observable<Recipe> {
+    return this.http.put<Recipe>(`${this.apiUrl}/${id}`, recipe);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

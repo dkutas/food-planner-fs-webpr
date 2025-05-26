@@ -1,4 +1,3 @@
-// pantry.service.ts
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -8,7 +7,7 @@ import {Pantry} from '../models/pantry-model';
   providedIn: 'root'
 })
 export class PantryService {
-  private apiUrl = '/api/pantry';
+  private apiUrl = 'api/pantry';
 
   constructor(private http: HttpClient) {
   }
@@ -17,7 +16,7 @@ export class PantryService {
     return this.http.get<Pantry[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<Pantry> {
+  getById(id: string): Observable<Pantry> {
     return this.http.get<Pantry>(`${this.apiUrl}/${id}`);
   }
 
@@ -25,11 +24,11 @@ export class PantryService {
     return this.http.post<Pantry>(this.apiUrl, pantry);
   }
 
-  update(id: number, pantry: Pantry): Observable<Pantry> {
+  update(id: string, pantry: Pantry): Observable<Pantry> {
     return this.http.put<Pantry>(`${this.apiUrl}/${id}`, pantry);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

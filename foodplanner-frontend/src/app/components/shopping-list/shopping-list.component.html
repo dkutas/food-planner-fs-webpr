@@ -1,1 +1,30 @@
-<shopping-grid/>
+<div class="content-container">
+  <div class="header">
+    <h2>Shopping List</h2>
+    <button mat-raised-button color="primary" (click)="openForm()">
+      Add Item
+    </button>
+  </div>
+
+  <mat-table [dataSource]="shoppingList" class="mat-elevation-z8">
+    <ng-container matColumnDef="ingredient">
+      <mat-header-cell *matHeaderCellDef> Ingredient</mat-header-cell>
+      <mat-cell *matCellDef="let item"> {{ item.ingredient.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> Actions</mat-header-cell>
+      <mat-cell *matCellDef="let item">
+        <button mat-icon-button (click)="openForm(item)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="delete(item.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

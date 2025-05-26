@@ -7,7 +7,7 @@ import {IngredientCategory} from '../models/ingredient-category.model';
   providedIn: 'root'
 })
 export class IngredientCategoryService {
-  private apiUrl = '/api/ingredient/category';
+  private apiUrl = 'api/ingredient/category';
 
   constructor(private http: HttpClient) {
   }
@@ -16,19 +16,19 @@ export class IngredientCategoryService {
     return this.http.get<IngredientCategory[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<IngredientCategory> {
+  getById(id: string): Observable<IngredientCategory> {
     return this.http.get<IngredientCategory>(`${this.apiUrl}/${id}`);
   }
 
-  create(ingredientCategory: IngredientCategory): Observable<IngredientCategory> {
-    return this.http.post<IngredientCategory>(this.apiUrl, ingredientCategory);
+  create(category: IngredientCategory): Observable<IngredientCategory> {
+    return this.http.post<IngredientCategory>(this.apiUrl, category);
   }
 
-  update(id: number, ingredientCategory: IngredientCategory): Observable<IngredientCategory> {
-    return this.http.put<IngredientCategory>(`${this.apiUrl}/${id}`, ingredientCategory);
+  update(id: string, category: IngredientCategory): Observable<IngredientCategory> {
+    return this.http.put<IngredientCategory>(`${this.apiUrl}/${id}`, category);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

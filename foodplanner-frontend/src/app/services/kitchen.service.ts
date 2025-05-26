@@ -1,4 +1,3 @@
-// kitchen.service.ts
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -8,7 +7,7 @@ import {Kitchen} from '../models/kitchen.model';
   providedIn: 'root'
 })
 export class KitchenService {
-  private apiUrl = '/api/kitchen';
+  private apiUrl = 'api/kitchen';
 
   constructor(private http: HttpClient) {
   }
@@ -17,7 +16,7 @@ export class KitchenService {
     return this.http.get<Kitchen[]>(this.apiUrl);
   }
 
-  getById(id: number): Observable<Kitchen> {
+  getById(id: string): Observable<Kitchen> {
     return this.http.get<Kitchen>(`${this.apiUrl}/${id}`);
   }
 
@@ -25,12 +24,11 @@ export class KitchenService {
     return this.http.post<Kitchen>(this.apiUrl, kitchen);
   }
 
-  update(id: number, kitchen: Kitchen): Observable<Kitchen> {
+  update(id: string, kitchen: Kitchen): Observable<Kitchen> {
     return this.http.put<Kitchen>(`${this.apiUrl}/${id}`, kitchen);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
-

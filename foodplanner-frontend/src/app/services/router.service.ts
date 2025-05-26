@@ -9,31 +9,7 @@ export class RouterService {
   constructor(private router: Router) {
   }
 
-  routeToMealPlan() {
-    this.router.navigateByUrl('/meal-plan');
-  }
-
-  routeToLogin() {
-    this.router.navigateByUrl('/login');
-  }
-
-  routeToRegister() {
-    this.router.navigateByUrl('/register');
-  }
-
-  routeToPantry() {
-    this.router.navigateByUrl('/pantry');
-  }
-
-  routeToRecipe() {
-    this.router.navigateByUrl('/recipes');
-  }
-
-  routeToShoppingList() {
-    this.router.navigateByUrl('/shopping-list');
-  }
-
-  routeToNutrition() {
-    this.router.navigateByUrl('/nutritions');
+  routeToPath(path: string) {
+    this.router.navigateByUrl(path);
   }
 }

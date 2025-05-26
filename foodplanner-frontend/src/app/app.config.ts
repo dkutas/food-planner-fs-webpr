@@ -11,6 +11,7 @@ import {routes} from './app.routes';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {httpTokenInterceptor} from './interceptors/http-token.interceptor';
+import {provideNativeDateAdapter} from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideAppInitializer(() => initializeKeycloak(inject(KeycloakService))),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([httpTokenInterceptor])),
+    provideNativeDateAdapter()
   ],
 
 };
