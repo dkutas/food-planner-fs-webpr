@@ -1,35 +1,47 @@
 import {Component, OnInit} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {MealPlanFormComponent} from '../meal-plan-form/meal-plan-form.component';
+import {CdkDrag, CdkDragDrop, CdkDropList, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {MealPlan} from '../../../models/meal-plan.model';
 import {MealPlanService} from '../../../services/meal-plan.service';
+import {map} from 'rxjs';
+import {DatePipe, NgForOf} from '@angular/common';
 import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 import {MatCard, MatCardActions, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {RouterLink} from '@angular/router';
-import {DatePipe, NgForOf} from '@angular/common';
-import {MatIcon} from '@angular/material/icon';
-import {map} from 'rxjs';
+
+interface CalendarDay {
+  date: Date;
+  isCurrentMonth: boolean;
+  mealPlans: MealPlan[];
+  id: string;
+}
 
 @Component({
   selector: 'app-meal-planner-calendar',
   templateUrl: './meal-planner-calendar.component.html',
   imports: [
     MatIcon,
+    DatePipe,
     MatIconButton,
+    CdkDropList,
+    NgForOf,
     MatCard,
-    MatCardTitle,
     MatCardHeader,
+    MatCardTitle,
     MatCardActions,
     RouterLink,
-    NgForOf,
-    DatePipe
+    CdkDrag
   ],
   styleUrls: ['./meal-planner-calendar.component.less']
 })
 export class MealPlannerCalendarComponent implements OnInit {
+  currentDate = new Date();
+  calendarDays: CalendarDay[] = [];
   mealPlans: MealPlan[] = [];
-  selectedDate: Date = new Date();
-  weekDays: Date[] = [];
+  connectedDropLists: string[] = [];
+  weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   constructor(
     private mealPlanService: MealPlanService,
@@ -38,53 +50,118 @@ export class MealPlannerCalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.calculateWeekDays();
+    this.generateCalendar();
     this.loadMealPlans();
   }
 
-  calculateWeekDays(): void {
-    this.weekDays = [];
-    const firstDay = new Date(this.selectedDate);
-    firstDay.setDate(firstDay.getDate() - firstDay.getDay()); // Start from Sunday
+  generateCalendar(): void {
+    this.calendarDays = [];
+    const firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+    const lastDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, 0);
 
-    for (let i = 0; i < 7; i++) {
-      const day = new Date(firstDay);
-      day.setDate(firstDay.getDate() + i);
-      this.weekDays.push(day);
+    // Add days from previous month
+    const firstDayOfWeek = firstDay.getDay();
+    for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+      const date = new Date(firstDay);
+      date.setDate(date.getDate() - i - 1);
+      this.calendarDays.push({
+        date,
+        isCurrentMonth: false,
+        mealPlans: [],
+        id: `day-${date.getTime()}`
+      });
     }
+
+    // Add days of current month
+    for (let date = new Date(firstDay); date <= lastDay; date.setDate(date.getDate() + 1)) {
+      this.calendarDays.push({
+        date: new Date(date),
+        isCurrentMonth: true,
+        mealPlans: [],
+        id: `day-${date.getTime()}`
+      });
+    }
+
+    // Add days from next month
+    const remainingDays = 42 - this.calendarDays.length;
+    for (let i = 1; i <= remainingDays; i++) {
+      const date = new Date(lastDay);
+      date.setDate(date.getDate() + i);
+      this.calendarDays.push({
+        date,
+        isCurrentMonth: false,
+        mealPlans: [],
+        id: `day-${date.getTime()}`
+      });
+    }
+
+    this.connectedDropLists = this.calendarDays.map(day => day.id);
   }
 
   loadMealPlans(): void {
-    const startDate = this.weekDays[0];
-    const endDate = this.weekDays[6];
+    const startDate = this.calendarDays[0].date;
+    const endDate = this.calendarDays[this.calendarDays.length - 1].date;
 
     this.mealPlanService.getAll().pipe(
       map(plans => plans.filter(plan => {
         const planDate = new Date(plan.startDate);
         return planDate >= startDate && planDate <= endDate;
       }))
-    ).subscribe(
-      plans => this.mealPlans = plans
-    );
-  }
-
-  getMealPlansForDay(date: Date): MealPlan[] {
-    return this.mealPlans.filter(plan => {
-      const planDate = new Date(plan.startDate);
-      return planDate.toDateString() === date.toDateString();
+    ).subscribe(plans => {
+      this.mealPlans = plans;
+      this.updateCalendarMealPlans();
     });
   }
 
-  previousWeek(): void {
-    this.selectedDate.setDate(this.selectedDate.getDate() - 7);
-    this.calculateWeekDays();
+  updateCalendarMealPlans(): void {
+    this.calendarDays.forEach(day => {
+      day.mealPlans = this.mealPlans.filter(plan =>
+        new Date(plan.startDate).toDateString() === day.date.toDateString()
+      );
+    });
+  }
+
+  previousMonth(): void {
+    this.currentDate = new Date(this.currentDate.setMonth(this.currentDate.getMonth() - 1));
+    this.generateCalendar();
     this.loadMealPlans();
   }
 
-  nextWeek(): void {
-    this.selectedDate.setDate(this.selectedDate.getDate() + 7);
-    this.calculateWeekDays();
+  nextMonth(): void {
+    this.currentDate = new Date(this.currentDate.setMonth(this.currentDate.getMonth() + 1));
+    this.generateCalendar();
     this.loadMealPlans();
+  }
+
+  onDrop(event: CdkDragDrop<MealPlan[]>): void {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      const plan = event.previousContainer.data[event.previousIndex];
+      const targetDate = this.calendarDays.find(
+        day => day.id === event.container.id
+      )?.date;
+
+      if (targetDate) {
+        const updatedPlan = {
+          ...plan,
+          startDate: targetDate.toISOString()
+        };
+
+        this.mealPlanService.update(plan.id, updatedPlan).subscribe(() => {
+          transferArrayItem(
+            event.previousContainer.data,
+            event.container.data,
+            event.previousIndex,
+            event.currentIndex
+          );
+        });
+      }
+    }
   }
 
   addMealPlan(date: Date): void {

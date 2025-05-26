@@ -14,6 +14,9 @@ import {
 } from '@angular/material/table';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {SlicePipe} from '@angular/common';
+import {MapPipe} from '../../pipes/map.pipe';
+import {Ingredient} from '../../models/ingredient.model';
 
 @Component({
   selector: 'app-recipe-list',
@@ -31,13 +34,15 @@ import {MatIcon} from '@angular/material/icon';
     MatHeaderRowDef,
     MatRowDef,
     MatRow,
-    MatButton
+    MatButton,
+    SlicePipe,
+    MapPipe
   ],
   styleUrls: ['./recipes.component.less']
 })
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
-  displayedColumns: string[] = ['name', 'description', 'kitchen', 'actions'];
+  displayedColumns: string[] = ['name', 'description', 'kitchen', 'ingredients', 'actions'];
 
   constructor(
     private recipeService: RecipeService,

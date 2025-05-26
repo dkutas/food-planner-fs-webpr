@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {MealPlan} from '../models/meal-plan.model';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,11 @@ export class MealPlanService {
   }
 
   create(mealPlan: MealPlan): Observable<MealPlan> {
-    return this.http.post<MealPlan>(this.apiUrl, mealPlan);
+    return this.http.post<MealPlan>(this.apiUrl, {...mealPlan, id: uuidv4()});
   }
 
   update(id: string, mealPlan: MealPlan): Observable<MealPlan> {
-    return this.http.put<MealPlan>(`${this.apiUrl}/${id}`, mealPlan);
+    return this.http.patch<MealPlan>(`${this.apiUrl}/${id}`, mealPlan);
   }
 
   delete(id: string): Observable<void> {

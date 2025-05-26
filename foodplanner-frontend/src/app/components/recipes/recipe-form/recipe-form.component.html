@@ -20,6 +20,15 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    
+    <mat-form-field appearance="fill">
+      <mat-label>Ingredients</mat-label>
+      <mat-select formControlName="ingredients" multiple>
+        <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient">
+          {{ ingredient.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </form>
 </mat-dialog-content>
 

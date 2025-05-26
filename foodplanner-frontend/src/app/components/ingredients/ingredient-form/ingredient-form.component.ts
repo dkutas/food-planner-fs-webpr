@@ -14,6 +14,7 @@ import {Ingredient} from '../../../models/ingredient.model';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-ingredient-form',
@@ -28,7 +29,8 @@ import {MatButton} from '@angular/material/button';
     MatInput,
     MatButton,
     MatDialogClose,
-    MatDialogTitle
+    MatDialogTitle,
+    NgForOf
   ],
   templateUrl: './ingredient-form.component.html'
 })

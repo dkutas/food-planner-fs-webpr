@@ -73,6 +73,7 @@ export class MealPlanFormComponent {
   save(): void {
     if (this.form.valid) {
       const mealPlan = {...this.data, ...this.form.value};
+      console.log(mealPlan)
 
       if (mealPlan.id) {
         this.mealPlanService.update(mealPlan.id, mealPlan).subscribe(() => {
