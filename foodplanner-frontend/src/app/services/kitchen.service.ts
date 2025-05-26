@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Kitchen} from '../models/kitchen.model';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,11 @@ export class KitchenService {
   }
 
   create(kitchen: Kitchen): Observable<Kitchen> {
-    return this.http.post<Kitchen>(this.apiUrl, kitchen);
+    return this.http.post<Kitchen>(this.apiUrl, {...kitchen, id: uuidv4()});
   }
 
   update(id: string, kitchen: Kitchen): Observable<Kitchen> {
-    return this.http.put<Kitchen>(`${this.apiUrl}/${id}`, kitchen);
+    return this.http.patch<Kitchen>(`${this.apiUrl}/${id}`, kitchen);
   }
 
   delete(id: string): Observable<void> {

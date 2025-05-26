@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Pantry} from '../models/pantry-model';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,11 @@ export class PantryService {
   }
 
   create(pantry: Pantry): Observable<Pantry> {
-    return this.http.post<Pantry>(this.apiUrl, pantry);
+    return this.http.post<Pantry>(this.apiUrl, {...pantry, id: uuidv4()});
   }
 
   update(id: string, pantry: Pantry): Observable<Pantry> {
-    return this.http.put<Pantry>(`${this.apiUrl}/${id}`, pantry);
+    return this.http.patch<Pantry>(`${this.apiUrl}/${id}`, pantry);
   }
 
   delete(id: string): Observable<void> {

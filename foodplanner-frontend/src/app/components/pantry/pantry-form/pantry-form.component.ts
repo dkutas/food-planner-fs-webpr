@@ -14,6 +14,7 @@ import {Pantry} from '../../../models/pantry-model';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-pantry-form',
@@ -30,7 +31,8 @@ import {MatButton} from '@angular/material/button';
     MatFormField,
     MatDialogActions,
     MatDialogClose,
-    MatButton
+    MatButton,
+    NgForOf
   ],
   styleUrls: ['./pantry-form.component.less']
 })
