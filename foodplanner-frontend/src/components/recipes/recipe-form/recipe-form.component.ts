@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions, MatDialogClose,

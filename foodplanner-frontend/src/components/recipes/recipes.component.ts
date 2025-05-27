@@ -14,7 +14,6 @@ import {
 } from '@angular/material/table';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {SlicePipe} from '@angular/common';
 import {MapPipe} from '../../pipes/map.pipe';
 
 @Component({
