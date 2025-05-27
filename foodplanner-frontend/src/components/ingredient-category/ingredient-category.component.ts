@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {IngredientCategory} from '../../models/ingredient-category.model';
 import {IngredientCategoryService} from '../../services/ingredient-category.service';
-import {MatDialog} from '@angular/material/dialog';
-import {IngredientCategoryFormComponent} from './ingredient-category-form/ingredient-category-form.component';
 import {
   MatCell,
   MatCellDef,
@@ -12,8 +10,6 @@ import {
   MatHeaderRowDef, MatRow, MatRowDef,
   MatTable
 } from '@angular/material/table';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-ingredient-category-list',
@@ -25,9 +21,6 @@ import {MatIcon} from '@angular/material/icon';
     MatHeaderCellDef,
     MatCellDef,
     MatColumnDef,
-    MatButton,
-    MatIconButton,
-    MatIcon,
     MatHeaderRowDef,
     MatRowDef,
     MatHeaderRow,
@@ -41,7 +34,6 @@ export class IngredientCategoryListComponent implements OnInit {
 
   constructor(
     private categoryService: IngredientCategoryService,
-    private dialog: MatDialog
   ) {
   }
 
@@ -53,24 +45,5 @@ export class IngredientCategoryListComponent implements OnInit {
     this.categoryService.getAll().subscribe(
       data => this.categories = data
     );
-  }
-
-  openForm(category?: IngredientCategory): void {
-    const dialogRef = this.dialog.open(IngredientCategoryFormComponent, {
-      width: '600px',
-      data: category || {}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) this.loadCategories();
-    });
-  }
-
-  delete(id: string): void {
-    if (confirm('Are you sure you want to delete this category?')) {
-      this.categoryService.delete(id).subscribe(() => {
-        this.loadCategories();
-      });
-    }
   }
 }

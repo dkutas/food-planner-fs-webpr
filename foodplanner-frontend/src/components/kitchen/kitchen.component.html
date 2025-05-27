@@ -1,27 +1,8 @@
 <div class="content-container">
-  <div class="header">
-    <h2>Kitchens</h2>
-    <button mat-raised-button color="primary" (click)="openForm()">
-      Add Kitchen
-    </button>
-  </div>
-
   <mat-table [dataSource]="kitchens" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
       <mat-cell *matCellDef="let kitchen"> {{ kitchen.name }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef> Actions</mat-header-cell>
-      <mat-cell *matCellDef="let kitchen">
-        <button mat-icon-button (click)="openForm(kitchen)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="delete(kitchen.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

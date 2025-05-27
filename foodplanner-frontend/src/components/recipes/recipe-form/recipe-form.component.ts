@@ -87,7 +87,8 @@ export class RecipeFormComponent {
         name: this.form.value.name,
         description: this.form.value.description,
         ingredientIds: this.form.value.ingredients.map((i: Ingredient) => i.id),
-        kitchenId: this.form.value.kitchen.id
+        kitchenId: this.form.value.kitchen.id,
+        preparationTime: this.form.value.preparationTime
       };
 
       if (recipe.id) {

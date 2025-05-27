@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Ingredient} from '../../models/ingredient.model';
 import {IngredientService} from '../../services/ingredient.service';
-import {MatDialog} from '@angular/material/dialog';
-import {IngredientFormComponent} from './ingredient-form/ingredient-form.component';
-import {MatButton, MatIconButton} from '@angular/material/button';
 import {
   MatCell,
   MatCellDef,
@@ -13,20 +10,16 @@ import {
   MatHeaderRowDef, MatRow, MatRowDef,
   MatTable
 } from '@angular/material/table';
-import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-ingredient-list',
   imports: [
-    MatButton,
     MatTable,
     MatHeaderCell,
     MatCell,
     MatColumnDef,
     MatHeaderCellDef,
     MatCellDef,
-    MatIconButton,
-    MatIcon,
     MatHeaderRowDef,
     MatRowDef,
     MatRow,
@@ -40,7 +33,6 @@ export class IngredientListComponent implements OnInit {
 
   constructor(
     private ingredientService: IngredientService,
-    private dialog: MatDialog
   ) {
   }
 
@@ -54,22 +46,5 @@ export class IngredientListComponent implements OnInit {
     );
   }
 
-  openForm(ingredient?: Ingredient): void {
-    const dialogRef = this.dialog.open(IngredientFormComponent, {
-      width: '600px',
-      data: ingredient || {}
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) this.loadIngredients();
-    });
-  }
-
-  delete(id: string): void {
-    if (confirm('Are you sure?')) {
-      this.ingredientService.delete(id).subscribe(() => {
-        this.loadIngredients();
-      });
-    }
-  }
 }

@@ -149,6 +149,7 @@ export class MealPlannerCalendarComponent implements OnInit {
       if (targetDate) {
         const updatedPlan = {
           ...plan,
+          recipeId: plan.recipe.id,
           startDate: targetDate.toISOString()
         };
 
