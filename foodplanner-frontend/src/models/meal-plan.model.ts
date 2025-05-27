@@ -6,3 +6,10 @@ export interface MealPlan {
   startDate: string; // ISO 8601 date string
   endDate: string; // ISO 8601 date string
 }
+
+export interface MealPlanInput {
+  recipeId: string;
+  startDate: string; // ISO 8601 date string
+  endDate: string; // ISO 8601 date string
+}
+

@@ -21,12 +21,12 @@ export class RecipeService {
     return this.http.get<Recipe>(`${this.apiUrl}/${id}`);
   }
 
-  create(recipe: RecipeInput): Observable<RecipeInput> {
-    return this.http.post<RecipeInput>(this.apiUrl, {...recipe, id: uuidv4()});
+  create(recipe: RecipeInput): Observable<Recipe> {
+    return this.http.post<Recipe>(this.apiUrl, {...recipe, id: uuidv4()});
   }
 
-  update(id: string, recipe: RecipeInput): Observable<RecipeInput> {
-    return this.http.patch<RecipeInput>(`${this.apiUrl}/${id}`, recipe);
+  update(id: string, recipe: RecipeInput): Observable<Recipe> {
+    return this.http.patch<Recipe>(`${this.apiUrl}/${id}`, recipe);
   }
 
   delete(id: string): Observable<void> {

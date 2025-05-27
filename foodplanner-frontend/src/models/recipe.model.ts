@@ -6,13 +6,12 @@ export interface Recipe {
   id: string;
   name: string;
   description?: string;
+  preparationTime: number; // Preparation time in minutes
   kitchen: Kitchen;
   ingredients: Ingredient[];
-  mealPlans: MealPlan[];
 }
 
 export interface RecipeInput extends Omit<Recipe, 'ingredients' | 'mealPlans' | 'kitchen'> {
   ingredientIds: string[]; // Array of ingredient IDs
   kitchenId: string; // Kitchen ID
-  mealPlanIds?: string[]; // Optional array of meal plan IDs
 }

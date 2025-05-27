@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Ingredient} from '../models/ingredient.model';
-import {v4 as uuidv4} from 'uuid';
+import {Ingredient, MissingIngredientByMeal} from '../models/ingredient.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,19 +16,15 @@ export class IngredientService {
     return this.http.get<Ingredient[]>(this.apiUrl);
   }
 
-  getById(id: string): Observable<Ingredient> {
-    return this.http.get<Ingredient>(`${this.apiUrl}/${id}`);
+  getMissingForShoppingList(): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(`${this.apiUrl}/missing/shoppinglist`);
   }
 
-  create(ingredient: Ingredient): Observable<Ingredient> {
-    return this.http.post<Ingredient>(this.apiUrl, {...ingredient, id: uuidv4()});
+  getMissingForPanty(): Observable<Ingredient[]> {
+    return this.http.get<Ingredient[]>(`${this.apiUrl}/missing/pantry`);
   }
 
-  update(id: string, ingredient: Ingredient): Observable<Ingredient> {
-    return this.http.patch<Ingredient>(`${this.apiUrl}/${id}`, ingredient);
-  }
-
-  delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  getMissingForMealPlan(dates: { startDate: string, endDate: string }): Observable<MissingIngredientByMeal[]> {
+    return this.http.get<MissingIngredientByMeal[]>(`${this.apiUrl}/missing/mealplan?startDate=${dates.startDate}&endDate=${dates.endDate}`);
   }
 }
