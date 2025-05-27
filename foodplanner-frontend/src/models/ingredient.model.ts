@@ -1,5 +1,4 @@
 import {IngredientCategory} from './ingredient-category.model';
-import {Recipe} from './recipe.model';
 
 
 export interface Ingredient {
