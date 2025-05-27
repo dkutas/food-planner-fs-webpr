@@ -31,7 +31,7 @@ import {
 })
 export class KitchenListComponent implements OnInit {
   kitchens: Kitchen[] = [];
-  displayedColumns: string[] = ['name', 'actions'];
+  displayedColumns: string[] = ['name'];
 
   constructor(
     private kitchenService: KitchenService,

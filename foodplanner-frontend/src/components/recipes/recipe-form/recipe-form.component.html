@@ -14,16 +14,16 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Kitchen</mat-label>
-      <mat-select formControlName="kitchen">
+      <mat-select formControlName="kitchen" [compareWith]="compareKitchens">
         <mat-option *ngFor="let kitchen of kitchens" [value]="kitchen">
           {{ kitchen.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    
+
     <mat-form-field appearance="fill">
       <mat-label>Ingredients</mat-label>
-      <mat-select formControlName="ingredients" multiple>
+      <mat-select formControlName="ingredients" multiple [compareWith]="compareIngredients">
         <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient">
           {{ ingredient.name }}
         </mat-option>

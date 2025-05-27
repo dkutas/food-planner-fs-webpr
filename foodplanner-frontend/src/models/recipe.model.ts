@@ -13,4 +13,5 @@ export interface Recipe {
 export interface RecipeInput extends Omit<Recipe, 'ingredients' | 'mealPlans' | 'kitchen'> {
   ingredientIds: string[]; // Array of ingredient IDs
   kitchenId: string; // Kitchen ID
+  isPublic: boolean; // Indicates if the recipe is public
 }

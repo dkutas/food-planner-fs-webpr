@@ -39,7 +39,7 @@ import {MapPipe} from '../../pipes/map.pipe';
 })
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
-  displayedColumns: string[] = ['name', 'description', 'kitchen', 'ingredients', 'actions'];
+  displayedColumns: string[] = ['name', 'description', 'kitchen', 'ingredients', 'preparation_time', 'actions'];
 
   constructor(
     private recipeService: RecipeService,

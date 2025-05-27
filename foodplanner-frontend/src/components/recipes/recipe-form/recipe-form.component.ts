@@ -52,10 +52,13 @@ export class RecipeFormComponent {
     @Inject(MAT_DIALOG_DATA) public data: Recipe
   ) {
     this.form = this.fb.group({
+      id: [data?.id || null],
       name: ['', Validators.required],
       description: [''],
       kitchen: [{}, Validators.required],
       ingredients: [[], Validators.required],
+      preparationTime: [0, [Validators.required, Validators.min(1)]],
+      isPublic: [false],
     });
 
     if (data?.id) {
@@ -78,18 +81,28 @@ export class RecipeFormComponent {
     );
   }
 
+
+  compareIngredients(i1: Ingredient, i2: Ingredient): boolean {
+    return i1?.id === i2?.id;
+  }
+
+  compareKitchens(kitchen1: Kitchen, kitchen2: Kitchen): boolean {
+    return kitchen1 && kitchen2 ? kitchen1.id === kitchen2.id : kitchen1 === kitchen2;
+  }
+
   save(): void {
     if (this.form.valid) {
-      console.log(this.form.value);
-      // console.log(this.data);
       const recipe: RecipeInput = {
         id: this.form.value.id,
         name: this.form.value.name,
         description: this.form.value.description,
         ingredientIds: this.form.value.ingredients.map((i: Ingredient) => i.id),
         kitchenId: this.form.value.kitchen.id,
-        preparationTime: this.form.value.preparationTime
+        preparationTime: this.form.value.preparationTime,
+        isPublic: false
       };
+
+      console.log(recipe);
 
       if (recipe.id) {
         this.recipeService.update(recipe.id, recipe).subscribe(() => {

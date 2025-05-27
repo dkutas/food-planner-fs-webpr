@@ -29,7 +29,7 @@ import {
 })
 export class IngredientListComponent implements OnInit {
   ingredients: Ingredient[] = [];
-  displayedColumns: string[] = ['name', 'category', 'actions'];
+  displayedColumns: string[] = ['name', 'category'];
 
   constructor(
     private ingredientService: IngredientService,
