@@ -18,12 +18,6 @@ import {NgForOf} from '@angular/common';
 import {Ingredient} from '../../../models/ingredient.model';
 import {IngredientService} from '../../../services/ingredient.service';
 
-interface IngredientForm {
-  name: FormControl<string>,
-  description: FormControl<string>,
-  kitchen: FormControl<Kitchen>,
-  ingredients: FormControl<Ingredient[]>,
-}
 
 @Component({
   selector: 'app-recipe-form',

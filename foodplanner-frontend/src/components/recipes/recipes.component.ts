@@ -16,7 +16,6 @@ import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {SlicePipe} from '@angular/common';
 import {MapPipe} from '../../pipes/map.pipe';
-import {Ingredient} from '../../models/ingredient.model';
 
 @Component({
   selector: 'app-recipe-list',
@@ -35,7 +34,6 @@ import {Ingredient} from '../../models/ingredient.model';
     MatRowDef,
     MatRow,
     MatButton,
-    SlicePipe,
     MapPipe
   ],
   styleUrls: ['./recipes.component.less']
