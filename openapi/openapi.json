@@ -22,7 +22,7 @@
           "Shopping List"
         ],
         "summary": "Retrieves all shopping list records",
-        "operationId": "getAllShoppingLists",
+        "operationId": "getAllShoppingListItem",
         "responses": {
           "200": {
             "description": "OK",
@@ -31,7 +31,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ShoppingList"
+                    "$ref": "#/components/schemas/ShoppingListResponseDTO"
                   }
                 }
               }
@@ -44,24 +44,24 @@
           "Shopping List"
         ],
         "summary": "Creates a new shopping list record",
-        "operationId": "addShoppingList",
-        "parameters": [
-          {
-            "name": "shoppingListDTO",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/ShoppingListDTO"
+        "operationId": "addShoppingListItem",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShoppingListRequestDTO"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ShoppingList"
+                  "$ref": "#/components/schemas/ShoppingListResponseDTO"
                 }
               }
             }
@@ -75,7 +75,7 @@
           "Recipe"
         ],
         "summary": "Retrieves all recipes",
-        "operationId": "getAllRecipes",
+        "operationId": "getAllRecipe",
         "responses": {
           "200": {
             "description": "OK",
@@ -84,7 +84,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Recipe"
+                    "$ref": "#/components/schemas/RecipeResponseDTO"
                   }
                 }
               }
@@ -98,23 +98,23 @@
         ],
         "summary": "Creates a new recipe",
         "operationId": "addRecipe",
-        "parameters": [
-          {
-            "name": "recipeDTO",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/RecipeDTO"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeRequestDTO"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Recipe"
+                  "$ref": "#/components/schemas/RecipeResponseDTO"
                 }
               }
             }
@@ -128,7 +128,7 @@
           "Pantry"
         ],
         "summary": "Retrieves all pantry records",
-        "operationId": "getAllPantries",
+        "operationId": "getAllPantryItem",
         "responses": {
           "200": {
             "description": "OK",
@@ -137,7 +137,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Pantry"
+                    "$ref": "#/components/schemas/PantryResponseDTO"
                   }
                 }
               }
@@ -150,24 +150,24 @@
           "Pantry"
         ],
         "summary": "Creates a new pantry record",
-        "operationId": "addPantry",
-        "parameters": [
-          {
-            "name": "pantryDTO",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/PantryDTO"
+        "operationId": "addPantryItem",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PantryRequestDTO"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Pantry"
+                  "$ref": "#/components/schemas/PantryResponseDTO"
                 }
               }
             }
@@ -181,7 +181,7 @@
           "Meal Plan"
         ],
         "summary": "Retrieves a list of all meal plans",
-        "operationId": "getAllMealPlans",
+        "operationId": "getAllMealPlan",
         "responses": {
           "200": {
             "description": "OK",
@@ -190,7 +190,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/MealPlan"
+                    "$ref": "#/components/schemas/MealPlanResponseDTO"
                   }
                 }
               }
@@ -204,23 +204,23 @@
         ],
         "summary": "Creates a new meal plan",
         "operationId": "addMealPlan",
-        "parameters": [
-          {
-            "name": "mealPlanDTO",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/MealPlanDTO"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MealPlanRequestDTO"
+              }
             }
-          }
-        ],
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MealPlan"
+                  "$ref": "#/components/schemas/MealPlanResponseDTO"
                 }
               }
             }
@@ -234,7 +234,7 @@
           "Shopping List"
         ],
         "summary": "Retrieves a shopping list record by id",
-        "operationId": "getShoppingList",
+        "operationId": "getShoppingListItem",
         "parameters": [
           {
             "name": "id",
@@ -252,7 +252,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ShoppingList"
+                  "$ref": "#/components/schemas/ShoppingListResponseDTO"
                 }
               }
             }
@@ -264,7 +264,7 @@
           "Shopping List"
         ],
         "summary": "Deletes a shopping list record by id",
-        "operationId": "deleteShoppingList",
+        "operationId": "deleteShoppingListItem",
         "parameters": [
           {
             "name": "id",
@@ -287,7 +287,7 @@
           "Shopping List"
         ],
         "summary": "Updates a shopping list record by id",
-        "operationId": "updateShoppingList",
+        "operationId": "updateShoppingListItem",
         "parameters": [
           {
             "name": "id",
@@ -297,23 +297,25 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "shoppingListDTO",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/ShoppingListDTO"
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ShoppingListRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ShoppingList"
+                  "$ref": "#/components/schemas/ShoppingListResponseDTO"
                 }
               }
             }
@@ -345,7 +347,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Recipe"
+                  "$ref": "#/components/schemas/RecipeResponseDTO"
                 }
               }
             }
@@ -390,23 +392,25 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "recipeDTO",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/RecipeDTO"
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Recipe"
+                  "$ref": "#/components/schemas/RecipeResponseDTO"
                 }
               }
             }
@@ -420,7 +424,7 @@
           "Pantry"
         ],
         "summary": "Retrieves a pantry by id",
-        "operationId": "getPantry",
+        "operationId": "getPantryItem",
         "parameters": [
           {
             "name": "id",
@@ -438,7 +442,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Pantry"
+                  "$ref": "#/components/schemas/PantryResponseDTO"
                 }
               }
             }
@@ -450,7 +454,7 @@
           "Pantry"
         ],
         "summary": "Deletes a pantry by id",
-        "operationId": "deletePantry",
+        "operationId": "deletePantryItem",
         "parameters": [
           {
             "name": "id",
@@ -473,7 +477,7 @@
           "Pantry"
         ],
         "summary": "Updates a pantry by id",
-        "operationId": "updatePantry",
+        "operationId": "updatePantryItem",
         "parameters": [
           {
             "name": "id",
@@ -483,23 +487,25 @@
               "type": "string",
               "format": "uuid"
             }
-          },
-          {
-            "name": "pantryDTO",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/PantryDTO"
-            }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PantryRequestDTO"
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/Pantry"
+                  "$ref": "#/components/schemas/PantryResponseDTO"
                 }
               }
             }
@@ -531,7 +537,7 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MealPlan"
+                  "$ref": "#/components/schemas/MealPlanResponseDTO"
                 }
               }
             }
@@ -576,13 +582,47 @@
               "type": "string",
               "format": "uuid"
             }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MealPlanRequestDTO"
+              }
+            }
           },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/MealPlanResponseDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shoppinglist/ingredient/{ingredientId}": {
+      "get": {
+        "tags": [
+          "Shopping List"
+        ],
+        "summary": "Retrieves a shopping list record by ingredient id",
+        "operationId": "getAllShoppingListItemByIngredientId",
+        "parameters": [
           {
-            "name": "mealPlanDTO",
-            "in": "query",
+            "name": "ingredientId",
+            "in": "path",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/MealPlanDTO"
+              "type": "string",
+              "format": "uuid"
             }
           }
         ],
@@ -592,7 +632,69 @@
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/MealPlan"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShoppingListResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe/public": {
+      "get": {
+        "tags": [
+          "Recipe"
+        ],
+        "summary": "Retrieves all public recipes",
+        "operationId": "getAllPublicRecipe",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RecipeResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pantry/ingredient/{ingredientId}": {
+      "get": {
+        "tags": [
+          "Pantry"
+        ],
+        "summary": "Retrieves a pantry by ingredient id",
+        "operationId": "getAllPantryItemByIngredientId",
+        "parameters": [
+          {
+            "name": "ingredientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PantryResponseDTO"
+                  }
                 }
               }
             }
@@ -615,7 +717,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Kitchen"
+                    "$ref": "#/components/schemas/KitchenResponseDTO"
                   }
                 }
               }
@@ -629,8 +731,8 @@
         "tags": [
           "Ingredient"
         ],
-        "summary": "Retrieves a list of all ingredient ingredients",
-        "operationId": "getAllIngredients",
+        "summary": "Retrieves a list of all ingredients",
+        "operationId": "getAllIngredient",
         "responses": {
           "200": {
             "description": "OK",
@@ -639,7 +741,99 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Ingredient"
+                    "$ref": "#/components/schemas/IngredientResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ingredient/missing/shoppinglist": {
+      "get": {
+        "tags": [
+          "Ingredient"
+        ],
+        "summary": "Retrieves all the ingredients that are not already on the shopping list of the current user",
+        "operationId": "getAllIngredientNotOnShoppingList",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IngredientResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ingredient/missing/pantry": {
+      "get": {
+        "tags": [
+          "Ingredient"
+        ],
+        "summary": "Retrieves all the ingredients that are not already in pantry for the current user",
+        "operationId": "getAllIngredientNotInPantry",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IngredientResponseDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ingredient/missing/mealplan": {
+      "get": {
+        "tags": [
+          "Ingredient"
+        ],
+        "summary": "Retrieves all the ingredients by meal that are missing for the planned meals of the current user",
+        "operationId": "getAllIngredientMissingByMeal",
+        "parameters": [
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MissingIngredientByMealResponseDTO"
                   }
                 }
               }
@@ -654,7 +848,7 @@
           "Ingredient Category"
         ],
         "summary": "Retrieves a list of all ingredient categories",
-        "operationId": "getAllIngredientCategories",
+        "operationId": "getAllIngredientCategory",
         "responses": {
           "200": {
             "description": "OK",
@@ -663,7 +857,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/IngredientCategory"
+                    "$ref": "#/components/schemas/IngredientCategoryResponseDTO"
                   }
                 }
               }
@@ -675,7 +869,7 @@
   },
   "components": {
     "schemas": {
-      "ShoppingListDTO": {
+      "ShoppingListRequestDTO": {
         "type": "object",
         "properties": {
           "ingredientId": {
@@ -684,7 +878,19 @@
           }
         }
       },
-      "Ingredient": {
+      "IngredientCategoryResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "IngredientResponseDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -695,108 +901,11 @@
             "type": "string"
           },
           "category": {
-            "$ref": "#/components/schemas/IngredientCategory"
-          },
-          "recipes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Recipe"
-            },
-            "uniqueItems": true
+            "$ref": "#/components/schemas/IngredientCategoryResponseDTO"
           }
         }
       },
-      "IngredientCategory": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "ingredients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Ingredient"
-            },
-            "uniqueItems": true
-          }
-        }
-      },
-      "Kitchen": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "recipes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Recipe"
-            },
-            "uniqueItems": true
-          }
-        }
-      },
-      "MealPlan": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "recipe": {
-            "$ref": "#/components/schemas/Recipe"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "Recipe": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "kitchen": {
-            "$ref": "#/components/schemas/Kitchen"
-          },
-          "ingredients": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Ingredient"
-            },
-            "uniqueItems": true
-          },
-          "mealPlans": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MealPlan"
-            },
-            "uniqueItems": true
-          }
-        }
-      },
-      "ShoppingList": {
+      "ShoppingListResponseDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -804,22 +913,25 @@
             "format": "uuid"
           },
           "ingredient": {
-            "$ref": "#/components/schemas/Ingredient"
+            "$ref": "#/components/schemas/IngredientResponseDTO"
           }
         }
       },
-      "RecipeDTO": {
+      "RecipeRequestDTO": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
           "name": {
             "type": "string"
           },
           "description": {
             "type": "string"
+          },
+          "isPublic": {
+            "type": "boolean"
+          },
+          "preparationTime": {
+            "type": "integer",
+            "format": "int64"
           },
           "kitchenId": {
             "type": "string",
@@ -835,7 +947,48 @@
           }
         }
       },
-      "PantryDTO": {
+      "KitchenResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "RecipeResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "preparationTime": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "kitchen": {
+            "$ref": "#/components/schemas/KitchenResponseDTO"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IngredientResponseDTO"
+            },
+            "uniqueItems": true
+          }
+        }
+      },
+      "PantryRequestDTO": {
         "type": "object",
         "properties": {
           "ingredientId": {
@@ -844,7 +997,7 @@
           }
         }
       },
-      "Pantry": {
+      "PantryResponseDTO": {
         "type": "object",
         "properties": {
           "id": {
@@ -852,11 +1005,11 @@
             "format": "uuid"
           },
           "ingredient": {
-            "$ref": "#/components/schemas/Ingredient"
+            "$ref": "#/components/schemas/IngredientResponseDTO"
           }
         }
       },
-      "MealPlanDTO": {
+      "MealPlanRequestDTO": {
         "type": "object",
         "properties": {
           "recipeId": {
@@ -870,6 +1023,43 @@
           "endDate": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "MealPlanResponseDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "recipe": {
+            "$ref": "#/components/schemas/RecipeResponseDTO"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MissingIngredientByMealResponseDTO": {
+        "type": "object",
+        "properties": {
+          "mealPlanId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "recipeId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ingredientId": {
+            "type": "string",
+            "format": "uuid"
           }
         }
       }
