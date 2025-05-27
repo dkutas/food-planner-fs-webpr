@@ -13,7 +13,7 @@ import {
   MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
   MatTable
 } from '@angular/material/table';
-import {MatIcon} from '@angular/material/icon';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-shopping-list-list',
@@ -31,6 +31,7 @@ import {MatIcon} from '@angular/material/icon';
     MatHeaderRow,
     MatRowDef,
     MatHeaderRowDef,
+    MatIconModule,
     MatRow
   ],
   styleUrls: ['./shopping-list.component.less']
