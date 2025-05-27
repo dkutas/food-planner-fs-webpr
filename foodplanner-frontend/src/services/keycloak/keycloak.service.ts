@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import Keycloak, {KeycloakProfile} from 'keycloak-js';
-import {environment} from '../../../environments/environment';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class KeycloakService {
       onLoad: "login-required"
     })
 
-    if(authenticated) {
+    if (authenticated) {
       console.log("User authenticated...")
       this._profile = await this.keycloak?.loadUserProfile()
     }

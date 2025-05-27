@@ -8,7 +8,7 @@ import {v4 as uuidv4} from 'uuid';
   providedIn: 'root'
 })
 export class ShoppingListService {
-  private apiUrl = 'api/shopping-lists';
+  private apiUrl = 'api/shoppinglist';
 
   constructor(private http: HttpClient) {
   }
@@ -19,6 +19,10 @@ export class ShoppingListService {
 
   getById(id: string): Observable<ShoppingList> {
     return this.http.get<ShoppingList>(`${this.apiUrl}/${id}`);
+  }
+
+  getByIngredient(ingredientId: string): Observable<ShoppingList[]> {
+    return this.http.get<ShoppingList[]>(`${this.apiUrl}/ingredient/${ingredientId}`);
   }
 
   create(item: ShoppingList): Observable<ShoppingList> {
