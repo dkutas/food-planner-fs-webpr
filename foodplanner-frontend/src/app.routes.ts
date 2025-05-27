@@ -1,7 +1,5 @@
 import {Routes} from '@angular/router';
 import {NutritionsComponent} from './components/nutritions/nutritions.component';
-import {RegisterComponent} from './components/auth/register/register.component';
-import {LoginComponent} from './components/auth/login/login.component';
 import {
   MealPlannerCalendarComponent
 } from './components/mealplan/meal-planner-calendar/meal-planner-calendar.component';
@@ -69,15 +67,5 @@ export const routes: Routes = [
     path: 'ingredient-categories',
     component: IngredientCategoryListComponent,
     canActivate: [authGuard]
-  },
-  {
-    title: 'Log in',
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    title: 'Register',
-    path: 'register',
-    component: RegisterComponent,
-  },
+  }
 ];
