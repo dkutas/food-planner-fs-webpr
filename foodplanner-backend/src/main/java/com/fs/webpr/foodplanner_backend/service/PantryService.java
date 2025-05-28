@@ -51,7 +51,7 @@ public class PantryService {
                 () -> new ResourceNotFoundException("Pantry not found with id " + id)
         );
 
-        if (pantry.getUserId() != user.userId()) {
+        if (!pantry.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to get pantry item with id " + id);
         }
 
@@ -69,7 +69,7 @@ public class PantryService {
                 () -> new ResourceNotFoundException("Pantry not found with id " + id)
         );
 
-        if (pantry.getUserId() != user.userId()) {
+        if (!pantry.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to update pantry item with id " + id);
         }
 
@@ -89,7 +89,7 @@ public class PantryService {
                 () -> new ResourceNotFoundException("Pantry Item not found with id " + id)
         );
 
-        if (pantry.getUserId() != user.userId()) {
+        if (!pantry.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to delete pantry item with id " + id);
         }
 

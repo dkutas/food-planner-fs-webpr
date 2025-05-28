@@ -55,7 +55,7 @@ public class ShoppingListService {
                 () -> new ResourceNotFoundException("Shopping List not found with id " + id)
         );
 
-        if (shoppingList.getUserId() != user.userId()) {
+        if (!shoppingList.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to get shopping list item with id " + id);
         }
 
@@ -71,7 +71,7 @@ public class ShoppingListService {
                 () -> new ResourceNotFoundException("Shopping List not found with id " + id)
         );
 
-        if (shoppingList.getUserId() != user.userId()) {
+        if (!shoppingList.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to update shopping list item with id " + id);
         }
 
@@ -91,7 +91,7 @@ public class ShoppingListService {
                 () -> new ResourceNotFoundException("Shopping List Item not found with id " + id)
         );
 
-        if (shoppingList.getUserId() != user.userId()) {
+        if (!shoppingList.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to delete shopping list item with id " + id);
         }
 

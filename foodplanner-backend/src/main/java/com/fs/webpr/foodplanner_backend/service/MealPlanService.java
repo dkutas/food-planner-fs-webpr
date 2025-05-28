@@ -43,6 +43,8 @@ public class MealPlanService {
 
         mealPlan.setUserId(user.userId());
         mealPlan.setRecipe(recipe);
+        mealPlan.setStartDate(mealPlanRequestDTO.getStartDate());
+        mealPlan.setEndDate(mealPlanRequestDTO.getEndDate());
 
         return mealPlanMapper.toMealPlanResponseDTO(mealPlanRepository.save(mealPlan));
     }
@@ -52,7 +54,7 @@ public class MealPlanService {
                 () -> new ResourceNotFoundException("Meal Plan not found with id " + id)
         );
 
-        if (mealPlan.getUserId() != user.userId()) {
+        if (!mealPlan.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to get meal plan with id " + id);
         }
 
@@ -64,7 +66,7 @@ public class MealPlanService {
                 () -> new ResourceNotFoundException("Meal Plan not found with id " + id)
         );
 
-        if (mealPlan.getUserId() != user.userId()) {
+        if (!mealPlan.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to update meal plan with id " + id);
         }
 
@@ -94,7 +96,7 @@ public class MealPlanService {
                 () -> new ResourceNotFoundException("Meal Plan not found with id " + id)
         );
 
-        if (mealPlan.getUserId() != user.userId()) {
+        if (!mealPlan.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to delete meal plan with id " + id);
         }
 

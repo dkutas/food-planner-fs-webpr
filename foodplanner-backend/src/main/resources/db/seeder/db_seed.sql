@@ -1,74 +1,196 @@
--- Delete from pantry
-DELETE FROM pantry;
+-- -- Clear existing data in correct order
+-- DELETE FROM meal_plan;
+-- DELETE FROM recipe_ingredient;
+-- DELETE FROM pantry;
+-- DELETE FROM shopping_list;
+-- DELETE FROM recipe;
+-- DELETE FROM ingredient;
+-- DELETE FROM ingredient_category;
+-- DELETE FROM kitchen;
+--
+-- -- Insert ingredient categories
+-- INSERT INTO ingredient_category (id, name)
+-- VALUES
+--     (gen_random_uuid(), 'Vegetables'),
+--     (gen_random_uuid(), 'Fruits'),
+--     (gen_random_uuid(), 'Meats'),
+--     (gen_random_uuid(), 'Dairy'),
+--     (gen_random_uuid(), 'Grains'),
+--     (gen_random_uuid(), 'Spices'),
+--     (gen_random_uuid(), 'Herbs'),
+--     (gen_random_uuid(), 'Pantry Staples');
+--
+-- -- Insert real ingredients
+-- INSERT INTO ingredient (id, name, ingredient_category_id)
+-- SELECT gen_random_uuid(), ingredients.name, cat.id
+-- FROM (
+--          VALUES
+--              -- Vegetables
+--              ('Carrot', 'Vegetables'),
+--              ('Onion', 'Vegetables'),
+--              ('Garlic', 'Vegetables'),
+--              ('Bell Pepper', 'Vegetables'),
+--              ('Tomato', 'Vegetables'),
+--              ('Potato', 'Vegetables'),
+--              ('Broccoli', 'Vegetables'),
+--              ('Spinach', 'Vegetables'),
+--              ('Mushroom', 'Vegetables'),
+--              ('Zucchini', 'Vegetables'),
+--              -- Fruits
+--              ('Lemon', 'Fruits'),
+--              ('Lime', 'Fruits'),
+--              ('Apple', 'Fruits'),
+--              ('Orange', 'Fruits'),
+--              -- Meats
+--              ('Chicken Breast', 'Meats'),
+--              ('Ground Beef', 'Meats'),
+--              ('Bacon', 'Meats'),
+--              ('Salmon', 'Meats'),
+--              ('Pork Chop', 'Meats'),
+--              -- Dairy
+--              ('Butter', 'Dairy'),
+--              ('Milk', 'Dairy'),
+--              ('Heavy Cream', 'Dairy'),
+--              ('Parmesan Cheese', 'Dairy'),
+--              ('Mozzarella', 'Dairy'),
+--              -- Grains
+--              ('Rice', 'Grains'),
+--              ('Pasta', 'Grains'),
+--              ('Bread Crumbs', 'Grains'),
+--              ('Flour', 'Grains'),
+--              -- Spices
+--              ('Salt', 'Spices'),
+--              ('Black Pepper', 'Spices'),
+--              ('Paprika', 'Spices'),
+--              ('Cumin', 'Spices'),
+--              ('Cayenne Pepper', 'Spices'),
+--              -- Herbs
+--              ('Basil', 'Herbs'),
+--              ('Thyme', 'Herbs'),
+--              ('Rosemary', 'Herbs'),
+--              ('Parsley', 'Herbs'),
+--              -- Pantry Staples
+--              ('Olive Oil', 'Pantry Staples'),
+--              ('Soy Sauce', 'Pantry Staples'),
+--              ('Honey', 'Pantry Staples'),
+--              ('Vinegar', 'Pantry Staples')
+--      ) AS ingredients(name, category_name)
+--          JOIN ingredient_category cat ON cat.name = ingredients.category_name;
+--
+-- -- Insert kitchens
+-- INSERT INTO kitchen (id, name)
+-- VALUES
+--     (gen_random_uuid(), 'Italian'),
+--     (gen_random_uuid(), 'American'),
+--     (gen_random_uuid(), 'Asian'),
+--     (gen_random_uuid(), 'Mediterranean');
+--
+-- -- Insert actual recipes
+-- WITH recipe_data(name, description, kitchen_name) AS (
+--     VALUES
+--         -- Italian Kitchen
+--         ('Classic Spaghetti Carbonara', 'Creamy pasta dish with bacon and parmesan', 'Italian'),
+--         ('Chicken Parmesan', 'Breaded chicken with tomato sauce and mozzarella', 'Italian'),
+--         ('Margherita Pizza', 'Traditional pizza with tomatoes, mozzarella, and basil', 'Italian'),
+--         -- American Kitchen
+--         ('Homemade Burger', 'Juicy beef burger with fresh vegetables', 'American'),
+--         ('BBQ Chicken', 'Grilled chicken with homemade BBQ sauce', 'American'),
+--         ('Mac and Cheese', 'Creamy macaroni and cheese', 'American'),
+--         -- Asian Kitchen
+--         ('Stir-Fried Rice', 'Classic fried rice with vegetables', 'Asian'),
+--         ('Teriyaki Salmon', 'Salmon glazed with teriyaki sauce', 'Asian'),
+--         ('Chicken Curry', 'Spicy chicken curry with vegetables', 'Asian'),
+--         -- Mediterranean Kitchen
+--         ('Greek Salad', 'Fresh vegetables with olive oil and herbs', 'Mediterranean'),
+--         ('Grilled Vegetables', 'Mediterranean style grilled vegetables', 'Mediterranean'),
+--         ('Herb Roasted Chicken', 'Chicken roasted with Mediterranean herbs', 'Mediterranean')
+-- )
+-- INSERT INTO recipe (id, name, description, kitchen_id, user_id, is_public, preparation_time)
+-- SELECT
+--     gen_random_uuid(),
+--     r.name,
+--     r.description,
+--     k.id,
+--     '2f79a780-f729-4088-bf99-0331386e7678',
+--     true,
+--     (random() * 60 + 30)::int
+-- FROM recipe_data r
+--          JOIN kitchen k ON k.name = r.kitchen_name;
+--
+-- -- Insert recipe ingredients with actual quantities
+-- WITH recipe_ingredients(recipe_name, ingredient_name) AS (
+--     VALUES
+--         -- Carbonara ingredients
+--         ('Classic Spaghetti Carbonara', 'Pasta'),
+--         ('Classic Spaghetti Carbonara', 'Bacon'),
+--         ('Classic Spaghetti Carbonara', 'Parmesan Cheese'),
+--         ('Classic Spaghetti Carbonara', 'Black Pepper'),
+--         -- Burger ingredients
+--         ('Homemade Burger', 'Ground Beef'),
+--         ('Homemade Burger', 'Onion'),
+--         ('Homemade Burger', 'Salt'),
+--         ('Homemade Burger', 'Black Pepper')
+--     -- Add more recipe ingredients as needed
+-- )
+-- INSERT INTO recipe_ingredient (ingredient_id, recipe_id)
+-- SELECT i.id, r.id
+-- FROM recipe_ingredients ri
+--          JOIN ingredient i ON i.name = ri.ingredient_name
+--          JOIN recipe r ON r.name = ri.recipe_name;
+--
+-- -- Insert meal plans with exactly 2 meals per day
+-- WITH meal_times AS (
+--     SELECT
+--         r.id as recipe_id,
+--         date_time
+--     FROM (
+--              SELECT id FROM recipe ORDER BY random() LIMIT 14 -- 2 meals × 7 days
+--          ) r
+--              CROSS JOIN (
+--         SELECT current_date + (d || ' days')::interval +
+--             CASE WHEN h = 0 THEN '12:00'::interval  -- Lunch at 12:00
+--                  ELSE '18:00'::interval  -- Dinner at 18:00
+--             END as date_time
+--         FROM generate_series(0, 6) d
+--             CROSS JOIN generate_series(0, 1) h -- Generate 2 times per day
+--     ) dates
+-- )
+-- INSERT INTO meal_plan (id, recipe_id, start_date, end_date, user_id)
+-- SELECT
+--     gen_random_uuid(),
+--     recipe_id,
+--     date_time,
+--     date_time + interval '1 hour',
+--     '2f79a780-f729-4088-bf99-0331386e7678'
+-- FROM meal_times;
+--
+-- -- Insert pantry items
+-- INSERT INTO pantry (id, ingredient_id, user_id)
+-- SELECT
+--     gen_random_uuid(),
+--     id,
+--     '2f79a780-f729-4088-bf99-0331386e7678'
+-- FROM (
+--          SELECT id FROM ingredient
+--          WHERE name IN (
+--                         'Salt', 'Black Pepper', 'Olive Oil', 'Pasta',
+--                         'Rice', 'Flour', 'Soy Sauce', 'Honey'
+--              )
+--      ) as staples;
+--
+-- -- Insert shopping list
+-- INSERT INTO shopping_list (id, ingredient_id, user_id)
+-- SELECT
+--     gen_random_uuid(),
+--     id,
+--     '2f79a780-f729-4088-bf99-0331386e7678'
+-- FROM (
+--          SELECT id FROM ingredient
+--          WHERE name IN (
+--                         'Chicken Breast', 'Ground Beef', 'Tomato',
+--                         'Onion', 'Garlic', 'Bell Pepper', 'Milk'
+--              )
+--      ) as needed_items;
 
--- Delete from shopping_list
-DELETE FROM shopping_list;
-
--- Delete from recipe_ingredient
-DELETE FROM recipe_ingredient;
-
--- Delete from meal_plan
-DELETE FROM meal_plan;
-
--- Delete from ingredient
-DELETE FROM ingredient;
-
--- Delete from recipe
-DELETE FROM recipe;
-
--- Delete from kitchen
-DELETE FROM kitchen;
-
--- Delete from ingredient_category
-DELETE FROM ingredient_category;
-
--- Insert into ingredient_category
-INSERT INTO ingredient_category (id, name)
-VALUES (gen_random_uuid(), 'Vegetables'),
-       (gen_random_uuid(), 'Meats'),
-       (gen_random_uuid(), 'Spices'),
-       (gen_random_uuid(), 'Dairy');
-
--- Insert into ingredient
-INSERT INTO ingredient (id, name, ingredient_category_id)
-VALUES (gen_random_uuid(), 'Carrot', (SELECT id FROM ingredient_category WHERE name = 'Vegetables')),
-       (gen_random_uuid(), 'Chicken', (SELECT id FROM ingredient_category WHERE name = 'Meats')),
-       (gen_random_uuid(), 'Salt', (SELECT id FROM ingredient_category WHERE name = 'Spices')),
-       (gen_random_uuid(), 'Cheese', (SELECT id FROM ingredient_category WHERE name = 'Dairy'));
-
--- Insert into kitchen
-INSERT INTO kitchen (id, name)
-VALUES (gen_random_uuid(), 'Main Kitchen'),
-       (gen_random_uuid(), 'Side Kitchen');
-
--- Insert into recipe
-INSERT INTO recipe (id, name, description, kitchen_id)
-VALUES (gen_random_uuid(), 'Grilled Chicken', 'A delicious grilled chicken recipe.',
-        (SELECT id FROM kitchen WHERE name = 'Main Kitchen')),
-       (gen_random_uuid(), 'Carrot Salad', 'A healthy carrot salad with light dressing.',
-        (SELECT id FROM kitchen WHERE name = 'Side Kitchen'));
-
--- Insert into recipe_ingredient
-INSERT INTO recipe_ingredient (ingredient_id, recipe_id)
-VALUES ((SELECT id FROM ingredient WHERE name = 'Carrot'), (SELECT id FROM recipe WHERE name = 'Carrot Salad')),
-       ((SELECT id FROM ingredient WHERE name = 'Chicken'), (SELECT id FROM recipe WHERE name = 'Grilled Chicken')),
-       ((SELECT id FROM ingredient WHERE name = 'Salt'), (SELECT id FROM recipe WHERE name = 'Grilled Chicken')),
-       ((SELECT id FROM ingredient WHERE name = 'Cheese'), (SELECT id FROM recipe WHERE name = 'Carrot Salad'));
-
--- Insert into meal_plan with timezone-aware dates
-INSERT INTO meal_plan (id, recipe_id, start_date, end_date)
-VALUES (gen_random_uuid(), (SELECT id FROM recipe WHERE name = 'Grilled Chicken'),
-        '2025-03-18 00:00:00+00', '2025-03-18 23:59:59+00'), -- UTC timezone
-       (gen_random_uuid(), (SELECT id FROM recipe WHERE name = 'Carrot Salad'),
-        '2025-03-19 00:00:00+00', '2025-03-19 23:59:59+00');
--- UTC timezone
-
--- Insert into pantry
-INSERT INTO pantry (id, ingredient_id)
-VALUES (gen_random_uuid(), (SELECT id FROM ingredient WHERE name = 'Carrot')),
-       (gen_random_uuid(), (SELECT id FROM ingredient WHERE name = 'Chicken'));
-
--- Insert into shopping_list
-INSERT INTO shopping_list (id, ingredient_id)
-VALUES (gen_random_uuid(), (SELECT id FROM ingredient WHERE name = 'Salt')),
-       (gen_random_uuid(), (SELECT id FROM ingredient WHERE name = 'Cheese'));
+select *
+from meal_plan;

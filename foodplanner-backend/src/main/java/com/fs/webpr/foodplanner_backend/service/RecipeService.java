@@ -85,7 +85,7 @@ public class RecipeService {
                 () -> new ResourceNotFoundException("Recipe not found with id " + id)
         );
 
-        if (recipe.getUserId() != user.userId()) {
+        if (!recipe.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to get recipe with id " + id);
         }
 
@@ -99,7 +99,7 @@ public class RecipeService {
 
         log.debug("Recipe Found: {}", recipe);
 
-        if (recipe.getUserId() != user.userId()) {
+        if (!recipe.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to update recipe with id " + id);
         }
 
@@ -160,7 +160,7 @@ public class RecipeService {
                 () -> new ResourceNotFoundException("Recipe not found with id " + id)
         );
 
-        if (recipe.getUserId() != user.userId()) {
+        if (!recipe.getUserId().equals(user.userId())) {
             throw new AccessDeniedException("You do not have permission to delete recipe with id " + id);
         }
 
