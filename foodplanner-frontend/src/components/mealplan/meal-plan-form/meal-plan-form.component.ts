@@ -13,7 +13,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
 import {Recipe} from '../../../models/recipe.model';
 import {MealPlanService} from '../../../services/meal-plan.service';
 import {RecipeService} from '../../../services/recipe.service';
-import {MealPlan} from '../../../models/meal-plan.model';
+import {MealPlan, MealPlanInput} from '../../../models/meal-plan.model';
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from '@angular/material/datepicker';
 import {MatButton} from '@angular/material/button';
 
@@ -53,8 +53,8 @@ export class MealPlanFormComponent {
   ) {
     this.form = this.fb.group({
       recipe: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required]
+      startDate: [data?.startDate || '', Validators.required],
+      endDate: [data?.endDate || '', Validators.required]
     });
 
     if (data?.id) {
@@ -72,11 +72,15 @@ export class MealPlanFormComponent {
 
   save(): void {
     if (this.form.valid) {
-      const mealPlan = {...this.data, ...this.form.value};
-      console.log(mealPlan)
+      const mealPlan: MealPlanInput = {
+        recipeId: this.form.value.recipe.id,
+        startDate: new Date(this.form.value.startDate).toISOString(),
+        endDate: new Date(this.form.value.endDate).toISOString(),
+      };
+      console.log(mealPlan);
 
-      if (mealPlan.id) {
-        this.mealPlanService.update(mealPlan.id, mealPlan).subscribe(() => {
+      if (this.data.id) {
+        this.mealPlanService.update(this.data.id, mealPlan).subscribe(() => {
           this.dialogRef.close(true);
         });
       } else {

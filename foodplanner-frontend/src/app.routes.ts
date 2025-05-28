@@ -8,9 +8,6 @@ import {MealPlanListComponent} from './components/mealplan/mealplan.component';
 import {RecipeListComponent} from './components/recipes/recipes.component';
 import {ShoppingListListComponent} from './components/shopping-list/shopping-list.component';
 import {authGuard} from './guards/auth.guard';
-import {KitchenListComponent} from './components/kitchen/kitchen.component';
-import {IngredientListComponent} from './components/ingredients/ingredients.component';
-import {IngredientCategoryListComponent} from './components/ingredient-category/ingredient-category.component';
 
 export const routes: Routes = [
   {
@@ -28,11 +25,6 @@ export const routes: Routes = [
     title: 'Mealplans',
     path: 'meal-plan',
     component: MealPlanListComponent,
-    canActivate: [authGuard]
-  }, {
-    title: 'Kitchens',
-    path: 'kitchens',
-    component: KitchenListComponent,
     canActivate: [authGuard]
   },
   {
@@ -57,15 +49,5 @@ export const routes: Routes = [
     path: 'shopping-list',
     component: ShoppingListListComponent,
     canActivate: [authGuard]
-  }, {
-    title: 'Ingredients',
-    path: 'ingredients',
-    component: IngredientListComponent,
-    canActivate: [authGuard]
-  }, {
-    title: 'Ingredient Category',
-    path: 'ingredient-categories',
-    component: IngredientCategoryListComponent,
-    canActivate: [authGuard]
-  }
+  },
 ];

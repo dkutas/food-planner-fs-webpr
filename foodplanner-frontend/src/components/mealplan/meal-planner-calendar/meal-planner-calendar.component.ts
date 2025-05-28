@@ -41,7 +41,7 @@ export class MealPlannerCalendarComponent implements OnInit {
   calendarDays: CalendarDay[] = [];
   mealPlans: MealPlan[] = [];
   connectedDropLists: string[] = [];
-  weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   constructor(
     private mealPlanService: MealPlanService,
@@ -168,7 +168,7 @@ export class MealPlannerCalendarComponent implements OnInit {
   addMealPlan(date: Date): void {
     const dialogRef = this.dialog.open(MealPlanFormComponent, {
       width: '600px',
-      data: {startDate: date}
+      data: {startDate: date, endDate: date},
     });
 
     dialogRef.afterClosed().subscribe(result => {
