@@ -1,0 +1,31 @@
+// pantry.component.less
+.content-container {
+  padding: 1rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h2 {
+      color: var(--mat-sys-primary);
+    }
+  }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  mat-card {
+    height: 100%;
+
+    mat-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}

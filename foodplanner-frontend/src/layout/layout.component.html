@@ -1,33 +1,29 @@
-<nz-layout>
-  <nz-header>
-    <div>
-      <img class="logo" ngSrc="./logo1.png" priority width="120" height="31" alt="Logo"/>
-    </div>
-    <ul nz-menu [nzSelectable]="false" nzTheme="dark" nzMode="horizontal">
-      <li nz-menu-item routerLink="login" routerLinkActive="active-link"
-          (click)="keycloakService.logout()">Logout
-      </li>
-    </ul>
-  </nz-header>
-  <nz-content class="outer-content">
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>App</nz-breadcrumb-item>
-    </nz-breadcrumb>
-    <nz-layout class="inner-layout">
-      <nz-sider nzTheme="dark">
-        <ul nz-menu [nzSelectable]="false" nzMode="inline" class="sider-menu" nzTheme="dark">
-          <li *ngFor="let route of menuRoutes"
-              nz-menu-item
-              [routerLink]="route.path"
-              routerLinkActive="active-link"
-              (click)="getRouteFn(route.path||'')()">
-            {{ route.title }}
-          </li>
-        </ul>
-      </nz-sider>
-      <nz-content class="inner-content">
+<!-- layout.component.html -->
+<div class="layout-container">
+  <mat-toolbar class="toolbar">
+    <img class="logo" ngSrc="./logo1.png" priority width="120" height="31" alt="Logo"/>
+    <span class="spacer"></span>
+    <button mat-button routerLink="login" routerLinkActive="active-link" (click)="keycloakService.logout()">
+      Logout
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" opened>
+      <mat-nav-list>
+        <a mat-list-item *ngFor="let route of menuRoutes"
+           [routerLink]="route.path"
+           routerLinkActive="active-link"
+           (click)="getRouteFn(route.path||'')()">
+          {{ route.title }}
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <div class="content-container">
         <router-outlet/>
-      </nz-content>
-    </nz-layout>
-  </nz-content>
-</nz-layout>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

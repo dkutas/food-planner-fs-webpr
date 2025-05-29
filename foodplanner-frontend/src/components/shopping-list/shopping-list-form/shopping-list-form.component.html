@@ -4,7 +4,7 @@
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
       <mat-label>Ingredient</mat-label>
-      <mat-select formControlName="ingredient">
+      <mat-select formControlName="ingredient" [compareWith]="compareIngredients">
         <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient">
           {{ ingredient.name }}
         </mat-option>

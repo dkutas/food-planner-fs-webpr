@@ -14,31 +14,42 @@ import {
   MatTable
 } from '@angular/material/table';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {MatList, MatListItem} from '@angular/material/list';
+import {KeyValuePipe, NgForOf} from '@angular/common';
+import {MatToolbarRow} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-shopping-list-list',
   templateUrl: './shopping-list.component.html',
   imports: [
     MatButton,
-    MatTable,
-    MatHeaderCell,
-    MatCell,
-    MatCellDef,
-    MatHeaderCellDef,
-    MatColumnDef,
     MatIconButton,
     MatIcon,
-    MatHeaderRow,
-    MatRowDef,
-    MatHeaderRowDef,
     MatIconModule,
-    MatRow
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatList,
+    MatListItem,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatList,
+    MatListItem,
+    MatIcon,
+    MatButton,
+    MatIconButton,
+    NgForOf,
+    KeyValuePipe,
+    MatToolbarRow
   ],
   styleUrls: ['./shopping-list.component.less']
 })
 export class ShoppingListListComponent implements OnInit {
   shoppingList: ShoppingList[] = [];
-  displayedColumns: string[] = ['ingredient', 'actions'];
+  groupedShoppingList: Map<string, ShoppingList[]> = new Map();
 
   constructor(
     private shoppingListService: ShoppingListService,
@@ -51,9 +62,21 @@ export class ShoppingListListComponent implements OnInit {
   }
 
   loadShoppingList(): void {
-    this.shoppingListService.getAll().subscribe(
-      data => this.shoppingList = data
-    );
+    this.shoppingListService.getAll().subscribe(data => {
+      this.shoppingList = data;
+      // Group shopping list items by ingredient category
+      this.groupedShoppingList = new Map(
+        Object.entries(
+          this.shoppingList.reduce((groups, item) => {
+            const category = item.ingredient.category?.name || 'Uncategorized';
+            return {
+              ...groups,
+              [category]: [...(groups[category] || []), item]
+            };
+          }, {} as Record<string, ShoppingList[]>)
+        )
+      );
+    });
   }
 
   openForm(item?: ShoppingList): void {

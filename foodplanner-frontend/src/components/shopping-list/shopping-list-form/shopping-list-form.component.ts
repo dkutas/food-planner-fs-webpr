@@ -13,7 +13,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
 import {Ingredient} from '../../../models/ingredient.model';
 import {ShoppingListService} from '../../../services/shopping-list.service';
 import {IngredientService} from '../../../services/ingredient.service';
-import {ShoppingList} from '../../../models/shopping-list.model';
+import {ShoppingList, ShoppingListInput} from '../../../models/shopping-list.model';
 import {NgForOf} from '@angular/common';
 
 @Component({
@@ -62,12 +62,18 @@ export class ShoppingListFormComponent {
     );
   }
 
+  compareIngredients(i1: Ingredient, i2: Ingredient): boolean {
+    return i1?.id === i2?.id;
+  }
+
   save(): void {
     if (this.form.valid) {
-      const shoppingListItem = {...this.data, ...this.form.value};
+      const shoppingListItem: ShoppingListInput = {
+        ingredientId: this.form.value.ingredient.id,
+      };
 
-      if (shoppingListItem.id) {
-        this.shoppingListService.update(shoppingListItem.id, shoppingListItem).subscribe(() => {
+      if (this.data?.id) {
+        this.shoppingListService.update(this.data.id, shoppingListItem).subscribe(() => {
           this.dialogRef.close(true);
         });
       } else {

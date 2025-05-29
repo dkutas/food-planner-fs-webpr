@@ -3,43 +3,42 @@ import {Recipe} from '../../models/recipe.model';
 import {RecipeService} from '../../services/recipe.service';
 import {MatDialog} from '@angular/material/dialog';
 import {RecipeFormComponent} from './recipe-form/recipe-form.component';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
-  MatTable
-} from '@angular/material/table';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
-import {MapPipe} from '../../pipes/map.pipe';
+import {RecipeDetailsComponent} from './recipe-details/recipe-details.component';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardImage,
+  MatCardTitle,
+  MatCardSubtitle,
+} from '@angular/material/card';
+import {KeyValuePipe, NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipes.component.html',
   imports: [
-    MatTable,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatCellDef,
-    MatCell,
     MatIconButton,
     MatIcon,
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatRowDef,
-    MatRow,
     MatButton,
-    MapPipe
+    MatCardActions,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardImage,
+    MatCardTitle,
+    NgForOf,
+    KeyValuePipe,
+    MatCardSubtitle
   ],
   styleUrls: ['./recipes.component.less']
 })
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
-  displayedColumns: string[] = ['name', 'description', 'kitchen', 'ingredients', 'preparation_time', 'actions'];
+  groupedRecipes: Map<string, Recipe[]> = new Map();
 
   constructor(
     private recipeService: RecipeService,
@@ -52,9 +51,28 @@ export class RecipeListComponent implements OnInit {
   }
 
   loadRecipes(): void {
-    this.recipeService.getAll().subscribe(
-      data => this.recipes = data
-    );
+    this.recipeService.getAll().subscribe(data => {
+      this.recipes = data;
+      // Group recipes by kitchen
+      this.groupedRecipes = new Map(
+        Object.entries(
+          this.recipes.reduce((groups, recipe) => {
+            const kitchen = recipe.kitchen?.name || 'Other';
+            return {
+              ...groups,
+              [kitchen]: [...(groups[kitchen] || []), recipe]
+            };
+          }, {} as Record<string, Recipe[]>)
+        )
+      );
+    });
+  }
+
+  openDetails(recipe: Recipe): void {
+    this.dialog.open(RecipeDetailsComponent, {
+      width: '800px',
+      data: recipe
+    });
   }
 
   openForm(recipe?: Recipe): void {

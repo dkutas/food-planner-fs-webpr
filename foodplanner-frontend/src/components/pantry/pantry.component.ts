@@ -14,31 +14,36 @@ import {
   MatTable
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
+import {KeyValuePipe, NgForOf} from '@angular/common';
+import {MatList, MatListItem} from '@angular/material/list';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 
 @Component({
   selector: 'app-pantry-list',
   templateUrl: './pantry.component.html',
   imports: [
     MatButton,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCellDef,
-    MatHeaderCell,
-    MatCellDef,
-    MatCell,
     MatIconButton,
     MatIcon,
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatRowDef,
-    MatRow
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatList,
+    MatListItem,
+    MatIcon,
+    MatButton,
+    MatIconButton,
+    NgForOf,
+    KeyValuePipe
+
   ],
   styleUrls: ['./pantry.component.less']
 })
 export class PantryListComponent implements OnInit {
   pantries: Pantry[] = [];
-  displayedColumns: string[] = ['ingredient', 'actions'];
-
+  groupedPantries: Map<string, Pantry[]> = new Map();
+  
   constructor(
     private pantryService: PantryService,
     private dialog: MatDialog
@@ -49,10 +54,23 @@ export class PantryListComponent implements OnInit {
     this.loadPantries();
   }
 
+
   loadPantries(): void {
-    this.pantryService.getAll().subscribe(
-      data => this.pantries = data
-    );
+    this.pantryService.getAll().subscribe(data => {
+      this.pantries = data;
+      // Group pantry items by ingredient category
+      this.groupedPantries = new Map(
+        Object.entries(
+          this.pantries.reduce((groups, item) => {
+            const category = item.ingredient.category?.name || 'Uncategorized';
+            return {
+              ...groups,
+              [category]: [...(groups[category] || []), item]
+            };
+          }, {} as Record<string, Pantry[]>)
+        )
+      );
+    });
   }
 
   openForm(pantry?: Pantry): void {

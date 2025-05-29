@@ -1,3 +1,4 @@
+<!-- recipes.component.html -->
 <div class="content-container">
   <div class="header">
     <h2>Recipes</h2>
@@ -6,45 +7,29 @@
     </button>
   </div>
 
-  <mat-table [dataSource]="recipes" class="mat-elevation-z8">
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
-      <mat-cell *matCellDef="let recipe"> {{ recipe.name }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef> Description</mat-header-cell>
-      <mat-cell *matCellDef="let recipe"> {{ recipe.description }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="kitchen">
-      <mat-header-cell *matHeaderCellDef> Kitchen</mat-header-cell>
-      <mat-cell *matCellDef="let recipe"> {{ recipe.kitchen.name }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="ingredients">
-      <mat-header-cell *matHeaderCellDef> Ingredients</mat-header-cell>
-      <mat-cell *matCellDef="let recipe"> {{ recipe.ingredients | map:'name' }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="preparation_time">
-      <mat-header-cell *matHeaderCellDef> Preparation time</mat-header-cell>
-      <mat-cell *matCellDef="let recipe"> {{ recipe.preparationTime }} minutes</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef> Actions</mat-header-cell>
-      <mat-cell *matCellDef="let recipe">
-        <button mat-icon-button (click)="openForm(recipe)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="delete(recipe.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+  <div class="lanes-container">
+    <div class="kitchen-lane" *ngFor="let kitchen of groupedRecipes | keyvalue">
+      <h3 class="kitchen-title">{{ kitchen.key }}</h3>
+      <div class="recipe-cards">
+        <mat-card *ngFor="let recipe of kitchen.value" (click)="openDetails(recipe)">
+          <img mat-card-image [src]="'assets/default-recipe.png'" [alt]="recipe.name">
+          <mat-card-header>
+            <mat-card-title>{{ recipe.name }}</mat-card-title>
+            <mat-card-subtitle>{{ recipe.preparationTime }} minutes</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p class="description">{{ recipe.description }}</p>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <button mat-icon-button (click)="openForm(recipe); $event.stopPropagation()">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="delete(recipe.id); $event.stopPropagation()">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
 </div>

@@ -15,6 +15,7 @@ import {
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {DatePipe} from '@angular/common';
+import {MatTabHeader} from '@angular/material/tabs';
 
 @Component({
   selector: 'app-meal-plan-list',
@@ -33,7 +34,8 @@ import {DatePipe} from '@angular/common';
     MatCellDef,
     DatePipe,
     MatHeaderRowDef,
-    MatRowDef
+    MatRowDef,
+    MatTabHeader
   ],
   styleUrls: ['./mealplan.component.less']
 })

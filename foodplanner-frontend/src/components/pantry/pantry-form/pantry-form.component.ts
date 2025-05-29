@@ -10,7 +10,7 @@ import {
 import {Ingredient} from '../../../models/ingredient.model';
 import {PantryService} from '../../../services/pantry.service';
 import {IngredientService} from '../../../services/ingredient.service';
-import {Pantry} from '../../../models/pantry-model';
+import {Pantry, PantryInput} from '../../../models/pantry-model';
 import {MatFormField, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatButton} from '@angular/material/button';
@@ -58,6 +58,10 @@ export class PantryFormComponent {
     this.loadIngredients();
   }
 
+  compareIngredients(i1: Ingredient, i2: Ingredient): boolean {
+    return i1?.id === i2?.id;
+  }
+
   loadIngredients(): void {
     this.ingredientService.getAll().subscribe(
       data => this.ingredients = data
@@ -66,10 +70,12 @@ export class PantryFormComponent {
 
   save(): void {
     if (this.form.valid) {
-      const pantry = {...this.data, ...this.form.value};
+      const pantry: PantryInput = {
+        ingredientId: this.form.value.ingredient.id,
+      }
 
-      if (pantry.id) {
-        this.pantryService.update(pantry.id, pantry).subscribe(() => {
+      if (this.data?.id) {
+        this.pantryService.update(this.data.id, pantry).subscribe(() => {
           this.dialogRef.close(true);
         });
       } else {
