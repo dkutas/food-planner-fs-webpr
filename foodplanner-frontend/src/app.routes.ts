@@ -1,12 +1,10 @@
 import {Routes} from '@angular/router';
 import {NutritionsComponent} from './components/nutritions/nutritions.component';
-import {
-  MealPlannerCalendarComponent
-} from './components/mealplan/meal-planner-calendar/meal-planner-calendar.component';
 import {PantryListComponent} from './components/pantry/pantry.component';
 import {MealPlanListComponent} from './components/mealplan/mealplan.component';
 import {RecipeListComponent} from './components/recipes/recipes.component';
 import {ShoppingListListComponent} from './components/shopping-list/shopping-list.component';
+import {MealPlanSchedulerComponent} from './components/mealplan/meal-plan-scheduler/meal-plan-scheduler.component';
 import {authGuard} from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -16,10 +14,10 @@ export const routes: Routes = [
     redirectTo: 'login',
   },
   {
-    path: 'meal-planner',
-    component: MealPlannerCalendarComponent,
+    path: 'meal-plan-scheduler',
+    component: MealPlanSchedulerComponent,
     canActivate: [authGuard],
-    title: 'Meal Planner'
+    title: 'Meal Plan Scheduler'
   },
   {
     title: 'Mealplans',
