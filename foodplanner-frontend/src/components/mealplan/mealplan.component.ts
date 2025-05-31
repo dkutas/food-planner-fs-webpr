@@ -55,7 +55,7 @@ export class MealPlanListComponent implements OnInit {
 
   loadMealPlans(): void {
     this.mealPlanService.getAll().subscribe(
-      data => this.mealPlans = data
+      data => this.mealPlans = data.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
     );
   }
 

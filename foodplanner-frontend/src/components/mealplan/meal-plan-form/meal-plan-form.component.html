@@ -1,33 +1,35 @@
+<!-- meal-plan-form.component.html -->
 <h2 mat-dialog-title>{{ data.id ? 'Edit' : 'Add' }} Meal Plan</h2>
 
 <mat-dialog-content>
   <form [formGroup]="form">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Recipe</mat-label>
-      <mat-select formControlName="recipe">
+      <mat-select formControlName="recipe" [compareWith]="compareRecipes">
         <mat-option *ngFor="let recipe of recipes" [value]="recipe">
           {{ recipe.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
-      <mat-label>Start Date</mat-label>
-      <input matInput [matDatepicker]="startPicker" formControlName="startDate">
-      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
-      <mat-datepicker #startPicker></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-      <mat-label>End Date</mat-label>
-      <input matInput [matDatepicker]="endPicker" formControlName="endDate">
-      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
-      <mat-datepicker #endPicker></mat-datepicker>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Choose date range</mat-label>
+      <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
+        <input matStartDate formControlName="start" placeholder="Start date">
+        <input matEndDate formControlName="end" placeholder="End date">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" (click)="save()">Save</button>
+  <button mat-raised-button color="primary"
+          [disabled]="!form.valid || !dateRange.valid"
+          (click)="save()">
+    Save
+  </button>
 </mat-dialog-actions>
