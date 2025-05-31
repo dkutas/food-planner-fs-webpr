@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions, MatDialogClose,
@@ -8,13 +8,15 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
-import {MatFormField, MatLabel} from '@angular/material/input';
-import {MatOption, MatSelect} from '@angular/material/select';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatOption} from '@angular/material/select';
 import {Ingredient} from '../../../models/ingredient.model';
 import {ShoppingListService} from '../../../services/shopping-list.service';
 import {IngredientService} from '../../../services/ingredient.service';
 import {ShoppingList, ShoppingListInput} from '../../../models/shopping-list.model';
-import {NgForOf} from '@angular/common';
+import {AsyncPipe, NgForOf} from '@angular/common';
+import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
+import {map, Observable, startWith} from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list-form',
@@ -25,18 +27,23 @@ import {NgForOf} from '@angular/common';
     ReactiveFormsModule,
     MatFormField,
     MatLabel,
-    MatSelect,
     MatOption,
     MatDialogActions,
     MatDialogClose,
     MatButton,
-    NgForOf
+    NgForOf,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
+    AsyncPipe,
+    MatInput
   ],
   styleUrls: ['./shopping-list-form.component.less']
 })
 export class ShoppingListFormComponent {
   form: FormGroup;
   ingredients: Ingredient[] = [];
+  ingredientControl = new FormControl('');
+  filteredIngredients: Observable<Ingredient[]>;
 
   constructor(
     private fb: FormBuilder,
@@ -49,6 +56,14 @@ export class ShoppingListFormComponent {
       ingredient: ['', Validators.required]
     });
 
+    this.filteredIngredients = this.ingredientControl.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = value;
+        return name ? this._filter(name) : this.ingredients.slice();
+      })
+    );
+
     if (data?.id) {
       this.form.patchValue(data);
     }
@@ -59,6 +74,17 @@ export class ShoppingListFormComponent {
   loadIngredients(): void {
     this.ingredientService.getAll().subscribe(
       data => this.ingredients = data
+    );
+  }
+
+  displayFn(ingredient: Ingredient): string {
+    return ingredient?.name ?? '';
+  }
+
+  private _filter(name: string): Ingredient[] {
+    const filterValue = name.toLowerCase();
+    return this.ingredients.filter(ingredient =>
+      ingredient.name.toLowerCase().includes(filterValue)
     );
   }
 

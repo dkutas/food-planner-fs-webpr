@@ -1,19 +1,32 @@
+<!-- shopping-list-form.component.html -->
 <h2 mat-dialog-title>{{ data.id ? 'Edit' : 'Add' }} Shopping List Item</h2>
 
 <mat-dialog-content>
   <form [formGroup]="form">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Ingredient</mat-label>
-      <mat-select formControlName="ingredient" [compareWith]="compareIngredients">
-        <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient">
+      <input type="text"
+             matInput
+             [formControl]="ingredientControl"
+             [matAutocomplete]="auto"
+             placeholder="Start typing to search...">
+      <mat-autocomplete #auto="matAutocomplete"
+                        [displayWith]="displayFn"
+                        (optionSelected)="form.patchValue({ingredient: $event.option.value})">
+        <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient">
           {{ ingredient.name }}
         </mat-option>
-      </mat-select>
+      </mat-autocomplete>
     </mat-form-field>
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" (click)="save()">Save</button>
+  <button mat-raised-button
+          color="primary"
+          (click)="save()"
+          [disabled]="!form.valid">
+    Save
+  </button>
 </mat-dialog-actions>
