@@ -10,7 +10,6 @@ import {MatList, MatListItem} from '@angular/material/list';
 import {KeyValuePipe, NgForOf} from '@angular/common';
 import {MatToolbarRow} from '@angular/material/toolbar';
 import {IngredientService} from '../../services/ingredient.service';
-import {add} from 'date-fns';
 import {PantryService} from '../../services/pantry.service';
 
 @Component({
@@ -49,7 +48,6 @@ export class ShoppingListListComponent implements OnInit {
     private shoppingListService: ShoppingListService,
     private dialog: MatDialog,
     private pantryService: PantryService,
-    private ingredientService: IngredientService
   ) {
   }
 
