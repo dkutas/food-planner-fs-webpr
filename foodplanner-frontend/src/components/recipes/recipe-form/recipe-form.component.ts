@@ -149,9 +149,7 @@ export class RecipeFormComponent {
         preparationTime: this.form.value.preparationTime,
         isPublic: this.form.value.isPublic
       };
-
-      console.log(recipe);
-
+      
       if (recipe.id) {
         this.recipeService.update(recipe.id, recipe).subscribe(() => {
           this.dialogRef.close(true);

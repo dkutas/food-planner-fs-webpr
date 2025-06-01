@@ -59,22 +59,6 @@ export class ShoppingListListComponent implements OnInit {
 
   loadShoppingList(): void {
 
-    this.ingredientService.getMissingForShoppingList().subscribe((missingIngredients) => {
-        console.log('Missing ingredients for shopping list:', missingIngredients);
-      }
-    );
-    this.ingredientService.getMissingForPanty().subscribe((missingIngredients) => {
-        console.log('Missing ingredients for pantry:', missingIngredients);
-      }
-    );
-    this.ingredientService.getMissingForMealPlan({
-      startDate: new Date().toISOString(),
-      endDate: add(new Date(), {months: 1}).toISOString()
-    }).subscribe((missingIngredients) => {
-        console.log('Missing ingredients for meal plan:', missingIngredients);
-      }
-    );
-
     this.shoppingListService.getAll().subscribe(data => {
       this.shoppingList = data;
       // Group shopping list items by ingredient category
