@@ -1,8 +1,8 @@
 // meal-plan-scheduler.component.ts
 import {Component, OnInit} from '@angular/core';
-import {CalendarOptions, EventDropArg} from '@fullcalendar/core';
+import {CalendarOptions} from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin, {EventResizeDoneArg} from '@fullcalendar/interaction';
+import interactionPlugin from '@fullcalendar/interaction';
 import {MealPlan, MealPlanInput} from '../../../models/meal-plan.model';
 import {MealPlanService} from '../../../services/meal-plan.service';
 import {MatDialog} from '@angular/material/dialog';

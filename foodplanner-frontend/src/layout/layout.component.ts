@@ -7,7 +7,7 @@ import {KeycloakService} from '../services/keycloak/keycloak.service';
 import {routes} from '../app.routes';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatSidenav, MatSidenavContainer, MatSidenavContent} from "@angular/material/sidenav";
-import {MatList, MatListItem, MatNavList} from "@angular/material/list";
+import {MatListItem, MatNavList} from "@angular/material/list";
 import {MatButton} from "@angular/material/button";
 
 @Component({
