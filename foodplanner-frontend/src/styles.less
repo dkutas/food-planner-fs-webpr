@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/ng-zorro-antd/ng-zorro-antd.less";
 
+
+:root {
+}
 
 html, body {
   height: 100%;
@@ -19,29 +21,57 @@ mat-sidenav {
   }
 }
 
-.ng-calendar-wrapper {
-  height: 900px;
+//.ng-calendar-wrapper {
+//  height: 900px;
+//
+//  .sx__month-grid {
+//
+//
+//    &-day {
+//      cursor: pointer;
+//
+//      &:hover {
+//        background-color: #424242;
+//      }
+//
+//      &-event {
+//        background-color: #ff9800;
+//        color: white;
+//        border-radius: 4px;
+//        padding: 2px 4px;
+//
+//        &:hover {
+//          background-color: transparent;
+//        }
+//      }
+//    }
+//  }
+//}
 
-  .sx__month-grid {
+/* meal-plan-scheduler.component.less */
+.calendar-container {
+  padding: 20px;
+  height: calc(100vh - 100px);
 
+}
 
-    &-day {
-      cursor: pointer;
+.fc-view-harness {
+  border-radius: 8px !important;
+}
 
-      &:hover {
-        background-color: #424242;
-      }
+:host ::ng-deep {
 
-      &-event {
-        background-color: #ff9800;
-        color: white;
-        border-radius: 4px;
-        padding: 2px 4px;
+  .event-meal-plan {
+    background-color: var(--mat-sys-primary-container);
+    border-color: var(--mat-sys-primary);
 
-        &:hover {
-          background-color: transparent;
-        }
-      }
+    a {
+      color: var(--mat-sys-primary-text);
+    }
+
+    &:hover {
+      background-color: var(--mat-sys-secondary-container);
+      border-color: var(--mat-sys-secondary);
     }
   }
 }

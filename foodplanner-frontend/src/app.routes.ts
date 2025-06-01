@@ -1,11 +1,12 @@
 import {Routes} from '@angular/router';
-import {NutritionsComponent} from './components/nutritions/nutritions.component';
 import {PantryListComponent} from './components/pantry/pantry.component';
 import {MealPlanListComponent} from './components/mealplan/mealplan.component';
 import {RecipeListComponent} from './components/recipes/recipes.component';
 import {ShoppingListListComponent} from './components/shopping-list/shopping-list.component';
-import {MealPlanSchedulerComponent} from './components/mealplan/meal-plan-scheduler/meal-plan-scheduler.component';
 import {authGuard} from './guards/auth.guard';
+import {
+  MealPlanSchedulerComponent
+} from './components/mealplan/meal-plan-scheduler/meal-plan-scheduler.component';
 
 export const routes: Routes = [
   {
@@ -25,12 +26,12 @@ export const routes: Routes = [
     component: MealPlanListComponent,
     canActivate: [authGuard]
   },
-  {
-    title: 'Nutritions',
-    path: 'nutritions',
-    component: NutritionsComponent,
-    canActivate: [authGuard]
-  },
+  // {
+  //   title: 'Nutritions',
+  //   path: 'nutritions',
+  //   component: NutritionsComponent,
+  //   canActivate: [authGuard]
+  // },
   {
     title: 'Pantry',
     path: 'pantry',

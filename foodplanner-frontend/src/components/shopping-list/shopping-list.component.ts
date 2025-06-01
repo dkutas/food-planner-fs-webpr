@@ -4,20 +4,13 @@ import {ShoppingListService} from '../../services/shopping-list.service';
 import {MatDialog} from '@angular/material/dialog';
 import {ShoppingListFormComponent} from './shopping-list-form/shopping-list-form.component';
 import {MatButton, MatIconButton} from '@angular/material/button';
-import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
-  MatTable
-} from '@angular/material/table';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
 import {MatList, MatListItem} from '@angular/material/list';
 import {KeyValuePipe, NgForOf} from '@angular/common';
 import {MatToolbarRow} from '@angular/material/toolbar';
+import {IngredientService} from '../../services/ingredient.service';
+import {add} from 'date-fns';
 
 @Component({
   selector: 'app-shopping-list-list',
@@ -53,7 +46,8 @@ export class ShoppingListListComponent implements OnInit {
 
   constructor(
     private shoppingListService: ShoppingListService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private ingredientService: IngredientService
   ) {
   }
 
@@ -62,6 +56,23 @@ export class ShoppingListListComponent implements OnInit {
   }
 
   loadShoppingList(): void {
+
+    this.ingredientService.getMissingForShoppingList().subscribe((missingIngredients) => {
+        console.log('Missing ingredients for shopping list:', missingIngredients);
+      }
+    );
+    this.ingredientService.getMissingForPanty().subscribe((missingIngredients) => {
+        console.log('Missing ingredients for pantry:', missingIngredients);
+      }
+    );
+    this.ingredientService.getMissingForMealPlan({
+      startDate: new Date().toISOString(),
+      endDate: add(new Date(), {months: 1}).toISOString()
+    }).subscribe((missingIngredients) => {
+        console.log('Missing ingredients for meal plan:', missingIngredients);
+      }
+    );
+
     this.shoppingListService.getAll().subscribe(data => {
       this.shoppingList = data;
       // Group shopping list items by ingredient category
@@ -89,7 +100,7 @@ export class ShoppingListListComponent implements OnInit {
       if (result) this.loadShoppingList();
     });
   }
-
+  
   delete(id: string): void {
     if (confirm('Are you sure you want to delete this item?')) {
       this.shoppingListService.delete(id).subscribe(() => {

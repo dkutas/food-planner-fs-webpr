@@ -35,7 +35,6 @@ import {MatTabHeader} from '@angular/material/tabs';
     DatePipe,
     MatHeaderRowDef,
     MatRowDef,
-    MatTabHeader
   ],
   styleUrls: ['./mealplan.component.less']
 })

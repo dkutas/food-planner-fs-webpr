@@ -66,6 +66,7 @@ export class ShoppingListFormComponent {
 
     if (data?.id) {
       this.form.patchValue(data);
+      this.ingredientControl.setValue(data.ingredient.name);
     }
 
     this.loadIngredients();

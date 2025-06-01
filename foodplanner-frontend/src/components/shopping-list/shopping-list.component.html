@@ -17,9 +17,6 @@
           <mat-list-item *ngFor="let item of category.value">
             <span matListItemTitle>{{ item.ingredient.name }}</span>
             <div matListItemMeta>
-              <button mat-icon-button (click)="openForm(item)">
-                <mat-icon>edit</mat-icon>
-              </button>
               <button mat-icon-button color="warn" (click)="delete(item.id)">
                 <mat-icon>delete</mat-icon>
               </button>

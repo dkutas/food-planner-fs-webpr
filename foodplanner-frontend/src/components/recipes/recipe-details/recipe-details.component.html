@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{ data.name }}</h2>
+<mat-dialog-content>
+  <!--      <img [src]="data.imageUrl || 'assets/default-recipe.png'" [alt]="data.name">-->
+  <p><strong>Kitchen:</strong> {{ data.kitchen.name }}</p>
+  <p><strong>Preparation Time:</strong> {{ data.preparationTime }} minutes</p>
+  <p><strong>Description:</strong></p>
+  <p>{{ data.description }}</p>
+  <p><strong>Ingredients:</strong></p>
+  <ul>
+    <li *ngFor="let ingredient of data.ingredients">{{ ingredient.name }}</li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

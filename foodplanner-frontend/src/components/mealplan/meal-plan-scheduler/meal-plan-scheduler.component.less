@@ -1,0 +1,27 @@
+/* meal-plan-scheduler.component.less */
+.calendar-container {
+  padding: 20px;
+  height: calc(100vh - 100px);
+
+}
+
+.fc-view-harness {
+  border-radius: 8px !important;
+}
+
+:host ::ng-deep {
+
+  .event-meal-plan {
+    background-color: var(--mat-sys-primary-container);
+    border-color: var(--mat-sys-primary);
+
+    a {
+      color: var(--mat-sys-primary-text);
+    }
+
+    &:hover {
+      background-color: var(--mat-sys-secondary-container);
+      border-color: var(--mat-sys-secondary);
+    }
+  }
+}

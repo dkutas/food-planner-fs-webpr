@@ -8,6 +8,11 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill">
+      <mat-label>Preparation Time (in minutes)</mat-label>
+      <input matInput type="number" formControlName="preparationTime">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
       <mat-label>Description</mat-label>
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
@@ -21,14 +26,37 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="fill">
+
+    <mat-form-field appearance="fill" class="full-width">
       <mat-label>Ingredients</mat-label>
-      <mat-select formControlName="ingredients" multiple [compareWith]="compareIngredients">
-        <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient">
+      <mat-chip-grid #chipGrid>
+        <mat-chip-row *ngFor="let ingredient of selectedIngredients"
+                      (removed)="removeIngredient(ingredient)">
+          {{ ingredient.name }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+      </mat-chip-grid>
+      <input placeholder="Search ingredients..."
+             [formControl]="ingredientsControl"
+             [matChipInputFor]="chipGrid"
+             [matAutocomplete]="auto"
+             matInput>
+      <mat-autocomplete #auto="matAutocomplete"
+                        (optionSelected)="selected($event)">
+        <mat-option *ngFor="let ingredient of filteredIngredients | async"
+                    [value]="ingredient">
           {{ ingredient.name }}
         </mat-option>
-      </mat-select>
+      </mat-autocomplete>
     </mat-form-field>
+    <div class="checkbox-field">
+      <mat-checkbox formControlName="isPublic" color="primary">
+        Make recipe public
+      </mat-checkbox>
+      <mat-hint>Public recipes will be visible to all users</mat-hint>
+    </div>
   </form>
 </mat-dialog-content>
 
