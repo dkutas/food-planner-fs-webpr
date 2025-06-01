@@ -18,6 +18,10 @@ export class RecipeService {
     return this.http.get<Recipe[]>(this.apiUrl);
   }
 
+  getAllPublic(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(this.apiUrl + '/public');
+  }
+
   getById(id: string): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.apiUrl}/${id}`);
   }

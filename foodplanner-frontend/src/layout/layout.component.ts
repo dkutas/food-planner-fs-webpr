@@ -1,7 +1,7 @@
 // layout.component.ts
 import {Component} from '@angular/core';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {NgForOf, NgOptimizedImage} from '@angular/common';
+import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
 import {RouterService} from '../services/router.service';
 import {KeycloakService} from '../services/keycloak/keycloak.service';
 import {routes} from '../app.routes';
@@ -26,7 +26,8 @@ import {MatButton} from "@angular/material/button";
     RouterLinkActive,
     RouterLink,
     NgForOf,
-    MatNavList
+    MatNavList,
+    NgIf
   ],
   standalone: true
 })

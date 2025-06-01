@@ -16,6 +16,7 @@ import {
   MatCardSubtitle,
 } from '@angular/material/card';
 import {KeyValuePipe, NgForOf} from '@angular/common';
+import {KeycloakService} from '../../services/keycloak/keycloak.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -42,7 +43,8 @@ export class RecipeListComponent implements OnInit {
 
   constructor(
     private recipeService: RecipeService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private keyCloakService: KeycloakService
   ) {
   }
 
@@ -51,21 +53,40 @@ export class RecipeListComponent implements OnInit {
   }
 
   loadRecipes(): void {
-    this.recipeService.getAll().subscribe(data => {
-      this.recipes = data;
-      // Group recipes by kitchen
-      this.groupedRecipes = new Map(
-        Object.entries(
-          this.recipes.reduce((groups, recipe) => {
-            const kitchen = recipe.kitchen?.name || 'Other';
-            return {
-              ...groups,
-              [kitchen]: [...(groups[kitchen] || []), recipe]
-            };
-          }, {} as Record<string, Recipe[]>)
-        )
-      );
-    });
+    if (!!this.keyCloakService.profile) {
+
+      this.recipeService.getAll().subscribe(data => {
+        this.recipes = data;
+        // Group recipes by kitchen
+        this.groupedRecipes = new Map(
+          Object.entries(
+            this.recipes.reduce((groups, recipe) => {
+              const kitchen = recipe.kitchen?.name || 'Other';
+              return {
+                ...groups,
+                [kitchen]: [...(groups[kitchen] || []), recipe]
+              };
+            }, {} as Record<string, Recipe[]>)
+          )
+        );
+      });
+    } else {
+      this.recipeService.getAllPublic().subscribe(data => {
+        this.recipes = data;
+        // Group recipes by kitchen
+        this.groupedRecipes = new Map(
+          Object.entries(
+            this.recipes.reduce((groups, recipe) => {
+              const kitchen = recipe.kitchen?.name || 'Other';
+              return {
+                ...groups,
+                [kitchen]: [...(groups[kitchen] || []), recipe]
+              };
+            }, {} as Record<string, Recipe[]>)
+          )
+        );
+      });
+    }
   }
 
   openDetails(recipe: Recipe): void {

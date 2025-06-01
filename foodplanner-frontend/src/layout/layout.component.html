@@ -3,9 +3,26 @@
   <mat-toolbar class="toolbar">
     <img class="logo" ngSrc="./logo1.png" priority width="120" height="31" alt="Logo"/>
     <span class="spacer"></span>
-    <button mat-button routerLink="login" routerLinkActive="active-link" (click)="keycloakService.logout()">
-      Logout
-    </button>
+    <div *ngIf="keycloakService.profile">
+      <button mat-button routerLink="login" routerLinkActive="active-link"
+              (click)="keycloakService.logout()">
+        Profile
+      </button>
+      <button mat-button routerLink="login" routerLinkActive="active-link"
+              (click)="keycloakService.logout()">
+        Logout
+      </button>
+    </div>
+    <div *ngIf="!keycloakService.profile">
+      <button mat-button routerLink="login" routerLinkActive="active-link"
+              (click)="keycloakService.login()">
+        Login
+      </button>
+      <button mat-button routerLink="login" routerLinkActive="active-link"
+              (click)="keycloakService.register()">
+        Register
+      </button>
+    </div>
   </mat-toolbar>
 
   <mat-sidenav-container>

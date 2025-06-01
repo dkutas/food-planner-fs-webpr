@@ -18,14 +18,15 @@ export const routes: Routes = [
     path: 'meal-plan-scheduler',
     component: MealPlanSchedulerComponent,
     canActivate: [authGuard],
-    title: 'Meal Plan Scheduler'
+    title: 'Meal Plan Scheduler',
+    data: {needAuth: true}
   },
   {
     title: 'Mealplans',
     path: 'meal-plan',
     component: MealPlanListComponent,
     canActivate: [authGuard],
-    data: {renderLink: false}
+    data: {renderLink: false, needAuth: true}
 
   },
   // {
@@ -38,17 +39,20 @@ export const routes: Routes = [
     title: 'Pantry',
     path: 'pantry',
     component: PantryListComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: {needAuth: true}
   },
   {
     title: 'Recipes',
     path: 'recipes',
-    component: RecipeListComponent
+    component: RecipeListComponent,
+    data: {needAuth: false}
   },
   {
     title: 'Shopping List',
     path: 'shopping-list',
     component: ShoppingListListComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: {needAuth: true}
   },
 ];

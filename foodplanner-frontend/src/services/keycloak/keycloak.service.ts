@@ -30,9 +30,7 @@ export class KeycloakService {
 
   async initializeKeycloak() {
     console.log("Initializing keycloak....")
-    const authenticated = await this.keycloak?.init({
-      onLoad: "login-required"
-    })
+    const authenticated = await this.keycloak?.init({})
 
     if (authenticated) {
       console.log("User authenticated...")
@@ -46,6 +44,10 @@ export class KeycloakService {
 
   async logout() {
     await this.keycloak?.logout();
+  }
+
+  async register() {
+    await this.keycloak?.register();
   }
 
 }
