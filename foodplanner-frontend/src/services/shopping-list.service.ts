@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ShoppingList, ShoppingListInput} from '../models/shopping-list.model';
-import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +25,7 @@ export class ShoppingListService {
   }
 
   create(item: ShoppingListInput): Observable<ShoppingList> {
-    return this.http.post<ShoppingList>(this.apiUrl, {...item, id: uuidv4()});
+    return this.http.post<ShoppingList>(this.apiUrl, item);
   }
 
   update(id: string, item: ShoppingListInput): Observable<ShoppingList> {

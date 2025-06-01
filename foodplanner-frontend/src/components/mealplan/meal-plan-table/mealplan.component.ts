@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {MealPlan} from '../../models/meal-plan.model';
-import {MealPlanService} from '../../services/meal-plan.service';
+import {MealPlan} from '../../../models/meal-plan.model';
+import {MealPlanService} from '../../../services/meal-plan.service';
 import {MatDialog} from '@angular/material/dialog';
-import {MealPlanFormComponent} from './meal-plan-form/meal-plan-form.component';
+import {MealPlanFormComponent} from '../meal-plan-form/meal-plan-form.component';
 import {
   MatCell, MatCellDef,
   MatColumnDef,
@@ -15,7 +15,7 @@ import {
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {DatePipe} from '@angular/common';
-import {MatTabHeader} from '@angular/material/tabs';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-meal-plan-list',
@@ -35,6 +35,7 @@ import {MatTabHeader} from '@angular/material/tabs';
     DatePipe,
     MatHeaderRowDef,
     MatRowDef,
+    RouterLink,
   ],
   styleUrls: ['./mealplan.component.less']
 })

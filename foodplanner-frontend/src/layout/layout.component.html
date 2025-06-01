@@ -14,7 +14,7 @@
         <a mat-list-item *ngFor="let route of menuRoutes"
            [routerLink]="route.path"
            routerLinkActive="active-link"
-           (click)="getRouteFn(route.path||'')()">
+           (click)="getRouteFn(route.path || '')()">
           {{ route.title }}
         </a>
       </mat-nav-list>

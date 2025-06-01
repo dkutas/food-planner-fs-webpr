@@ -11,6 +11,7 @@ import {KeyValuePipe, NgForOf} from '@angular/common';
 import {MatToolbarRow} from '@angular/material/toolbar';
 import {IngredientService} from '../../services/ingredient.service';
 import {add} from 'date-fns';
+import {PantryService} from '../../services/pantry.service';
 
 @Component({
   selector: 'app-shopping-list-list',
@@ -47,6 +48,7 @@ export class ShoppingListListComponent implements OnInit {
   constructor(
     private shoppingListService: ShoppingListService,
     private dialog: MatDialog,
+    private pantryService: PantryService,
     private ingredientService: IngredientService
   ) {
   }
@@ -100,7 +102,27 @@ export class ShoppingListListComponent implements OnInit {
       if (result) this.loadShoppingList();
     });
   }
-  
+
+  handleShoppingDone(): void {
+    this.shoppingList.forEach(item => {
+      this.pantryService.create({ingredientId: item.ingredient.id}).subscribe();
+      this.shoppingListService.delete(item.id).subscribe();
+    });
+    this.loadShoppingList();
+  }
+
+  handleShoppingReset() {
+    if (confirm('Are you sure you want to reset the shopping list?')) {
+      this.shoppingListService.getAll().subscribe(data => {
+        data.forEach(item => {
+          this.shoppingListService.delete(item.id).subscribe();
+        });
+        this.loadShoppingList();
+      });
+    }
+  }
+
+
   delete(id: string): void {
     if (confirm('Are you sure you want to delete this item?')) {
       this.shoppingListService.delete(id).subscribe(() => {

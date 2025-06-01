@@ -1,9 +1,14 @@
 <div class="content-container">
   <div class="header">
     <h2>Meal Plans</h2>
-    <button mat-raised-button color="primary" (click)="openForm()">
-      Add Meal Plan
-    </button>
+    <div>
+      <button mat-raised-button color="primary" (click)="openForm()">
+        Add Meal Plan
+      </button>
+      <button mat-raised-button color="primary" role="link" routerLink="/meal-plan-scheduler">
+        View in Scheduler
+      </button>
+    </div>
   </div>
 
   <mat-table [dataSource]="mealPlans" class="mat-elevation-z8">

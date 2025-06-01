@@ -9,10 +9,13 @@ import {Kitchen} from '../models/kitchen.model';
 export class KitchenService {
   private apiUrl = 'api/kitchen';
 
+
   constructor(private http: HttpClient) {
   }
 
   getAll(): Observable<Kitchen[]> {
     return this.http.get<Kitchen[]>(this.apiUrl);
   }
+
+
 }

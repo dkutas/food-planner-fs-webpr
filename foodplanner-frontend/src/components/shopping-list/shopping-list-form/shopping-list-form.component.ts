@@ -89,10 +89,6 @@ export class ShoppingListFormComponent {
     );
   }
 
-  compareIngredients(i1: Ingredient, i2: Ingredient): boolean {
-    return i1?.id === i2?.id;
-  }
-
   save(): void {
     if (this.form.valid) {
       const shoppingListItem: ShoppingListInput = {

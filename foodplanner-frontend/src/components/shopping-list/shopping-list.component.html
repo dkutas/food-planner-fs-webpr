@@ -2,9 +2,17 @@
 <div class="content-container">
   <mat-toolbar-row class="header">
     <h2>Shopping List</h2>
-    <button mat-raised-button color="primary" (click)="openForm()">
-      Add Item
-    </button>
+    <div>
+      <button mat-raised-button color="primary" (click)="openForm()">
+        Add Item
+      </button>
+      <button mat-raised-button color="primary" (click)="handleShoppingDone()">
+        Shopping done
+      </button>
+      <button mat-raised-button color="primary" (click)="handleShoppingReset()">
+        Clear shopping list
+      </button>
+    </div>
   </mat-toolbar-row>
 
   <div class="category-grid">

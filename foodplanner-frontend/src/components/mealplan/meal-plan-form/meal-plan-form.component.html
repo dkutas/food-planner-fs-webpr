@@ -5,11 +5,19 @@
   <form [formGroup]="form">
     <mat-form-field appearance="fill" class="full-width">
       <mat-label>Recipe</mat-label>
-      <mat-select formControlName="recipe" [compareWith]="compareRecipes">
-        <mat-option *ngFor="let recipe of recipes" [value]="recipe">
+      <input type="text"
+             matInput
+             [formControl]="recipeControl"
+             [matAutocomplete]="auto"
+             placeholder="Search for a recipe...">
+      <mat-autocomplete #auto="matAutocomplete"
+                        [displayWith]="displayFn"
+                        (optionSelected)="selected($event)">
+        <mat-option *ngFor="let recipe of filteredRecipes | async"
+                    [value]="recipe">
           {{ recipe.name }}
         </mat-option>
-      </mat-select>
+      </mat-autocomplete>
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="full-width">
@@ -27,7 +35,8 @@
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary"
+  <button mat-raised-button
+          color="primary"
           [disabled]="!form.valid || !dateRange.valid"
           (click)="save()">
     Save

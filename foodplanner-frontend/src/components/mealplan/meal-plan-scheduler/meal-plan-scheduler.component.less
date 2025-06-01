@@ -1,12 +1,12 @@
 /* meal-plan-scheduler.component.less */
 .calendar-container {
-  padding: 20px;
+  padding: 0 20px;
   height: calc(100vh - 100px);
+  color: var(--mat-sys-primary);
 
-}
-
-.fc-view-harness {
-  border-radius: 8px !important;
+  .fc-event-title-container {
+    height: 80px;
+  }
 }
 
 :host ::ng-deep {
@@ -14,14 +14,36 @@
   .event-meal-plan {
     background-color: var(--mat-sys-primary-container);
     border-color: var(--mat-sys-primary);
-
-    a {
-      color: var(--mat-sys-primary-text);
-    }
+    height: 15rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
       background-color: var(--mat-sys-secondary-container);
       border-color: var(--mat-sys-secondary);
     }
   }
+
+  .meal-plan-day-cell {
+    background-color: var(--mat-sys-surface-bright);
+    border-color: var(--mat-sys-secondary);
+    height: 18rem;
+  }
 }
+
+.content-container {
+  padding: 0 20px;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      color: var(--mat-sys-primary);
+    }
+  }
+}
+

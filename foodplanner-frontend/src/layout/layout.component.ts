@@ -35,7 +35,8 @@ export class LayoutComponent {
     route.path !== '' &&
     route.path !== 'login' &&
     route.path !== 'register' &&
-    route.title
+    route.title &&
+    route.data?.['renderLink'] !== false
   );
 
   constructor(

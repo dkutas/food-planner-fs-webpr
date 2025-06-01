@@ -1,4 +1,13 @@
 <!-- meal-plan-scheduler.component.html -->
-<div class="calendar-container">
-  <full-calendar [options]="calendarOptions"></full-calendar>
+<div class="content-container">
+  <div class="header">
+    <h2>Meal Plans</h2>
+    <button mat-raised-button color="primary" role="link" routerLink="/meal-plan">
+      View in Table
+    </button>
+  </div>
+
+  <div class="calendar-container">
+    <full-calendar [options]="calendarOptions"></full-calendar>
+  </div>
 </div>

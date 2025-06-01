@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
 import {PantryListComponent} from './components/pantry/pantry.component';
-import {MealPlanListComponent} from './components/mealplan/mealplan.component';
+import {MealPlanListComponent} from './components/mealplan/meal-plan-table/mealplan.component';
 import {RecipeListComponent} from './components/recipes/recipes.component';
 import {ShoppingListListComponent} from './components/shopping-list/shopping-list.component';
 import {authGuard} from './guards/auth.guard';
@@ -24,7 +24,9 @@ export const routes: Routes = [
     title: 'Mealplans',
     path: 'meal-plan',
     component: MealPlanListComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    data: {renderLink: false}
+
   },
   // {
   //   title: 'Nutritions',
