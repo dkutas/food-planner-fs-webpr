@@ -20,7 +20,7 @@ public interface IngredientRepository extends JpaRepository<Ingredient, UUID> {
     List<Ingredient> getIngredientsNotOnShoppingList(UUID userId);
 
     @Query(value = """
-             SELECT mp.id, r.id, i.id FROM meal_plan mp\s
+             SELECT DISTINCT mp.id, r.id, i.id FROM meal_plan mp\s
              INNER JOIN recipe r on r.id = mp.recipe_id\s
              INNER JOIN recipe_ingredient ri on r.id = ri.recipe_id\s
              INNER JOIN ingredient i on i.id = ri.ingredient_id\s
