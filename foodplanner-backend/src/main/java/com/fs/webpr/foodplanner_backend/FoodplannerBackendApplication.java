@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FoodplannerBackendApplication {
 
 	// TODO: Modify API Endpoints to work with Authentication Object
+	// TODO: Keycloak Client
 	// TODO: Error Response Object
 	public static void main(String[] args) {
 		SpringApplication.run(FoodplannerBackendApplication.class, args);

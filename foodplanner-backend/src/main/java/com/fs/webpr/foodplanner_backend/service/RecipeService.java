@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +35,8 @@ public class RecipeService {
     private final KitchenRepository kitchenRepository;
     private final IngredientRepository ingredientRepository;
     private final RecipeMapper recipeMapper;
+
+    private final FileUploadService fileUploadService;
 
     public List<RecipeResponseDTO> getAllPublic() {
         return recipeMapper.toRecipeResponseDTO(recipeRepository.findAllPublic());
@@ -166,4 +169,27 @@ public class RecipeService {
 
         recipeRepository.deleteById(id);
     }
+
+    public void uploadImage(AuthenticatedUser user, UUID id, MultipartFile file) {
+        String contentType = file.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            throw new IllegalArgumentException("File is not an image");
+        }
+
+        Recipe recipe = recipeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Recipe not found with id " + id)
+        );
+
+        if (!recipe.getUserId().equals(user.userId())) {
+            throw new AccessDeniedException("You do not have permission to upload image for recipe with id " + id);
+        }
+
+        String url = fileUploadService.uploadFile(file);
+
+        recipe.setImageSrc(url);
+
+        recipeRepository.save(recipe);
+
+    }
 }
+

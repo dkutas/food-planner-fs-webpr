@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -94,5 +95,19 @@ public class RecipeController {
             @PathVariable UUID id
     ) {
         recipeService.delete(user, id);
+    }
+
+    @PostMapping("/{id}")
+    @Operation(
+            operationId = "uploadImage",
+            summary = "Uploads an image for a recipe"
+    )
+    @PreAuthorize("isAuthenticated()")
+    public void uploadImage(
+            @CurrentUser AuthenticatedUser user,
+            @PathVariable UUID id,
+            @RequestParam("file") MultipartFile file
+    ) {
+        recipeService.uploadImage(user, id, file);
     }
 }
